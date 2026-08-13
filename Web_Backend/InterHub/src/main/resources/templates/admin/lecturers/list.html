@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Giảng viên | InterHub Admin
+    </title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin/dashboard.css}">
+
+</head>
+
+
+<body>
+
+
+<header class="admin-top-header">
+
+    <div class="header-container">
+
+        <a
+                th:href="@{/admin}"
+                class="admin-brand">
+
+            InterHub Administration
+
+        </a>
+
+    </div>
+
+</header>
+
+<nav class="admin-navbar">
+
+    <div class="nav-container">
+
+        <a th:href="@{/admin}"
+           class="nav-item">
+
+            Dashboard
+
+        </a>
+
+        <a th:href="@{/admin/students}"
+           class="nav-item">
+
+            Sinh viên
+
+        </a>
+
+        <a th:href="@{/admin/lecturers}"
+           class="nav-item active">
+
+            Giảng viên
+
+        </a>
+
+        <a th:href="@{/admin/employers}"
+           class="nav-item">
+
+            Doanh nghiệp
+
+        </a>
+
+        <a th:href="@{/admin/jobs}"
+           class="nav-item">
+
+            Việc làm
+
+        </a>
+        <a th:href="@{/admin/logs}"
+           class="nav-item">
+
+            System Logs
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="breadcrumb">
+
+    <div class="content-container">
+
+        <a th:href="@{/admin}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <span>
+            Giảng viên
+        </span>
+
+    </div>
+
+</div>
+
+
+<main class="content-container">
+
+
+    <div class="page-header">
+
+        <h1>
+            Quản lý giảng viên
+        </h1>
+
+        <p>
+            Xem danh sách và sinh viên mà từng giảng viên đang quản lý.
+        </p>
+
+    </div>
+
+
+    <section class="django-module">
+
+
+        <div class="django-module-title">
+
+            <div>
+
+                <h2>
+                    Giảng viên
+                </h2>
+
+                <span th:text="${totalItems + ' giảng viên'}">
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-table-wrapper">
+
+
+            <table class="admin-table">
+
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Mã GV</th>
+
+                    <th>Họ tên</th>
+
+                    <th>Email</th>
+
+                    <th>Số điện thoại</th>
+
+                    <th>Hành động</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <tr th:each="lecturer : ${lecturers}">
+
+
+                    <td th:text="${lecturer.id}">
+                    </td>
+
+
+                    <td>
+
+                        <a
+                                class="object-link"
+                                th:href="@{/admin/lecturers/{id}(id=${lecturer.id})}"
+                                th:text="${lecturer.lecturerCode}">
+
+                        </a>
+
+                    </td>
+
+
+                    <td th:text="${lecturer.fullName}">
+                    </td>
+
+
+                    <td th:text="${lecturer.email}">
+                    </td>
+
+
+                    <td th:text="${lecturer.phone}">
+                    </td>
+
+
+                    <td>
+
+                        <a
+                                class="action-link"
+                                th:href="@{/admin/lecturers/{id}(id=${lecturer.id})}">
+
+                            Xem
+
+                        </a>
+
+                    </td>
+
+
+                </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+        <div class="table-footer">
+
+
+            <div class="result-count">
+
+                Tổng
+
+                <strong th:text="${totalItems}">
+                </strong>
+
+                giảng viên
+
+            </div>
+
+
+            <div
+                    class="admin-pagination"
+                    th:if="${totalPages > 0}">
+
+
+                <a
+                        th:if="${currentPage > 0}"
+                        th:href="@{/admin/lecturers(
+                        page=${currentPage - 1},
+                        size=${pageSize}
+                        )}">
+
+                    ‹ Trước
+
+                </a>
+
+
+                <a
+                        th:each="i : ${#numbers.sequence(0,totalPages - 1)}"
+                        th:href="@{/admin/lecturers(
+                        page=${i},
+                        size=${pageSize}
+                        )}"
+                        th:text="${i + 1}"
+                        th:classappend="${i == currentPage}
+                        ? 'current-page'
+                        : ''">
+
+                </a>
+
+
+                <a
+                        th:if="${currentPage + 1 < totalPages}"
+                        th:href="@{/admin/lecturers(
+                        page=${currentPage + 1},
+                        size=${pageSize}
+                        )}">
+
+                    Sau ›
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html
+        lang="vi"
+        xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Danh sách ứng tuyển
+    </title>
+
+</head>
+
+
+<body>
+
+
+<a
+        th:href="@{/admin/employers/{id}(id=${employer.id})}">
+
+    ← Quay lại nhà tuyển dụng
+
+</a>
+
+
+<h1>
+
+    Application của
+
+    <span th:text="${employer.companyName}">
+    </span>
+
+</h1>
+
+
+<p>
+
+    Tổng:
+
+    <strong th:text="${totalItems}">
+        0
+    </strong>
+
+    lượt ứng tuyển
+
+</p>
+
+
+<table border="1">
+
+
+    <thead>
+
+    <tr>
+
+        <th>ID</th>
+
+        <th>MSSV</th>
+
+        <th>Sinh viên</th>
+
+        <th>Email</th>
+
+        <th>Job</th>
+
+        <th>Trạng thái</th>
+
+        <th>Ngày ứng tuyển</th>
+
+    </tr>
+
+    </thead>
+
+
+    <tbody>
+
+
+    <tr th:each="application : ${applications}">
+
+
+        <td th:text="${application.id}">
+        </td>
+
+
+        <td th:text="${application.student.mssv}">
+        </td>
+
+
+        <td th:text="${application.student.fullName}">
+        </td>
+
+
+        <td th:text="${application.student.email}">
+        </td>
+
+
+        <td th:text="${application.job.title}">
+        </td>
+
+
+        <td th:text="${application.status}">
+        </td>
+
+
+        <td th:text="${application.createdDate}">
+        </td>
+
+
+    </tr>
+
+
+    <tr th:if="${#lists.isEmpty(applications)}">
+
+        <td
+                colspan="7"
+                style="text-align:center">
+
+            Chưa có sinh viên ứng tuyển.
+
+        </td>
+
+    </tr>
+
+
+    </tbody>
+
+
+</table>
+
+
+<div th:if="${totalPages > 0}">
+
+
+    <a
+            th:if="${currentPage > 0}"
+            th:href="@{/admin/employers/{id}/applications(
+                id=${employer.id},
+                page=${currentPage - 1},
+                size=${pageSize}
+            )}">
+
+        Trước
+
+    </a>
+
+
+    <a
+            th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+            th:href="@{/admin/employers/{id}/applications(
+                id=${employer.id},
+                page=${i},
+                size=${pageSize}
+            )}"
+            th:text="${i + 1}">
+
+    </a>
+
+
+    <a
+            th:if="${currentPage + 1 < totalPages}"
+            th:href="@{/admin/employers/{id}/applications(
+                id=${employer.id},
+                page=${currentPage + 1},
+                size=${pageSize}
+            )}">
+
+        Sau
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

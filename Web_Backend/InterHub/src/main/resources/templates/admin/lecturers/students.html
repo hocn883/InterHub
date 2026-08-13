@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Sinh viên của giảng viên
+    </title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin/dashboard.css}">
+
+</head>
+
+
+<body>
+
+
+<header class="admin-top-header">
+
+    <div class="header-container">
+
+        <a
+                th:href="@{/admin}"
+                class="admin-brand">
+
+            InterHub Administration
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="content-container">
+
+
+    <div class="page-header">
+
+        <h1>
+
+            Sinh viên của
+
+            <span th:text="${lecturer.fullName}">
+            </span>
+
+        </h1>
+
+    </div>
+
+
+    <section class="django-module">
+
+
+        <div class="django-module-title">
+
+            <h2>
+                Danh sách sinh viên quản lý
+            </h2>
+
+        </div>
+
+
+        <div class="admin-table-wrapper">
+
+
+            <table class="admin-table">
+
+
+                <thead>
+
+                <tr>
+
+                    <th>MSSV</th>
+
+                    <th>Họ tên</th>
+
+                    <th>Email</th>
+
+                    <th>Ngành</th>
+
+                    <th>Lớp</th>
+
+                    <th>Tình trạng</th>
+
+                    <th>Hành động</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <tr th:each="student : ${students}">
+
+
+                    <td th:text="${student.mssv}">
+                    </td>
+
+
+                    <td th:text="${student.fullName}">
+                    </td>
+
+
+                    <td th:text="${student.email}">
+                    </td>
+
+
+                    <td th:text="${student.major}">
+                    </td>
+
+
+                    <td th:text="${student.className}">
+                    </td>
+
+
+                    <td th:text="${student.status}">
+                    </td>
+
+
+                    <td>
+
+                        <a
+                                class="action-link"
+                                th:href="@{/admin/students/{id}(id=${student.id})}">
+
+                            Chi tiết
+
+                        </a>
+
+                    </td>
+
+
+                </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="table-footer">
+
+
+            <div class="result-count">
+
+                Tổng
+
+                <strong th:text="${totalItems}">
+                </strong>
+
+                sinh viên
+
+            </div>
+
+
+            <div
+                    class="admin-pagination"
+                    th:if="${totalPages > 0}">
+
+
+                <a
+                        th:if="${currentPage > 0}"
+                        th:href="@{/admin/lecturers/{id}/students(
+                        id=${lecturer.id},
+                        page=${currentPage - 1},
+                        size=${pageSize}
+                        )}">
+
+                    ‹ Trước
+
+                </a>
+
+
+                <a
+                        th:each="i : ${#numbers.sequence(0,totalPages - 1)}"
+                        th:href="@{/admin/lecturers/{id}/students(
+                        id=${lecturer.id},
+                        page=${i},
+                        size=${pageSize}
+                        )}"
+                        th:text="${i + 1}"
+                        th:classappend="${i == currentPage}
+                        ? 'current-page'
+                        : ''">
+
+                </a>
+
+
+                <a
+                        th:if="${currentPage + 1 < totalPages}"
+                        th:href="@{/admin/lecturers/{id}/students(
+                        id=${lecturer.id},
+                        page=${currentPage + 1},
+                        size=${pageSize}
+                        )}">
+
+                    Sau ›
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

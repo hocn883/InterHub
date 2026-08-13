@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>
+        System Logs | InterHub Admin
+    </title>
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin/dashboard.css}">
+</head>
+<body>
+<header class="admin-top-header">
+    <div class="header-container">
+        <a
+                th:href="@{/admin}"
+                class="admin-brand">
+            InterHub Administration
+        </a>
+        <div class="admin-account">
+            <span>
+                Welcome,
+                <strong>Administrator</strong>
+            </span>
+            <a href="#">
+                Log out
+            </a>
+        </div>
+    </div>
+</header>
+<nav class="admin-navbar">
+    <div class="nav-container">
+
+        <a
+                th:href="@{/admin}"
+                class="nav-item">
+
+            Dashboard
+
+        </a>
+        <a
+                th:href="@{/admin/students}"
+                class="nav-item">
+
+            Sinh viên
+
+        </a>
+        <a
+                th:href="@{/admin/lecturers}"
+                class="nav-item">
+
+            Giảng viên
+
+        </a>
+        <a
+                th:href="@{/admin/employers}"
+                class="nav-item">
+
+            Doanh nghiệp
+
+        </a>
+        <a
+                th:href="@{/admin/jobs}"
+                class="nav-item">
+
+            Việc làm
+
+        </a>
+        <a
+                th:href="@{/admin/logs}"
+                class="nav-item active">
+
+            System Logs
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================================
+     BREADCRUMB
+================================ -->
+
+<div class="breadcrumb">
+
+    <div class="content-container">
+
+        <a th:href="@{/admin}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <span>
+            System Logs
+        </span>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================
+     MAIN
+================================ -->
+<main class="content-container">
+    <div class="page-header">
+        <h1>
+            Nhật ký hệ thống
+        </h1>
+        <p>
+            Theo dõi các hoạt động gần đây trong hệ thống InterHub.
+        </p>
+    </div>
+    <section class="django-module">
+        <div class="django-module-title">
+            <div>
+                <h2>
+                    System Logs
+                </h2>
+                <span th:text="${totalItems + ' bản ghi'}">
+                    0 bản ghi
+                </span>
+            </div>
+        </div>
+        <!-- ================================
+             LOG LIST
+        ================================= -->
+        <div class="system-log-list">
+            <div
+                    class="system-log-row"
+                    th:each="log : ${logs}">
+                <!-- DATE -->
+                <div
+                        class="system-log-date"
+                        th:text="${#temporals.format(
+                            log.createdDate,
+                            'dd/MM/yyyy HH:mm:ss'
+                        )}">
+                    13/08/2026 15:40:20
+                </div>
+                <!-- ACTION -->
+                <div>
+                    <span
+                            class="system-log-action"
+                            th:text="${log.action}">
+                        APPLY_JOB
+                    </span>
+                </div>
+                <!-- DESCRIPTION -->
+                <div
+                        class="system-log-description"
+                        th:text="${log.description}">
+
+                    Sinh viên đã ứng tuyển vào công việc Java Intern
+                </div>
+            </div>
+            <!-- EMPTY -->
+            <div
+                    class="system-log-empty"
+                    th:if="${#lists.isEmpty(logs)}">
+                Chưa có nhật ký hệ thống.
+            </div>
+        </div>
+        <!-- ================================
+             PAGINATION
+        ================================= -->
+        <div class="table-footer">
+            <div class="result-count">
+                Hiển thị
+                <strong th:text="${logs.size()}">
+                    0
+                </strong>
+                trên
+                <strong th:text="${totalItems}">
+                    0
+                </strong>
+                bản ghi
+            </div>
+            <div
+                    class="admin-pagination"
+                    th:if="${totalPages > 0}">
+                <a
+                        th:if="${currentPage > 0}"
+                        th:href="@{/admin/logs(
+                            page=${currentPage - 1},
+                            size=${pageSize}
+                        )}">
+
+                    ‹ Trước
+
+                </a>
+                <a
+                        th:each="i : ${#numbers.sequence(
+                            0,
+                            totalPages - 1
+                        )}"
+                        th:href="@{/admin/logs(
+                            page=${i},
+                            size=${pageSize}
+                        )}"
+                        th:text="${i + 1}"
+                        th:classappend="${i == currentPage}
+                            ? 'current-page'
+                            : ''">
+
+                    1
+                </a>
+                <a
+                        th:if="${currentPage + 1 < totalPages}"
+                        th:href="@{/admin/logs(
+                            page=${currentPage + 1},
+                            size=${pageSize}
+                        )}">
+                    Sau ›
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

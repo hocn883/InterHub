@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Chi tiết sinh viên
+    </title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/admin/dashboard.css}">
+
+</head>
+
+<body>
+
+
+<header class="admin-top-header">
+
+    <div class="header-container">
+
+        <a
+                th:href="@{/admin}"
+                class="admin-brand">
+
+            InterHub Administration
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<nav class="admin-navbar">
+
+    <div class="nav-container">
+
+        <a th:href="@{/admin}"
+           class="nav-item">
+            Dashboard
+        </a>
+
+        <a th:href="@{/admin/students}"
+           class="nav-item active">
+            Sinh viên
+        </a>
+
+        <a th:href="@{/admin/lecturers}"
+           class="nav-item">
+            Giảng viên
+        </a>
+
+        <a th:href="@{/admin/employers}"
+           class="nav-item">
+            Doanh nghiệp
+        </a>
+
+        <a th:href="@{/admin/jobs}"
+           class="nav-item">
+            Việc làm
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="breadcrumb">
+
+    <div class="content-container">
+
+        <a th:href="@{/admin}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <a th:href="@{/admin/students}">
+            Sinh viên
+        </a>
+
+        <span>›</span>
+
+        <span th:text="${student.fullName}">
+        </span>
+
+    </div>
+
+</div>
+
+
+<main class="content-container">
+
+
+    <div class="page-header">
+
+        <h1 th:text="${student.fullName}">
+            Sinh viên
+        </h1>
+
+        <p>
+            Chi tiết thông tin sinh viên
+        </p>
+
+    </div>
+
+
+    <section class="admin-content-grid">
+
+
+        <!-- =========================
+             THÔNG TIN STUDENT
+        ========================== -->
+
+        <div class="module-section">
+
+
+            <div class="module-title">
+
+                Thông tin sinh viên
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>MSSV</strong>
+
+                <span th:text="${student.mssv}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Họ tên</strong>
+
+                <span th:text="${student.fullName}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Email</strong>
+
+                <span th:text="${student.email}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Số điện thoại</strong>
+
+                <span th:text="${student.phone}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Ngành</strong>
+
+                <span th:text="${student.major}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Lớp</strong>
+
+                <span th:text="${student.className}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Giảng viên quản lý</strong>
+
+                <span
+                        th:if="${student.lecturer != null}"
+                        th:text="${student.lecturer.fullName}">
+                </span>
+
+                <span
+                        th:if="${student.lecturer == null}">
+
+                    Chưa có
+
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             TÌNH TRẠNG VIỆC LÀM
+        ========================== -->
+
+        <div class="module-section">
+
+
+            <div class="module-title">
+
+                Tình trạng thực tập
+
+            </div>
+
+
+            <!-- CHƯA CÓ VIỆC -->
+
+            <div
+                    class="internship-status no-job"
+                    th:if="${!hasJob}">
+
+                <h2>
+                    Chưa có việc
+                </h2>
+
+                <p>
+                    Sinh viên hiện chưa có Application
+                    nào được doanh nghiệp chấp nhận.
+                </p>
+
+            </div>
+
+
+            <!-- ĐÃ CÓ VIỆC -->
+
+            <div
+                    class="internship-status has-job"
+                    th:if="${hasJob}">
+
+
+                <h2>
+                    Đã có việc / Đang thực tập
+                </h2>
+
+
+                <div class="detail-row">
+
+                    <strong>
+                        Doanh nghiệp
+                    </strong>
+
+                    <a
+                            class="object-link"
+                            th:href="@{/admin/employers/{id}
+                            (id=${acceptedApplication.job.employer.id})}"
+                            th:text="${acceptedApplication.job.employer.companyName}">
+
+                    </a>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <strong>
+                        Vị trí
+                    </strong>
+
+                    <span
+                            th:text="${acceptedApplication.job.title}">
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <strong>
+                        Địa điểm
+                    </strong>
+
+                    <span
+                            th:text="${acceptedApplication.job.location}">
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <strong>
+                        Trạng thái Application
+                    </strong>
+
+                    <span
+                            th:text="${acceptedApplication.status}">
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+    <div style="margin-top:25px">
+
+        <a
+                class="action-link"
+                th:href="@{/admin/students/{id}/applications(id=${student.id})}">
+
+            Xem lịch sử ứng tuyển
+
+        </a>
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

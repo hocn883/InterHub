@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Chi tiết giảng viên
+    </title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin/dashboard.css}">
+
+</head>
+
+
+<body>
+
+
+<header class="admin-top-header">
+
+    <div class="header-container">
+
+        <a
+                th:href="@{/admin}"
+                class="admin-brand">
+
+            InterHub Administration
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<nav class="admin-navbar">
+
+    <div class="nav-container">
+
+        <a th:href="@{/admin}"
+           class="nav-item">
+
+            Dashboard
+
+        </a>
+
+        <a th:href="@{/admin/students}"
+           class="nav-item">
+
+            Sinh viên
+
+        </a>
+
+        <a th:href="@{/admin/lecturers}"
+           class="nav-item active">
+
+            Giảng viên
+
+        </a>
+
+        <a th:href="@{/admin/employers}"
+           class="nav-item">
+
+            Doanh nghiệp
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="breadcrumb">
+
+    <div class="content-container">
+
+        <a th:href="@{/admin}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <a th:href="@{/admin/lecturers}">
+            Giảng viên
+        </a>
+
+        <span>›</span>
+
+        <span th:text="${lecturer.fullName}">
+        </span>
+
+    </div>
+
+</div>
+
+
+<main class="content-container">
+
+
+    <div class="page-header">
+
+        <h1 th:text="${lecturer.fullName}">
+        </h1>
+
+        <p>
+            Chi tiết giảng viên
+        </p>
+
+    </div>
+
+
+    <section class="admin-content-grid">
+
+
+        <div class="module-section">
+
+
+            <div class="module-title">
+
+                Thông tin giảng viên
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>
+                    Mã giảng viên
+                </strong>
+
+                <span th:text="${lecturer.lecturerCode}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>
+                    Họ tên
+                </strong>
+
+                <span th:text="${lecturer.fullName}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>
+                    Email
+                </strong>
+
+                <span th:text="${lecturer.email}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>
+                    Số điện thoại
+                </strong>
+
+                <span th:text="${lecturer.phone}">
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="module-section">
+
+
+            <div class="module-title">
+
+                Sinh viên đang quản lý
+
+            </div>
+
+
+            <div class="lecturer-student-count">
+
+                <strong th:text="${totalStudents}">
+                    0
+                </strong>
+
+                <span>
+                    sinh viên
+                </span>
+
+            </div>
+
+
+            <div style="padding:20px">
+
+                <a
+                        class="action-link"
+                        th:href="@{/admin/lecturers/{id}/students(id=${lecturer.id})}">
+
+                    Xem danh sách sinh viên
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

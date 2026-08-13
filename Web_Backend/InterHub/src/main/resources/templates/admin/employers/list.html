@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Doanh nghiệp | InterHub Admin
+    </title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin/dashboard.css}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="admin-top-header">
+
+    <div class="header-container">
+
+        <a
+                th:href="@{/admin}"
+                class="admin-brand">
+
+            InterHub Administration
+
+        </a>
+
+
+        <div class="admin-account">
+
+            <span>
+                Welcome,
+                <strong>Administrator</strong>
+            </span>
+
+            <a href="#">
+                Log out
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="admin-navbar">
+
+    <div class="nav-container">
+
+
+        <a
+                th:href="@{/admin}"
+                class="nav-item">
+
+            Dashboard
+
+        </a>
+
+
+        <a
+                th:href="@{/admin/students}"
+                class="nav-item">
+
+            Sinh viên
+
+        </a>
+
+
+        <a
+                th:href="@{/admin/lecturers}"
+                class="nav-item">
+
+            Giảng viên
+
+        </a>
+
+
+        <a
+                th:href="@{/admin/employers}"
+                class="nav-item active">
+
+            Doanh nghiệp
+
+        </a>
+
+
+        <a
+                th:href="@{/admin/jobs}"
+                class="nav-item">
+
+            Việc làm
+
+        </a>
+
+
+        <a
+                th:href="@{/admin/logs}"
+                class="nav-item">
+
+            System Logs
+
+        </a>
+
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     BREADCRUMB
+===================================================== -->
+
+<div class="breadcrumb">
+
+    <div class="content-container">
+
+        <a th:href="@{/admin}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <span>
+            Doanh nghiệp
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="content-container">
+
+
+    <div class="page-header">
+
+        <h1>
+            Quản lý doanh nghiệp
+        </h1>
+
+        <p>
+            Xem thông tin và xét duyệt các doanh nghiệp đăng ký
+            tham gia hệ thống InterHub.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         STATISTICS
+    ================================================== -->
+
+    <div class="employer-statistics">
+
+
+        <div class="employer-stat-card">
+
+            <span>
+                Tổng doanh nghiệp
+            </span>
+
+            <strong th:text="${totalEmployers}">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="employer-stat-card">
+
+            <span>
+                Chờ duyệt
+            </span>
+
+            <strong th:text="${pendingEmployers}">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="employer-stat-card">
+
+            <span>
+                Đã duyệt
+            </span>
+
+            <strong th:text="${approvedEmployers}">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="employer-stat-card">
+
+            <span>
+                Không duyệt
+            </span>
+
+            <strong th:text="${rejectedEmployers}">
+                0
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         EMPLOYER TABLE
+    ================================================== -->
+
+    <section class="django-module">
+
+
+        <div class="django-module-title">
+
+            <div>
+
+                <h2>
+                    Doanh nghiệp
+                </h2>
+
+                <span th:text="${totalItems + ' doanh nghiệp'}">
+                    0 doanh nghiệp
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-table-wrapper">
+
+
+            <table class="admin-table">
+
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Tên doanh nghiệp</th>
+
+                    <th>Người đại diện</th>
+
+                    <th>Email</th>
+
+                    <th>Mã số thuế</th>
+
+                    <th>Trạng thái</th>
+
+                    <th>Hành động</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <tr th:each="employer : ${employers}">
+
+
+                    <!-- ID -->
+
+                    <td th:text="${employer.id}">
+                        1
+                    </td>
+
+
+                    <!-- COMPANY -->
+
+                    <td>
+
+                        <a
+                                class="object-link"
+                                th:href="@{/admin/employers/{id}(id=${employer.id})}"
+                                th:text="${employer.companyName}">
+
+                            FPT Software
+
+                        </a>
+
+                    </td>
+
+
+                    <!-- FULL NAME -->
+
+                    <td th:text="${employer.fullName}">
+                        Nguyễn Văn A
+                    </td>
+
+
+                    <!-- EMAIL -->
+
+                    <td th:text="${employer.email}">
+                        employer@gmail.com
+                    </td>
+
+
+                    <!-- TAX CODE -->
+
+                    <td th:text="${employer.taxCode}">
+                        0123456789
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+
+                        <span
+                                th:if="${employer.status.name() == 'PENDING'}"
+                                class="status-badge status-pending">
+
+                            PENDING
+
+                        </span>
+
+
+                        <span
+                                th:if="${employer.status.name() == 'APPROVED'}"
+                                class="status-badge status-approved">
+
+                            APPROVED
+
+                        </span>
+
+
+                        <span
+                                th:if="${employer.status.name() == 'REJECTED'}"
+                                class="status-badge status-rejected">
+
+                            REJECTED
+
+                        </span>
+
+
+                    </td>
+
+
+                    <!-- ACTION -->
+
+                    <td>
+
+                        <div class="employer-actions">
+
+
+                            <!-- DETAIL -->
+
+                            <a
+                                    class="action-link"
+                                    th:href="@{/admin/employers/{id}(id=${employer.id})}">
+
+                                Xem
+
+                            </a>
+
+
+                            <!-- APPROVE -->
+
+                            <form
+                                    th:if="${employer.status.name() == 'PENDING'}"
+                                    th:action="@{/admin/employers/{id}/approve(id=${employer.id})}"
+                                    method="post">
+
+                                <button
+                                        type="submit"
+                                        class="admin-action-button approve-button">
+
+                                    Duyệt
+
+                                </button>
+
+                            </form>
+
+
+                            <!-- REJECT -->
+
+                            <form
+                                    th:if="${employer.status.name() == 'PENDING'}"
+                                    th:action="@{/admin/employers/{id}/reject(id=${employer.id})}"
+                                    method="post">
+
+                                <button
+                                        type="submit"
+                                        class="admin-action-button reject-button">
+
+                                    Không duyệt
+
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+                    </td>
+
+
+                </tr>
+
+
+                <!-- EMPTY -->
+
+                <tr th:if="${#lists.isEmpty(employers)}">
+
+                    <td
+                            colspan="7"
+                            class="empty-table">
+
+                        Không có doanh nghiệp.
+
+                    </td>
+
+                </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+        <!-- =================================================
+             PAGINATION
+        ================================================== -->
+
+        <div class="table-footer">
+
+
+            <div class="result-count">
+
+                Hiển thị
+
+                <strong th:text="${employers.size()}">
+                    0
+                </strong>
+
+                trên
+
+                <strong th:text="${totalItems}">
+                    0
+                </strong>
+
+                doanh nghiệp
+
+            </div>
+
+
+            <div
+                    class="admin-pagination"
+                    th:if="${totalPages > 0}">
+
+
+                <!-- PREVIOUS -->
+
+                <a
+                        th:if="${currentPage > 0}"
+                        th:href="@{${pageUrl}(
+                            page=${currentPage - 1},
+                            size=${pageSize}
+                        )}">
+
+                    ‹ Trước
+
+                </a>
+
+
+                <!-- PAGE NUMBER -->
+
+                <a
+                        th:each="i : ${#numbers.sequence(
+                            0,
+                            totalPages - 1
+                        )}"
+                        th:href="@{${pageUrl}(
+                            page=${i},
+                            size=${pageSize}
+                        )}"
+                        th:text="${i + 1}"
+                        th:classappend="${i == currentPage}
+                            ? 'current-page'
+                            : ''">
+
+                </a>
+
+
+                <!-- NEXT -->
+
+                <a
+                        th:if="${currentPage + 1 < totalPages}"
+                        th:href="@{${pageUrl}(
+                            page=${currentPage + 1},
+                            size=${pageSize}
+                        )}">
+
+                    Sau ›
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

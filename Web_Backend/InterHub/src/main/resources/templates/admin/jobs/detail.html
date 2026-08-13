@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Chi tiết việc làm
+    </title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin/dashboard.css}">
+
+</head>
+
+
+<body>
+
+
+<header class="admin-top-header">
+
+    <div class="header-container">
+
+        <a
+                th:href="@{/admin}"
+                class="admin-brand">
+
+            InterHub Administration
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<nav class="admin-navbar">
+
+    <div class="nav-container">
+
+        <a th:href="@{/admin}"
+           class="nav-item">
+
+            Dashboard
+
+        </a>
+
+        <a th:href="@{/admin/students}"
+           class="nav-item">
+
+            Sinh viên
+
+        </a>
+
+        <a th:href="@{/admin/lecturers}"
+           class="nav-item">
+
+            Giảng viên
+
+        </a>
+
+        <a th:href="@{/admin/employers}"
+           class="nav-item">
+
+            Doanh nghiệp
+
+        </a>
+
+        <a th:href="@{/admin/jobs}"
+           class="nav-item active">
+
+            Việc làm
+
+        </a>
+
+        <a th:href="@{/admin/applications}"
+           class="nav-item">
+
+            Ứng tuyển
+
+        </a>
+
+        <a th:href="@{/admin/logs}"
+           class="nav-item">
+
+            System Logs
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<div class="breadcrumb">
+
+    <div class="content-container">
+
+        <a th:href="@{/admin}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <a th:href="@{/admin/jobs}">
+            Việc làm
+        </a>
+
+        <span>›</span>
+
+        <span th:text="${job.title}">
+        </span>
+
+    </div>
+
+</div>
+
+
+
+<main class="content-container">
+
+
+    <div class="page-header">
+
+        <h1 th:text="${job.title}">
+            Backend Intern
+        </h1>
+
+        <p>
+            Chi tiết thông tin công việc.
+        </p>
+
+    </div>
+
+
+
+    <section class="admin-content-grid">
+
+
+        <!-- JOB INFO -->
+
+        <div class="module-section">
+
+
+            <div class="module-title">
+
+                Thông tin việc làm
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>ID</strong>
+
+                <span th:text="${job.id}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Tiêu đề</strong>
+
+                <span th:text="${job.title}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Địa điểm</strong>
+
+                <span th:text="${job.location}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Mức lương</strong>
+
+                <span th:text="${job.salary}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Số lượng</strong>
+
+                <span th:text="${job.quantity}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Trạng thái</strong>
+
+                <span th:text="${job.status}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Deadline</strong>
+
+                <span th:text="${job.deadline}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Ngày bắt đầu</strong>
+
+                <span th:text="${job.startDate}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Ngày kết thúc</strong>
+
+                <span th:text="${job.endDate}">
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- EMPLOYER -->
+
+        <div class="module-section">
+
+
+            <div class="module-title">
+
+                Doanh nghiệp đăng tuyển
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Tên doanh nghiệp</strong>
+
+                <a
+                        class="object-link"
+                        th:href="@{/admin/employers/{id}(id=${job.employer.id})}"
+                        th:text="${job.employer.companyName}">
+
+                </a>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Người đại diện</strong>
+
+                <span th:text="${job.employer.fullName}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Email</strong>
+
+                <span th:text="${job.employer.email}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Mã số thuế</strong>
+
+                <span th:text="${job.employer.taxCode}">
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <strong>Trạng thái doanh nghiệp</strong>
+
+                <span th:text="${job.employer.status}">
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- DESCRIPTION -->
+
+    <section
+            class="module-section"
+            style="margin-top:25px">
+
+        <div class="module-title">
+
+            Mô tả công việc
+
+        </div>
+
+        <div class="job-text-content"
+             th:text="${job.description}">
+
+        </div>
+
+    </section>
+
+
+
+    <!-- REQUIREMENTS -->
+
+    <section
+            class="module-section"
+            style="margin-top:25px">
+
+        <div class="module-title">
+
+            Yêu cầu
+
+        </div>
+
+        <div class="job-text-content"
+             th:text="${job.requirements}">
+
+        </div>
+
+    </section>
+
+
+
+</main>
+
+
+</body>
+</html>

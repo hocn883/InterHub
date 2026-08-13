@@ -1,0 +1,19 @@
+package com.example.InterHub.enums;
+
+public enum Action {
+    REGISTER,
+    LOGIN,
+    CREATE_JOB,
+    UPDATE_JOB,
+    DELETE_JOB,
+    APPLY_JOB,
+    CANCEL_APPLICATION,
+    UPDATE_APPLICATION_STATUS,
+    UPLOAD_CV,
+    APPROVE_CV,
+    REJECT_CV,
+    CREATE_REVIEW,
+    APPROVE_EMPLOYER,
+    REJECT_EMPLOYER,
+    UPDATE_PROFILE,
+}
