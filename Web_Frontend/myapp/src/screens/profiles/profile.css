@@ -1,0 +1,444 @@
+.profile-page {
+  min-height: 100vh;
+
+  background: #f7f9fc;
+}
+
+
+/* ================================
+   HERO
+================================ */
+
+.profile-hero {
+  padding: 58px 0 62px;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(127, 97, 255, 0.12),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #f7f4ff,
+      #f5f9ff
+    );
+}
+
+
+.profile-badge {
+  display: inline-block;
+
+  padding: 8px 14px;
+
+  border: 1px solid #ddd6ff;
+  border-radius: 30px;
+
+  background: #ffffff;
+
+  color: #6046e9;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+.profile-hero h1 {
+  margin: 18px 0 12px;
+
+  color: #192239;
+
+  font-size: 42px;
+}
+
+
+.profile-hero h1 span {
+  color: #6046e9;
+}
+
+
+.profile-hero p {
+  max-width: 650px;
+
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+
+/* ================================
+   MAIN
+================================ */
+
+.profile-main {
+  padding-top: 42px;
+  padding-bottom: 80px;
+}
+
+
+/* ================================
+   OVERVIEW
+================================ */
+
+.profile-overview {
+  display: flex;
+  align-items: center;
+
+  gap: 24px;
+
+  margin-bottom: 24px;
+
+  padding: 28px;
+
+  border: 1px solid #e6e9f0;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 25px rgba(40, 48, 70, 0.04);
+}
+
+
+.profile-avatar {
+  width: 95px;
+  height: 95px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  flex-shrink: 0;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6046e9,
+      #8069ee
+    );
+
+  color: #ffffff;
+
+  font-size: 32px;
+  font-weight: 800;
+}
+
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+.profile-overview-content {
+  flex: 1;
+}
+
+
+.profile-name-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+
+.profile-name-row h2 {
+  margin: 0 0 8px;
+
+  color: #20293e;
+
+  font-size: 26px;
+}
+
+
+.profile-role {
+  display: inline-block;
+
+  padding: 5px 11px;
+
+  border-radius: 20px;
+
+  background: #f0edff;
+
+  color: #6046e9;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+.profile-contact-row {
+  display: flex;
+
+  gap: 30px;
+
+  margin-top: 20px;
+
+  color: #737c8f;
+
+  font-size: 13px;
+}
+
+
+/* ================================
+   CARD
+================================ */
+
+.profile-card {
+  margin-bottom: 24px;
+
+  padding: 28px;
+
+  border: 1px solid #e6e9f0;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 25px rgba(40, 48, 70, 0.04);
+}
+
+
+.profile-section-heading {
+  margin-bottom: 24px;
+}
+
+
+.profile-section-heading > span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #6046e9;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+.profile-section-heading h2 {
+  margin: 0;
+
+  color: #20293e;
+
+  font-size: 22px;
+}
+
+
+.profile-section-heading p {
+  margin: 7px 0 0;
+
+  color: #858d9e;
+
+  font-size: 13px;
+}
+
+
+/* ================================
+   INFO GRID
+================================ */
+
+.profile-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  overflow: hidden;
+
+  border: 1px solid #eceef3;
+  border-radius: 15px;
+}
+
+
+.profile-info-item {
+  padding: 20px 22px;
+
+  border-bottom: 1px solid #eceef3;
+}
+
+
+.profile-info-item:nth-child(odd) {
+  border-right: 1px solid #eceef3;
+}
+
+
+.profile-info-item:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+
+.profile-info-item span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #9299a8;
+
+  font-size: 11px;
+}
+
+
+.profile-info-item strong {
+  color: #424b5f;
+
+  font-size: 14px;
+}
+
+
+.profile-green-text {
+  color: #159370 !important;
+}
+
+
+/* ================================
+   GIẢNG VIÊN
+================================ */
+
+.profile-lecturer-card {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  margin-top: 22px;
+
+  padding: 18px;
+
+  border: 1px solid #e8e5f7;
+  border-radius: 15px;
+
+  background: #faf9ff;
+}
+
+
+.profile-lecturer-avatar {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #6046e9;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+
+.profile-lecturer-content {
+  flex: 1;
+}
+
+
+.profile-lecturer-content span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #9299a8;
+
+  font-size: 10px;
+}
+
+
+.profile-lecturer-content strong {
+  color: #343d51;
+
+  font-size: 14px;
+}
+
+
+.profile-lecturer-content p {
+  margin: 4px 0 0;
+
+  color: #9299a8;
+
+  font-size: 11px;
+}
+
+
+/* ================================
+   ROLE ACTION
+================================ */
+
+.profile-role-actions {
+  display: flex;
+
+  gap: 10px;
+
+  margin-top: 22px;
+}
+
+
+/* ================================
+   EMPLOYER STATUS
+================================ */
+
+.employer-profile-status.pending {
+  color: #bd8500;
+}
+
+
+.employer-profile-status.approved {
+  color: #159370;
+}
+
+
+.employer-profile-status.rejected {
+  color: #d94b59;
+}
+
+
+/* ================================
+   SECURITY
+================================ */
+
+.profile-security {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 20px;
+
+  border: 1px solid #eceef3;
+  border-radius: 14px;
+}
+
+
+.profile-security > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+
+.profile-security strong {
+  color: #424b5f;
+
+  font-size: 14px;
+}
+
+
+.profile-security span {
+  color: #969dab;
+
+  font-size: 13px;
+
+  letter-spacing: 2px;
+}

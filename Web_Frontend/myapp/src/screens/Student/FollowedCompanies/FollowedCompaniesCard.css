@@ -1,0 +1,176 @@
+.followed-company-card {
+  background: #fff;
+
+  border: 1px solid #e9eaf2;
+  border-radius: 22px;
+
+  padding: 25px;
+
+  display: flex;
+  flex-direction: column;
+
+  transition: 0.25s;
+
+  box-shadow: 0 10px 30px rgba(54, 61, 94, 0.05);
+}
+
+.followed-company-card:hover {
+  transform: translateY(-5px);
+
+  border-color: #d9d2ff;
+
+  box-shadow: 0 20px 40px rgba(96, 70, 233, 0.11);
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.followed-company-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.followed-company-logo {
+  width: 64px;
+  height: 64px;
+
+  border-radius: 17px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(
+    135deg,
+    #2f67ef,
+    #7048ed
+  );
+
+  color: #fff;
+
+  font-weight: 800;
+  font-size: 18px;
+
+  box-shadow: 0 8px 20px rgba(96, 70, 233, 0.2);
+}
+
+.unfollow-button {
+  border: 1px solid #dcd6ff;
+
+  background: #f5f3ff;
+  color: #6046e9;
+
+  padding: 9px 15px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.unfollow-button:hover {
+  background: #6046e9;
+  color: #fff;
+}
+
+
+/* ================================
+   CONTENT
+================================ */
+
+.followed-company-content h3 {
+  margin: 0 0 7px;
+
+  color: #172033;
+
+  font-size: 21px;
+}
+
+.company-field {
+  display: block;
+
+  color: #6046e9;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  margin-bottom: 15px;
+}
+
+.company-description {
+  color: #747d90;
+
+  font-size: 14px;
+  line-height: 1.7;
+
+  min-height: 72px;
+
+  margin-bottom: 20px;
+}
+
+.company-meta {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  color: #687286;
+  font-size: 14px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #edf0f5;
+}
+
+.company-meta div {
+  display: flex;
+  gap: 8px;
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+.followed-company-footer {
+  margin-top: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.open-job-count {
+  color: #7b8494;
+
+  font-size: 14px;
+}
+
+.open-job-count strong {
+  color: #10a579;
+
+  font-size: 18px;
+}
+
+.company-detail-button {
+  color: #6046e9;
+
+  font-weight: 700;
+  font-size: 14px;
+
+  text-decoration: none;
+}
+
+.company-detail-button:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,477 @@
+/* =========================
+   JOB CARD
+========================= */
+
+.job-card {
+  position: relative;
+
+  width: 100%;
+  min-height: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #ececf4;
+  border-radius: 18px;
+
+  padding: 22px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  text-align: left;
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+
+  border-color: #ddd7ff;
+
+  box-shadow: 0 18px 35px rgba(96, 70, 233, 0.12);
+}
+
+
+/* =========================
+   FEATURED LABEL
+========================= */
+
+.featured-label {
+  position: absolute;
+
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #6046e9;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  padding: 5px 12px;
+
+  border-radius: 30px;
+
+  z-index: 2;
+}
+
+
+/* =========================
+   CARD HEADER
+========================= */
+
+.job-card-header {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================
+   COMPANY LOGO
+========================= */
+
+.company-logo {
+  width: 58px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  background: linear-gradient(
+    135deg,
+    #6046e9,
+    #795ff2
+  );
+
+  color: #ffffff;
+
+  font-size: 22px;
+  font-weight: 700;
+
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 8px 18px rgba(96, 70, 233, 0.18);
+}
+
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.save-job-button {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f3f4f8;
+  color: #74798a;
+
+  font-size: 23px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.save-job-button:hover {
+  background: #ece8ff;
+
+  color: #6046e9;
+
+  transform: scale(1.05);
+}
+
+.save-job-button.saved {
+  color: #e53935;
+
+  background: #fff0f0;
+}
+
+
+/* =========================
+   CARD CONTENT
+========================= */
+
+.job-card-content {
+  width: 100%;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  text-align: left;
+
+  min-width: 0;
+}
+
+
+/* =========================
+   JOB TITLE
+========================= */
+
+.job-title {
+  display: block;
+
+  width: 100%;
+
+  color: #1b2235;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  line-height: 1.4;
+
+  text-decoration: none;
+
+  text-align: left;
+
+  margin-bottom: 8px;
+
+  transition: color 0.2s ease;
+}
+
+.job-title:hover {
+  color: #6046e9;
+}
+
+
+/* =========================
+   COMPANY NAME
+========================= */
+
+.company-name {
+  width: 100%;
+
+  color: #70798b;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  text-align: left;
+
+  margin: 0 0 18px 0;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================
+   SALARY
+========================= */
+
+.job-salary {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 7px;
+
+  color: #6046e9;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  text-align: left;
+
+  margin-bottom: 16px;
+}
+
+.job-icon {
+  font-size: 16px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================
+   JOB INFORMATION
+========================= */
+
+.job-information {
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  gap: 12px 18px;
+
+  color: #6d7488;
+
+  font-size: 14px;
+
+  text-align: left;
+
+  margin-bottom: 18px;
+}
+
+.job-information > div {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 6px;
+
+  text-align: left;
+}
+
+
+/* =========================
+   SKILLS
+========================= */
+
+.job-skills {
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 10px;
+
+  text-align: left;
+}
+
+.job-skills span {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f5f5ff;
+
+  color: #6046e9;
+
+  padding: 7px 14px;
+
+  border: 1px solid #ebe8ff;
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+/* =========================
+   CARD FOOTER
+========================= */
+
+.job-card-footer {
+  width: 100%;
+
+  margin-top: 22px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid #ececf4;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 15px;
+
+  text-align: left;
+}
+
+
+/* =========================
+   DEADLINE
+========================= */
+
+.job-deadline {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 4px;
+
+  text-align: left;
+}
+
+.job-deadline span {
+  display: block;
+
+  color: #555;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.job-deadline small {
+  display: block;
+
+  color: #999;
+
+  font-size: 12px;
+}
+
+
+/* =========================
+   DETAIL LINK
+========================= */
+
+.job-detail-link {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 5px;
+
+  flex-shrink: 0;
+
+  color: #6046e9;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    gap 0.2s ease,
+    color 0.2s ease;
+}
+
+.job-detail-link:hover {
+  gap: 8px;
+
+  color: #4932c8;
+
+  text-decoration: none;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .job-card {
+    padding: 18px;
+  }
+
+  .company-logo {
+    width: 52px;
+    height: 52px;
+
+    font-size: 19px;
+  }
+
+  .save-job-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .job-title {
+    font-size: 18px;
+  }
+
+  .job-information {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+
+  .job-skills {
+    justify-content: flex-start;
+  }
+
+  .job-card-footer {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+  }
+
+  .job-detail-link {
+    justify-content: flex-start;
+  }
+}

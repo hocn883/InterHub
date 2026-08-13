@@ -1,0 +1,261 @@
+.create-job-page {
+  min-height: 100vh;
+
+  background: #f7f9fc;
+}
+
+
+/* ===============================
+   HERO
+================================ */
+
+.create-job-hero {
+  padding: 58px 0 62px;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(127, 97, 255, 0.12),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(91, 126, 255, 0.08),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #f7f4ff,
+      #f5f9ff
+    );
+}
+
+
+.create-job-hero-content {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 40px;
+}
+
+
+.create-job-badge {
+  display: inline-block;
+
+  padding: 8px 14px;
+
+  border: 1px solid #ddd6ff;
+  border-radius: 30px;
+
+  background: #ffffff;
+
+  color: #6046e9;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+.create-job-hero h1 {
+  margin: 18px 0 12px;
+
+  color: #192239;
+
+  font-size: 40px;
+}
+
+
+.create-job-hero h1 span {
+  color: #6046e9;
+}
+
+
+.create-job-hero p {
+  max-width: 650px;
+
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+
+/* ===============================
+   MAIN
+================================ */
+
+.create-job-main {
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+
+.create-job-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 22px;
+}
+
+
+/* ===============================
+   CARD
+================================ */
+
+.create-job-card {
+  padding: 28px;
+
+  border: 1px solid #e6e9f0;
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 25px rgba(40, 48, 70, 0.04);
+}
+
+
+.create-job-heading {
+  margin-bottom: 26px;
+}
+
+
+.create-job-heading > span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #6046e9;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+.create-job-heading h2 {
+  margin: 0;
+
+  color: #20293e;
+
+  font-size: 23px;
+}
+
+
+.create-job-heading p {
+  margin: 7px 0 0;
+
+  color: #8b93a4;
+
+  font-size: 12px;
+}
+
+
+/* ===============================
+   FORM
+================================ */
+
+.job-form-row {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+
+.job-form-group {
+  margin-bottom: 20px;
+}
+
+
+.job-form-group:last-child {
+  margin-bottom: 0;
+}
+
+
+.job-form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #424b5f;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+.job-form-group label span {
+  color: #e25160;
+}
+
+
+.job-form-group input,
+.job-form-group textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #dfe3eb;
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #424b5f;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  transition: 0.2s;
+}
+
+
+.job-form-group input {
+  height: 44px;
+}
+
+
+.job-form-group textarea {
+  resize: vertical;
+
+  line-height: 1.7;
+}
+
+
+.job-form-group input:focus,
+.job-form-group textarea:focus {
+  border-color: #6046e9;
+
+  box-shadow:
+    0 0 0 3px rgba(96, 70, 233, 0.08);
+}
+
+
+.job-form-group input::placeholder,
+.job-form-group textarea::placeholder {
+  color: #a2a8b5;
+}
+
+
+/* ===============================
+   ACTION
+================================ */
+
+.create-job-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding-top: 4px;
+}

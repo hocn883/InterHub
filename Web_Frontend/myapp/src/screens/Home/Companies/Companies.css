@@ -1,0 +1,91 @@
+
+.companies-section {
+  background: #ffffff;
+}
+
+.companies-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.company-card {
+  overflow: hidden;
+  border: 1px solid #e5e8ef;
+  border-radius: 16px;
+  background: #ffffff;
+  transition: 0.2s;
+}
+
+.company-card:hover {
+  box-shadow: 0 14px 30px rgba(37, 46, 68, 0.08);
+  transform: translateY(-3px);
+}
+
+.company-card-cover {
+  height: 85px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 12px;
+  background:
+    linear-gradient(135deg, rgba(96, 70, 233, 0.88), rgba(94, 181, 193, 0.8)),
+    #6046e9;
+}
+
+.company-card-cover span {
+  padding: 5px 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-size: 9px;
+}
+
+.company-card-body {
+  position: relative;
+  padding: 0 18px 20px;
+}
+
+.company-card-logo {
+  width: 57px;
+  height: 57px;
+  display: grid;
+  place-items: center;
+  margin-top: -28px;
+  border: 4px solid #ffffff;
+  border-radius: 14px;
+  background: #f2efff;
+  color: #6046e9;
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.company-card-content h3 {
+  margin: 13px 0 5px;
+  color: #293247;
+  font-size: 15px;
+}
+
+.company-card-content p {
+  margin: 0;
+  color: #8b92a2;
+  font-size: 10px;
+}
+
+.company-jobs {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #667084;
+  font-size: 10px;
+}
+
+.company-card-content a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #6046e9;
+  font-size: 10px;
+  font-weight: 750;
+}

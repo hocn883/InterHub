@@ -1,0 +1,78 @@
+.followed-companies-page {
+  min-height: 100vh;
+
+  padding: 60px 0 80px;
+
+  background:
+    radial-gradient(
+      circle at 5% 15%,
+      #f1edff 0,
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 10%,
+      #edf1ff 0,
+      transparent 30%
+    ),
+    #f8faff;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.followed-company-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 30px;
+
+  margin-bottom: 35px;
+}
+
+
+.followed-company-stat {
+  min-width: 160px;
+
+  padding: 20px 30px;
+
+  border: 1px solid #ebeaf5;
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  box-shadow: 0 10px 30px rgba(67, 60, 120, 0.06);
+}
+
+
+.followed-company-stat strong {
+  display: block;
+
+  color: #6046e9;
+
+  font-size: 30px;
+}
+
+
+.followed-company-stat span {
+  color: #7b8494;
+
+  font-size: 14px;
+}
+
+
+/* ================================
+   GRID
+================================ */
+
+.followed-company-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 24px;
+}

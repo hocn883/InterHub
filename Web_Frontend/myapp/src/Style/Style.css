@@ -1,0 +1,157 @@
+/* =================================
+   CONTAINER CHUNG TOÀN WEBSITE
+================================= */
+
+.page-container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+
+/* =================================
+   KHOẢNG CÁCH SECTION CHUNG
+================================= */
+
+.page-section {
+  padding: 60px 0;
+}
+
+
+/* =================================
+   TIÊU ĐỀ SECTION
+================================= */
+
+.section-label {
+  display: inline-block;
+  margin-bottom: 8px;
+
+  color: #6046e9;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.section-title {
+  margin: 0;
+
+  color: #20293e;
+
+  font-size: 30px;
+}
+
+.section-description {
+  margin: 8px 0 0;
+
+  color: #7c8496;
+
+  font-size: 14px;
+}
+
+
+/* =================================
+   BUTTON CHUNG
+================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  transition: 0.2s;
+}
+
+
+/* Nút chính */
+
+.btn-primary {
+  border: 1px solid #6046e9;
+
+  background: #6046e9;
+
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #5038d5;
+}
+
+
+/* Nút viền */
+
+.btn-outline {
+  border: 1px solid #d9d2ff;
+
+  background: #ffffff;
+
+  color: #6046e9;
+}
+
+.btn-outline:hover {
+  border-color: #6046e9;
+
+  background: #f4f1ff;
+}
+
+
+/* =================================
+   FOLLOW BUTTON
+================================= */
+
+.follow-button {
+  padding: 9px 15px;
+
+  border: 1px solid #6046e9;
+  border-radius: 10px;
+
+  background: #6046e9;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+
+/* Chưa follow */
+
+.follow-button:hover {
+  background: #5038d5;
+}
+
+
+/* Đã follow */
+
+.follow-button.following {
+  border-color: #dcd6ff;
+
+  background: #f5f3ff;
+
+  color: #6046e9;
+}
+
+.follow-button.following:hover {
+  border-color: #f2c5cb;
+
+  background: #fff0f2;
+
+  color: #d94452;
+}
