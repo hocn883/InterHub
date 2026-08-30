@@ -1,5 +1,6 @@
 package com.example.InterHub.entity;
 
+import com.example.InterHub.enums.ApplicationSource;
 import com.example.InterHub.enums.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,4 +34,8 @@ public class Application extends BaseEntity {
     @ManyToOne(fetch=FetchType.LAZY,optional=false)
     @JoinColumn(name="job_id")
     private Job job;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    @Builder.Default
+    private ApplicationSource source = ApplicationSource.STUDENT_APPLIED;
 }

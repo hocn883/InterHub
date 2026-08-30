@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/employer/jobs")
+@RequestMapping("/api/employer")
 @RequiredArgsConstructor
 public class EmployerApplicationController {
 
@@ -26,7 +26,7 @@ public class EmployerApplicationController {
     /*
      * GET /api/employer/jobs/1/applications
      */
-    @GetMapping("/{jobId}/applications")
+    @GetMapping("jobs/{jobId}/applications")
     public ResponseEntity<ApiResponse<PageResponse<ApplicationResponse>>>
     getApplicationsByJob(
             @RequestParam (defaultValue = "0") int page,
@@ -34,7 +34,7 @@ public class EmployerApplicationController {
             @PathVariable Long jobId,
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
         PageResponse<ApplicationResponse>application=applicationService.getApplicationsByJob(
                 jobId,
                 userDetails.getUser(),
@@ -52,7 +52,7 @@ public class EmployerApplicationController {
     /*
      * PATCH /api/employer/applications/10/approve
      */
-    @PatchMapping("/applications/{applicationId}/approve")
+    @PatchMapping("application/{applicationId}/approve")
     public ResponseEntity<ApiResponse<ApplicationResponse>>
     approveApplication(
             @PathVariable Long applicationId,
@@ -73,7 +73,7 @@ public class EmployerApplicationController {
     /*
      * PATCH /api/employer/applications/10/reject
      */
-    @PatchMapping("/applications/{applicationId}/reject")
+    @PatchMapping("application/{applicationId}/reject")
     public ResponseEntity<ApiResponse<ApplicationResponse>>
     rejectApplication(
             @PathVariable Long applicationId,

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,4 +84,15 @@ public interface ApplicationRepository extends JpaRepository<Application,Long> {
             Pageable pageable
     );
     Optional<Application>findByStudentIdAndJobId(Long id,Long studentId);
+    List<Application> findByStatusAndJob_EndDateLessThanEqual(
+            ApplicationStatus status,
+            LocalDate endDate
+    );
+
+    boolean existsByStudent_IdAndJob_IdAndStatus(
+            Long studentId,
+            Long jobId,
+            ApplicationStatus status
+    );
+
 }

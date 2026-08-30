@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel="spring")
 public interface CvMapper {
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "studentId", source = "student.id")
     @Mapping(target = "studentName", source = "student.fullName")
     @Mapping(target = "lecturerId", source = "lecturer.id")

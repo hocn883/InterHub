@@ -17,8 +17,8 @@ public class Employer extends User{
     private String companyName;
     @Column(nullable=false , unique = true)
     private String taxCode;
-    @Enumerated(EnumType.STRING)
     @Column(nullable=false)
+    private String location;
     @Builder.Default
     private EmployerStatus status=EmployerStatus.PENDING;
     @OneToMany(mappedBy="employer")

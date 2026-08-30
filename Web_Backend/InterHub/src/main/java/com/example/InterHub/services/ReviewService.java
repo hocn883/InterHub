@@ -56,6 +56,7 @@ public class ReviewService {
                 .comment(reviewRequest.getComment())
                 .rating(reviewRequest.getRating())
                 .job(jobRepository.findById(jobId).orElseThrow()).build();
+        reviewRepository.save(jobReview);
         return reviewMapper.toResponse(jobReview);
 
     }

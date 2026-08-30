@@ -1,0 +1,62 @@
+.my-invitations-page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.invitation-page-container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.invitations-content {
+  padding-top: 38px;
+  padding-bottom: 60px;
+}
+
+.invitation-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.invitation-loading {
+  padding: 50px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  text-align: center;
+  color: #64748b;
+}
+
+.invitation-empty {
+  padding: 55px 30px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.invitation-empty-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px;
+  border-radius: 18px;
+  background: #eff6ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.invitation-empty h3 {
+  margin: 0 0 8px;
+  color: #0f172a;
+  font-size: 19px;
+}
+
+.invitation-empty p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}

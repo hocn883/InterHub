@@ -3,6 +3,9 @@ import com.example.InterHub.dto.request.PostJobRequest;
 import com.example.InterHub.dto.response.ApiResponse;
 import com.example.InterHub.dto.response.JobResponse;
 import com.example.InterHub.dto.response.PageResponse;
+import com.example.InterHub.entity.User;
+import com.example.InterHub.repository.EmployerRepository;
+import com.example.InterHub.repository.UserRepository;
 import com.example.InterHub.security.CustomUserDetails;
 import com.example.InterHub.services.JobService;
 import jakarta.validation.Valid;
@@ -12,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployerJobController {
     private final JobService jobService;
+    private final UserRepository userRepository;
+    private final EmployerRepository employerRepository;
     @GetMapping
     public ResponseEntity<ApiResponse<PageResponse<JobResponse>>>getMyJobs(@AuthenticationPrincipal CustomUserDetails currentUser,
                                                                            @RequestParam(defaultValue = "0")int page,
@@ -39,11 +45,11 @@ public class EmployerJobController {
         );
     }
     @PostMapping
-    public ResponseEntity<ApiResponse<JobResponse>>createJob(@AuthenticationPrincipal CustomUserDetails currentUser,
-                @Valid @RequestBody PostJobRequest request
-                                                )
-    {
-        JobResponse jobResponse=jobService.create(currentUser.getUser(),request);
+    public ResponseEntity<ApiResponse<JobResponse>>createJob(Authentication authentication,
+                                                             @Valid @RequestBody PostJobRequest request)
+    {   String username =authentication.getName();
+        User currentUser=userRepository.findByUsername(username).orElseThrow();
+        JobResponse jobResponse=jobService.create(currentUser,request);
         return ResponseEntity.ok(
                 ApiResponse.<JobResponse>builder()
                         .code(HttpStatus.CREATED.value())
@@ -58,6 +64,26 @@ public class EmployerJobController {
     {
         jobService.deleteJob(jobId,currentUser.getUser());
         return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("/{jobId}/close")
+    public ResponseEntity<ApiResponse<JobResponse>> closeJob(
+            @AuthenticationPrincipal CustomUserDetails currentUser,
+            @PathVariable Long jobId
+    ) {
+        JobResponse response =
+                jobService.closeJob(
+                        jobId,
+                        currentUser.getUser()
+                );
+
+        return ResponseEntity.ok(
+                ApiResponse.<JobResponse>builder()
+                        .code(HttpStatus.OK.value())
+                        .status(HttpStatus.OK.name())
+                        .message("Đóng Job thành công")
+                        .result(response)
+                        .build()
+        );
     }
 
 }

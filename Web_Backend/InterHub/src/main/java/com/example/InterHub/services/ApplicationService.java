@@ -6,6 +6,7 @@ import com.example.InterHub.dto.response.PageResponse;
 import com.example.InterHub.entity.*;
 import com.example.InterHub.enums.ApplicationStatus;
 import com.example.InterHub.enums.JobStatus;
+import com.example.InterHub.enums.StudentStatus;
 import com.example.InterHub.mapper.ApplicationMapper;
 import com.example.InterHub.mapper.PageMapper;
 import com.example.InterHub.repository.ApplicationRepository;
@@ -42,6 +43,7 @@ public class ApplicationService {
         }
         Application apply = Application.builder().coverLetter(request.getCoverLetter()).
                 fileCv(Cv.getUrl()).student(student).job(job).build();
+        applicationRepository.save(apply);
         return applicationMapper.toResponse(apply);
     }
 
@@ -107,7 +109,9 @@ public class ApplicationService {
         Employer employer = (Employer) currentUser;
         Application application = applicationRepository.findByIdAndJobEmployerId(applicationId,employer.getId()).orElseThrow();
         validatePendingApplication(application);
-        application.setStatus(ApplicationStatus.APPROVE);
+        application.setStatus(ApplicationStatus.APPROVED);
+        Student student = application.getStudent();
+        student.setStatus(StudentStatus.DA_CO_VIEC);
         Application savedApplication =
                 applicationRepository.save(application);
         return applicationMapper.toResponse(savedApplication);

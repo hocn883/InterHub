@@ -43,4 +43,5 @@ public class RegisterRequest {
     //employer
     private String companyName;
     private String taxCode;
+    private String location;
 }

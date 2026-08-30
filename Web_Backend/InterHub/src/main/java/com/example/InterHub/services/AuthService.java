@@ -3,6 +3,7 @@ package com.example.InterHub.services;
 import com.example.InterHub.dto.request.LoginRequest;
 import com.example.InterHub.dto.request.RegisterRequest;
 import com.example.InterHub.dto.response.AuthResponse;
+import com.example.InterHub.dto.response.UserResponse;
 import com.example.InterHub.services.cloudinary.FileUpload;
 import com.example.InterHub.entity.Employer;
 import com.example.InterHub.entity.Lecturer;
@@ -215,6 +216,11 @@ public class AuthService {
 
             user.setAvatarUrl(file.getUrl());
         }
+    }
+    public UserResponse getUser(String username)
+    {
+        User user= userRepository.findByUsername(username).orElseThrow();
+        return userMapper.toResponse(user);
     }
     private AuthResponse authResponse(
             User user,

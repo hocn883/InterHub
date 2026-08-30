@@ -14,12 +14,11 @@ import com.example.InterHub.repository.EmployerRepository;
 import com.example.InterHub.repository.JobRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import java.util.List;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -32,13 +31,13 @@ public class JobService {
     @Transactional(readOnly = true)
     public PageResponse<JobResponse> getAllJobs(Pageable pageable) {
         Page<Job> jobPage = jobRepository.findAll(pageable);
-        Page<JobResponse>page=jobPage.map(jobMapper::toRespone);
+        Page<JobResponse>page=jobPage.map(jobMapper::toResponse);
         return pageMapper.toPageResponse(page);
     }
     public JobResponse create(User currentUser, PostJobRequest request)
     {
         Employer employer=(Employer)currentUser;
-        if(employer.getStatus()== EmployerStatus.APPROVED)
+        if(employer.getStatus()!= EmployerStatus.APPROVED)
         {
             throw new RuntimeException(
                     "Nhà tuyển dụng chưa được admin duyệt."
@@ -54,18 +53,18 @@ public class JobService {
                 "Doanh nghiệp " + employer.getUsername()
                         + " đã đăng công việc " + saveJob.getTitle()
         );
-        return jobMapper.toRespone(saveJob);
+        return jobMapper.toResponse(saveJob);
     }
     @Transactional(readOnly=true)
     public JobResponse getJobById(Long id)
     {
         Job job= jobRepository.findJobById(id).orElseThrow();
-        return jobMapper.toRespone(job);
+        return jobMapper.toResponse(job);
     }
     @Transactional(readOnly=true)
     public PageResponse<JobResponse> searchJobs(String kw,Pageable pageable) {
         Page<Job>jobPage=jobRepository.findByTitleContainingIgnoreCase(kw,pageable);
-        Page<JobResponse>page=jobPage.map(jobMapper::toRespone);
+        Page<JobResponse>page=jobPage.map(jobMapper::toResponse);
         return pageMapper.toPageResponse(page);
     }
     @Transactional
@@ -84,13 +83,46 @@ public class JobService {
     public JobResponse updateJobs(Long id, User currentUser, PostJobRequest request)
     {
         Job job = jobRepository.findByIdAndEmployerId(id, currentUser.getId()).orElseThrow();
-        return jobMapper.toRespone(job);
+        return jobMapper.toResponse(job);
     }
     @Transactional
     public PageResponse<JobResponse> getMyJobs(User currentUser,Pageable pageable)
     {
         Page<Job>jobPage=jobRepository.findJobByEmployerId(currentUser.getId(),pageable);
-        Page<JobResponse>page=jobPage.map(jobMapper::toRespone);
+        Page<JobResponse>page=jobPage.map(jobMapper::toResponse);
         return pageMapper.toPageResponse(page);
+    }
+    @Transactional
+    public PageResponse<JobResponse>getJobsByEmployerId(Long id,Pageable pageable)
+    {
+        Page<Job>jobPage=jobRepository.findJobByEmployerId(id,pageable);
+        Page<JobResponse>page=jobPage.map(jobMapper::toResponse);
+        return pageMapper.toPageResponse(page);
+    }
+    @Transactional
+    public JobResponse closeJob(
+            Long jobId,
+            User currentUser
+    ) {
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                "Không tìm thấy Job"
+                        )
+                );
+        if (!job.getEmployer().getId()
+                .equals(currentUser.getId())) {
+            throw new RuntimeException(
+                    "Bạn không có quyền đóng Job này"
+            );
+        }
+        if (job.getStatus() == JobStatus.CLOSED) {
+            throw new RuntimeException(
+                    "Job đã được đóng"
+            );
+        }
+        job.setStatus(JobStatus.CLOSED);
+        Job savedJob = jobRepository.save(job);
+        return jobMapper.toResponse(savedJob);
     }
 }

@@ -1,0 +1,155 @@
+.invitation-detail-page {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 32px 20px;
+}
+
+.invitation-detail-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.invitation-back {
+  border: none;
+  background: transparent;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.invitation-back:hover {
+  color: #2563eb;
+}
+
+.invitation-letter {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+  padding: 36px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+.invitation-letter-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #eff6ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.invitation-letter-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.invitation-letter h1 {
+  margin: 0 0 24px;
+  color: #0f172a;
+  font-size: 30px;
+}
+
+.invitation-letter-intro {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #334155;
+}
+
+.invitation-letter-content {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.invitation-letter-content p {
+  margin: 0;
+  color: #334155;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.invitation-detail-info {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.invitation-detail-info > div {
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.invitation-detail-info svg {
+  color: #2563eb;
+  margin-bottom: 2px;
+}
+
+.invitation-detail-info span {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.invitation-detail-info strong {
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.invitation-cv-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.invitation-cv-link:hover {
+  text-decoration: underline;
+}
+
+.invitation-detail-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.invitation-detail-actions .invitation-accept,
+.invitation-detail-actions .invitation-reject {
+  padding: 12px 18px;
+}
+
+.invitation-result {
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.invitation-result.accepted {
+  background: #ecfdf5;
+  color: #15803d;
+}
+.invitation-result.rejected {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+.invitation-result.cancelled {
+  background: #f1f5f9;
+  color: #475569;
+}

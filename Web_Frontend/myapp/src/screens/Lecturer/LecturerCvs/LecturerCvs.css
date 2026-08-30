@@ -1,497 +1,220 @@
 .lecturer-cvs-page {
   min-height: 100vh;
-  background: #f7f9fc;
+  padding: 0;
+  background: #f8fafc;
 }
 
-
-/* ==============================
-   HERO
-============================== */
-
-.lecturer-cvs-hero {
-  padding: 58px 0 62px;
-
-  background:
-    radial-gradient(
-      circle at 15% 20%,
-      rgba(127, 97, 255, 0.12),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 90% 10%,
-      rgba(91, 126, 255, 0.08),
-      transparent 28%
-    ),
-    linear-gradient(
-      135deg,
-      #f7f4ff,
-      #f5f9ff
-    );
+.page-container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
 }
-
-
-.cv-page-badge {
-  display: inline-block;
-
-  padding: 8px 14px;
-
-  border: 1px solid #ddd6ff;
-  border-radius: 30px;
-
-  background: #ffffff;
-
-  color: #6046e9;
-
-  font-size: 12px;
-  font-weight: 800;
-}
-
-
-.lecturer-cvs-hero h1 {
-  margin: 18px 0 12px;
-
-  color: #192239;
-
-  font-size: 40px;
-}
-
-
-.lecturer-cvs-hero h1 span {
-  color: #6046e9;
-}
-
-
-.lecturer-cvs-hero p {
-  max-width: 670px;
-
-  margin: 0;
-
-  color: #667085;
-
-  font-size: 15px;
-  line-height: 1.7;
-}
-
-
-/* ==============================
-   MAIN
-============================== */
 
 .lecturer-cvs-main {
-  padding-top: 38px;
+  padding-top: 45px;
   padding-bottom: 80px;
 }
 
-
-/* ==============================
-   STAT
-============================== */
-
-.cv-stat-grid {
-  display: grid;
-
-  grid-template-columns: repeat(4, 1fr);
-
-  gap: 18px;
-
-  margin-bottom: 28px;
-}
-
-
-.cv-stat-card {
-  display: flex;
-  flex-direction: column;
-
-  gap: 7px;
-
-  padding: 20px 22px;
-
-  border: 1px solid #e6e9f0;
-  border-radius: 16px;
-
-  background: #ffffff;
-}
-
-
-.cv-stat-card span {
-  color: #858d9e;
-
-  font-size: 11px;
-}
-
-
-.cv-stat-card strong {
-  color: #293247;
-
-  font-size: 25px;
-}
-
-
-.cv-stat-card .pending-number {
-  color: #bd8500;
-}
-
-
-.cv-stat-card .approved-number {
-  color: #159370;
-}
-
-
-.cv-stat-card .rejected-number {
-  color: #d94b59;
-}
-
-
-/* ==============================
-   SECTION
-============================== */
+/* =========================
+   REVIEW SECTION
+========================= */
 
 .cv-review-section {
-  padding: 27px;
-
-  border: 1px solid #e6e9f0;
-  border-radius: 18px;
-
+  padding: 26px;
   background: #ffffff;
-
-  box-shadow:
-    0 8px 25px rgba(40, 48, 70, 0.04);
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.04);
 }
 
+/* =========================
+   HEADING
+========================= */
 
 .cv-review-heading {
-  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
 }
 
+.cv-review-heading .section-label {
+  display: inline-block;
+  margin-bottom: 7px;
+  color: #0284c7;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
 
 .cv-review-heading h2 {
   margin: 0;
-
-  color: #20293e;
-
+  color: #1e293b;
   font-size: 25px;
+  font-weight: 700;
 }
-
 
 .cv-review-heading p {
   margin: 7px 0 0;
-
-  color: #8b93a4;
-
-  font-size: 12px;
+  color: #7c8b9a;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
-
-/* ==============================
+/* =========================
    FILTER
-============================== */
+========================= */
 
 .cv-filter {
-  width: fit-content;
-
-  display: flex;
-
-  gap: 5px;
-
-  margin-bottom: 22px;
-
-  padding: 5px;
-
-  border: 1px solid #e2e5ec;
-  border-radius: 11px;
-
-  background: #f8f9fb;
-}
-
-
-.cv-filter button {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #edf2f7;
+}
 
+.cv-filter button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: 7px;
-
   padding: 8px 13px;
-
-  border: none;
-  border-radius: 7px;
-
-  background: transparent;
-
-  color: #747d90;
-
-  font-size: 11px;
-  font-weight: 700;
-
+  border: 1px solid #dbe3ea;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #64748b;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
-
-.cv-filter button span {
-  padding: 2px 6px;
-
-  border-radius: 20px;
-
-  background: #eceef3;
-
-  font-size: 9px;
+.cv-filter button:hover {
+  border-color: #38bdf8;
+  background: #f0faff;
+  color: #0284c7;
 }
-
 
 .cv-filter button.active {
-  background: #6046e9;
-
+  border-color: #0ea5e9;
+  background: #0ea5e9;
   color: #ffffff;
 }
 
+.cv-filter-count {
+  min-width: 21px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
 
-.cv-filter button.active span {
+.cv-filter button.active .cv-filter-count {
   background: rgba(255, 255, 255, 0.2);
-
   color: #ffffff;
 }
 
-
-/* ==============================
+/* =========================
    LIST
-============================== */
+========================= */
 
 .cv-review-list {
   display: flex;
   flex-direction: column;
-
-  gap: 14px;
+  gap: 16px;
 }
 
+/* =========================
+   STATE
+========================= */
 
-.cv-review-card {
+.cv-state-message {
+  min-height: 220px;
   display: flex;
-
-  gap: 18px;
-
-  padding: 20px;
-
-  border: 1px solid #e7e9f0;
-  border-radius: 15px;
-
-  background: #ffffff;
-}
-
-
-.cv-file-icon {
-  width: 52px;
-  height: 58px;
-
-  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  flex-shrink: 0;
-
-  border-radius: 11px;
-
-  background: #fff0f2;
-
-  color: #d94b59;
-
-  font-size: 10px;
-  font-weight: 800;
+  gap: 10px;
+  padding: 40px 20px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+  color: #64748b;
+  text-align: center;
 }
 
-
-.cv-review-content {
-  flex: 1;
-}
-
-
-.cv-review-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-
-  gap: 30px;
-}
-
-
-.cv-review-top h3 {
-  margin: 0 0 6px;
-
-  color: #333c50;
-
-  font-size: 15px;
-}
-
-
-.cv-review-top p {
+.cv-state-message p {
   margin: 0;
-
-  color: #8b93a4;
-
-  font-size: 10px;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-
-.cv-date {
-  margin-top: 9px;
-
-  color: #a0a6b3;
-
-  font-size: 9px;
+.cv-state-message.error {
+  border-color: #fecdd3;
+  background: #fff1f2;
+  color: #be123c;
 }
 
+/* =========================
+   EMPTY ICON
+========================= */
 
-/* ==============================
-   STATUS
-============================== */
-
-.cv-status {
-  display: inline-block;
-
-  padding: 6px 10px;
-
-  border-radius: 20px;
-
-  font-size: 9px;
-  font-weight: 700;
+.cv-empty-icon {
+  color: #38bdf8;
+  font-size: 38px;
 }
 
+/* =========================
+   LOADING
+========================= */
 
-.cv-status.pending {
-  background: #fff6dd;
-
-  color: #b98200;
+.cv-loading-spinner {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #d9f2fc;
+  border-top-color: #0ea5e9;
+  border-radius: 50%;
+  animation: cv-spin 0.7s linear infinite;
 }
 
-
-.cv-status.approved {
-  background: #e8f8f2;
-
-  color: #159370;
+@keyframes cv-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
+/* =========================
+   RETRY BUTTON
+========================= */
 
-.cv-status.rejected {
-  background: #fff0f2;
-
-  color: #d94b59;
-}
-
-
-/* ==============================
-   FEEDBACK FORM
-============================== */
-
-.cv-feedback-form {
-  margin-top: 18px;
-
-  padding-top: 17px;
-
-  border-top: 1px solid #eceef3;
-}
-
-
-.cv-feedback-form label {
-  display: block;
-
-  margin-bottom: 8px;
-
-  color: #525b6e;
-
-  font-size: 10px;
-  font-weight: 700;
-}
-
-
-.cv-feedback-form textarea {
-  width: 100%;
-  min-height: 85px;
-
-  box-sizing: border-box;
-
-  padding: 12px 13px;
-
-  border: 1px solid #dfe3eb;
-  border-radius: 10px;
-
-  outline: none;
-  resize: vertical;
-
-  color: #424b5f;
-
+.cv-retry-button {
+  margin-top: 4px;
+  padding: 9px 15px;
+  border: 1px solid #0ea5e9;
+  border-radius: 9px;
+  background: #0ea5e9;
+  color: #ffffff;
   font-family: inherit;
-  font-size: 11px;
-  line-height: 1.6;
-}
-
-
-.cv-feedback-form textarea:focus {
-  border-color: #6046e9;
-}
-
-
-.cv-review-actions {
-  display: flex;
-  justify-content: flex-end;
-
-  gap: 9px;
-
-  margin-top: 12px;
-}
-
-
-.cv-reject-button {
-  border: 1px solid #ffd8dd;
-
-  background: #fff1f3;
-
-  color: #d94452;
-}
-
-
-.cv-reject-button:hover {
-  background: #ffe5e9;
-}
-
-
-/* ==============================
-   OLD FEEDBACK
-============================== */
-
-.cv-old-feedback {
-  margin-top: 17px;
-
-  padding: 14px;
-
-  border-radius: 10px;
-
-  background: #f8f9fb;
-}
-
-
-.cv-old-feedback span {
-  display: block;
-
-  margin-bottom: 6px;
-
-  color: #747d90;
-
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-
-.cv-old-feedback p {
-  margin: 0;
-
-  color: #525b6e;
-
-  font-size: 11px;
-  line-height: 1.6;
-}
-
-
-.cv-reviewed-actions {
-  display: flex;
-  justify-content: flex-end;
-
-  margin-top: 12px;
+.cv-retry-button:hover {
+  border-color: #0284c7;
+  background: #0284c7;
+  transform: translateY(-1px);
 }

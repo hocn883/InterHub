@@ -1,17 +1,42 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
+import {
+  FaGraduationCap,
+  FaChalkboardTeacher,
+  FaBuilding,
+  FaCheck,
+  FaArrowRight,
+  FaUser,
+} from "react-icons/fa";
+
+import api, {
+  endpoints,
+} from "../../utils/api";
+
 import "./Auth.css";
 
+
 function Register() {
+
   const navigate = useNavigate();
 
+
+  // ==========================================
+  // FORM DATA
+  // ==========================================
+
   const [formData, setFormData] = useState({
+
     fullName: "",
     username: "",
     email: "",
     phone: "",
+
     password: "",
     confirmPassword: "",
+
+    gender: "",
 
     role: "STUDENT",
 
@@ -26,48 +51,441 @@ function Register() {
     // Employer
     companyName: "",
     taxCode: "",
+
   });
 
+
+  // ==========================================
+  // AVATAR
+  // ==========================================
+
+  const [avatar, setAvatar] =
+    useState(null);
+
+  const [avatarPreview, setAvatarPreview] =
+    useState("");
+
+
+  // ==========================================
+  // STATE
+  // ==========================================
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [error, setError] =
+    useState("");
+
+  const [success, setSuccess] =
+    useState("");
+
+
+  // ==========================================
+  // HANDLE CHANGE
+  // ==========================================
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+
+    const {
+      name,
+      value,
+    } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
   };
 
-  const handleSubmit = (e) => {
+
+  // ==========================================
+  // HANDLE AVATAR
+  // ==========================================
+
+  const handleAvatarChange = (e) => {
+
+    const file =
+      e.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+
+    // ========================================
+    // CHECK FILE TYPE
+    // ========================================
+
+    if (!file.type.startsWith("image/")) {
+
+      setError(
+        "Avatar phải là file hình ảnh."
+      );
+
+      return;
+    }
+
+
+    // ========================================
+    // CHECK FILE SIZE
+    // ========================================
+
+    if (file.size > 5 * 1024 * 1024) {
+
+      setError(
+        "Avatar không được vượt quá 5MB."
+      );
+
+      return;
+    }
+
+
+    setError("");
+
+    setAvatar(file);
+
+
+    // ========================================
+    // PREVIEW
+    // ========================================
+
+    const previewUrl =
+      URL.createObjectURL(file);
+
+    setAvatarPreview(previewUrl);
+
+  };
+
+
+  // ==========================================
+  // REGISTER
+  // ==========================================
+
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
 
-    console.log("REGISTER:", formData);
+    setError("");
+    setSuccess("");
 
-    // Sau này:
-    // POST /api/auth/register
 
-    // Thành công:
-    // navigate("/login");
+    // ========================================
+    // PASSWORD
+    // ========================================
+
+    if (
+      formData.password !==
+      formData.confirmPassword
+    ) {
+
+      setError(
+        "Mật khẩu nhập lại không khớp."
+      );
+
+      return;
+    }
+
+
+    // ========================================
+    // AVATAR
+    // ========================================
+
+    if (!avatar) {
+
+      setError(
+        "Vui lòng chọn ảnh đại diện."
+      );
+
+      return;
+    }
+
+
+    // ========================================
+    // GENDER
+    // ========================================
+
+    if (!formData.gender) {
+
+      setError(
+        "Vui lòng chọn giới tính."
+      );
+
+      return;
+    }
+
+
+    // ========================================
+    // CREATE FORMDATA
+    // ========================================
+
+    const data =
+      new FormData();
+
+
+    // ========================================
+    // BASIC
+    // ========================================
+
+    data.append(
+      "fullName",
+      formData.fullName.trim()
+    );
+
+    data.append(
+      "username",
+      formData.username.trim()
+    );
+
+    data.append(
+      "email",
+      formData.email.trim()
+    );
+
+    data.append(
+      "phone",
+      formData.phone.trim()
+    );
+
+    data.append(
+      "password",
+      formData.password
+    );
+
+    data.append(
+      "gender",
+      formData.gender
+    );
+
+    data.append(
+      "role",
+      formData.role
+    );
+
+
+    // ========================================
+    // AVATAR
+    // ========================================
+
+    data.append(
+      "avatar",
+      avatar
+    );
+
+
+    // ========================================
+    // STUDENT
+    // ========================================
+
+    if (
+      formData.role === "STUDENT"
+    ) {
+
+      data.append(
+        "mssv",
+        formData.mssv.trim()
+      );
+
+      data.append(
+        "major",
+        formData.major.trim()
+      );
+
+      data.append(
+        "className",
+        formData.className.trim()
+      );
+
+    }
+
+
+    // ========================================
+    // LECTURER
+    // ========================================
+
+    if (
+      formData.role === "LECTURER"
+    ) {
+
+      data.append(
+        "lecturerCode",
+        formData.lecturerCode.trim()
+      );
+
+    }
+
+
+    // ========================================
+    // EMPLOYER
+    // ========================================
+
+    if (
+      formData.role === "EMPLOYER"
+    ) {
+
+      data.append(
+        "companyName",
+        formData.companyName.trim()
+      );
+
+      data.append(
+        "taxCode",
+        formData.taxCode.trim()
+      );
+      data.append(
+        "location",
+        formData.location.trim()
+      )
+
+    }
+
+
+    try {
+
+      setLoading(true);
+
+
+      // ========================================
+      // DEBUG FORMDATA
+      // ========================================
+
+      console.log(
+        "REGISTER ROLE:",
+        formData.role
+      );
+
+      console.log(
+        "REGISTER AVATAR:",
+        avatar
+      );
+
+
+      for (
+        const [key, value]
+        of data.entries()
+      ) {
+
+        console.log(
+          key,
+          value
+        );
+
+      }
+
+
+      // ========================================
+      // API
+      // ========================================
+
+      const response =
+        await api.post(
+          endpoints.register,
+          data
+        );
+
+
+      console.log(
+        "REGISTER RESPONSE:",
+        response.data
+      );
+
+
+      // ========================================
+      // SUCCESS
+      // ========================================
+
+      setSuccess(
+        response.data?.message ||
+        "Đăng ký thành công!"
+      );
+
+
+      // ========================================
+      // REDIRECT LOGIN
+      // ========================================
+
+      setTimeout(() => {
+
+        navigate("/login");
+
+      }, 1500);
+
+
+    } catch (error) {
+
+      console.error(
+        "REGISTER ERROR:",
+        error
+      );
+
+      console.error(
+        "STATUS:",
+        error.response?.status
+      );
+
+      console.error(
+        "SERVER RESPONSE:",
+        error.response?.data
+      );
+
+
+      setError(
+        error.response?.data?.message ||
+        "Đăng ký thất bại. Vui lòng thử lại."
+      );
+
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
   };
 
+
   return (
+
     <div className="auth-page auth-register-page">
 
-      <div className="auth-decoration auth-decoration-one"></div>
-      <div className="auth-decoration auth-decoration-two"></div>
+      <div
+        className="auth-decoration auth-decoration-one"
+      ></div>
+
+      <div
+        className="auth-decoration auth-decoration-two"
+      ></div>
+
 
       <div className="auth-container auth-register-container">
 
-        {/* ================= LEFT ================= */}
+
+        {/* =====================================
+            LEFT
+        ===================================== */}
 
         <section className="auth-introduction">
 
-          <Link to="/" className="auth-brand">
+
+          <Link
+            to="/"
+            className="auth-brand"
+          >
 
             <div className="auth-brand-logo">
               IH
             </div>
 
             <div className="auth-brand-name">
-              <strong>InternHub</strong>
-              <span>OU - Faculty of Information Technology</span>
+
+              <strong>
+                InternHub
+              </strong>
+
+              <span>
+                OU - Faculty of Information Technology
+              </span>
+
             </div>
 
           </Link>
@@ -75,19 +493,33 @@ function Register() {
 
           <div className="auth-intro-content">
 
+
             <div className="auth-badge">
-              🎓 KHOA CÔNG NGHỆ THÔNG TIN
+
+              <FaGraduationCap />
+
+              KHOA CÔNG NGHỆ THÔNG TIN
+
             </div>
 
+
             <h1>
+
               Bắt đầu hành trình
-              <span>thực tập của bạn</span>
+
+              <span>
+                thực tập của bạn
+              </span>
+
             </h1>
 
+
             <p className="auth-description">
+
               Tạo tài khoản InternHub để kết nối sinh viên,
               giảng viên và doanh nghiệp trên một nền tảng
               hỗ trợ thực tập thống nhất.
+
             </p>
 
 
@@ -98,6 +530,7 @@ function Register() {
               </div>
 
               <div>
+
                 <span>
                   TRƯỜNG ĐẠI HỌC MỞ TP.HCM
                 </span>
@@ -105,6 +538,7 @@ function Register() {
                 <strong>
                   Khoa Công nghệ Thông tin
                 </strong>
+
               </div>
 
             </div>
@@ -112,13 +546,15 @@ function Register() {
 
             <div className="auth-features">
 
+
               <div className="auth-feature">
 
                 <div className="auth-feature-icon">
-                  ✓
+                  <FaCheck />
                 </div>
 
                 <div>
+
                   <strong>
                     Sinh viên
                   </strong>
@@ -126,6 +562,7 @@ function Register() {
                   <span>
                     Tìm việc, quản lý CV và ứng tuyển
                   </span>
+
                 </div>
 
               </div>
@@ -134,10 +571,11 @@ function Register() {
               <div className="auth-feature">
 
                 <div className="auth-feature-icon">
-                  ✓
+                  <FaCheck />
                 </div>
 
                 <div>
+
                   <strong>
                     Giảng viên
                   </strong>
@@ -145,6 +583,7 @@ function Register() {
                   <span>
                     Theo dõi và hỗ trợ sinh viên thực tập
                   </span>
+
                 </div>
 
               </div>
@@ -153,10 +592,11 @@ function Register() {
               <div className="auth-feature">
 
                 <div className="auth-feature-icon">
-                  ✓
+                  <FaCheck />
                 </div>
 
                 <div>
+
                   <strong>
                     Doanh nghiệp
                   </strong>
@@ -164,9 +604,11 @@ function Register() {
                   <span>
                     Đăng tuyển và tiếp cận sinh viên phù hợp
                   </span>
+
                 </div>
 
               </div>
+
 
             </div>
 
@@ -174,17 +616,26 @@ function Register() {
 
 
           <div className="auth-footer-text">
-            © 2026 InternHub · Khoa Công nghệ Thông tin · OU
+
+            © 2026 InternHub ·
+            Khoa Công nghệ Thông tin · OU
+
           </div>
 
         </section>
 
 
-        {/* ================= RIGHT ================= */}
+
+        {/* =====================================
+            RIGHT
+        ===================================== */}
 
         <section className="auth-form-area auth-register-form-area">
 
           <div className="auth-card auth-register-card">
+
+
+            {/* MOBILE BRAND */}
 
             <div className="auth-mobile-brand">
 
@@ -198,6 +649,8 @@ function Register() {
 
             </div>
 
+
+            {/* HEADER */}
 
             <div className="auth-card-header">
 
@@ -216,9 +669,44 @@ function Register() {
             </div>
 
 
-            <form onSubmit={handleSubmit}>
+            <form
+              onSubmit={handleSubmit}
+            >
 
-              {/* ROLE */}
+
+              {/* ==================================
+                  ERROR
+              ================================== */}
+
+              {error && (
+
+                <div className="auth-error">
+                  {error}
+                </div>
+
+              )}
+
+
+              {/* ==================================
+                  SUCCESS
+              ================================== */}
+
+              {success && (
+
+                <div className="auth-success">
+                  {success}
+                </div>
+
+              )}
+
+
+
+
+
+
+              {/* ==================================
+                  ROLE
+              ================================== */}
 
               <div className="auth-form-group">
 
@@ -228,24 +716,30 @@ function Register() {
 
                 <div className="auth-role-selector">
 
+
+                  {/* STUDENT */}
+
                   <label
-                    className={`auth-role-item ${
-                      formData.role === "STUDENT"
+                    className={`auth-role-item ${formData.role === "STUDENT"
                         ? "active"
                         : ""
-                    }`}
+                      }`}
                   >
 
                     <input
                       type="radio"
                       name="role"
                       value="STUDENT"
-                      checked={formData.role === "STUDENT"}
+                      checked={
+                        formData.role === "STUDENT"
+                      }
                       onChange={handleChange}
                     />
 
                     <span className="auth-role-icon">
-                      🎓
+
+                      <FaGraduationCap />
+
                     </span>
 
                     <span>
@@ -255,24 +749,29 @@ function Register() {
                   </label>
 
 
+                  {/* LECTURER */}
+
                   <label
-                    className={`auth-role-item ${
-                      formData.role === "LECTURER"
+                    className={`auth-role-item ${formData.role === "LECTURER"
                         ? "active"
                         : ""
-                    }`}
+                      }`}
                   >
 
                     <input
                       type="radio"
                       name="role"
                       value="LECTURER"
-                      checked={formData.role === "LECTURER"}
+                      checked={
+                        formData.role === "LECTURER"
+                      }
                       onChange={handleChange}
                     />
 
                     <span className="auth-role-icon">
-                      👨‍🏫
+
+                      <FaChalkboardTeacher />
+
                     </span>
 
                     <span>
@@ -282,24 +781,29 @@ function Register() {
                   </label>
 
 
+                  {/* EMPLOYER */}
+
                   <label
-                    className={`auth-role-item ${
-                      formData.role === "EMPLOYER"
+                    className={`auth-role-item ${formData.role === "EMPLOYER"
                         ? "active"
                         : ""
-                    }`}
+                      }`}
                   >
 
                     <input
                       type="radio"
                       name="role"
                       value="EMPLOYER"
-                      checked={formData.role === "EMPLOYER"}
+                      checked={
+                        formData.role === "EMPLOYER"
+                      }
                       onChange={handleChange}
                     />
 
                     <span className="auth-role-icon">
-                      🏢
+
+                      <FaBuilding />
+
                     </span>
 
                     <span>
@@ -308,14 +812,71 @@ function Register() {
 
                   </label>
 
+
+                </div>
+
+              </div>
+              {/* ==================================
+                  AVATAR
+              ================================== */}
+
+              <div className="auth-avatar-section">
+
+                <div className="auth-avatar-preview">
+
+                  {avatarPreview ? (
+
+                    <img
+                      src={avatarPreview}
+                      alt="Avatar preview"
+                    />
+
+                  ) : (
+
+                    <FaUser />
+
+                  )}
+
+                </div>
+
+
+                <div className="auth-avatar-content">
+
+                  <label>
+                    Ảnh đại diện
+                  </label>
+
+                  <span>
+                    JPG, PNG hoặc WEBP · tối đa 5MB
+                  </span>
+
+                  <label
+                    className="auth-avatar-button"
+                  >
+
+                    Chọn ảnh
+
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={
+                        handleAvatarChange
+                      }
+                    />
+
+                  </label>
+
                 </div>
 
               </div>
 
 
-              {/* BASIC */}
+              {/* ==================================
+                  BASIC
+              ================================== */}
 
               <div className="auth-form-grid">
+
 
                 <div className="auth-form-group">
 
@@ -354,10 +915,12 @@ function Register() {
 
                 </div>
 
+
               </div>
 
 
               <div className="auth-form-grid">
+
 
                 <div className="auth-form-group">
 
@@ -391,14 +954,57 @@ function Register() {
                     placeholder="0901234567"
                     value={formData.phone}
                     onChange={handleChange}
+                    required
                   />
 
                 </div>
 
+
               </div>
 
 
-              {/* STUDENT */}
+              {/* ==================================
+                  GENDER
+              ================================== */}
+
+              <div className="auth-form-group">
+
+                <label>
+                  Giới tính
+                </label>
+
+                <select
+                  className="auth-input"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  required
+                >
+
+                  <option value="">
+                    -- Chọn giới tính --
+                  </option>
+
+                  <option value="MALE">
+                    Nam
+                  </option>
+
+                  <option value="FEMALE">
+                    Nữ
+                  </option>
+
+                  <option value="OTHER">
+                    Khác
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              {/* ==================================
+                  STUDENT
+              ================================== */}
 
               {formData.role === "STUDENT" && (
 
@@ -410,6 +1016,7 @@ function Register() {
 
 
                   <div className="auth-form-grid">
+
 
                     <div className="auth-form-group">
 
@@ -424,6 +1031,7 @@ function Register() {
                         placeholder="2251012345"
                         value={formData.mssv}
                         onChange={handleChange}
+                        required
                       />
 
                     </div>
@@ -442,9 +1050,11 @@ function Register() {
                         placeholder="DH22IT01"
                         value={formData.className}
                         onChange={handleChange}
+                        required
                       />
 
                     </div>
+
 
                   </div>
 
@@ -462,6 +1072,7 @@ function Register() {
                       placeholder="Công nghệ thông tin"
                       value={formData.major}
                       onChange={handleChange}
+                      required
                     />
 
                   </div>
@@ -471,7 +1082,9 @@ function Register() {
               )}
 
 
-              {/* LECTURER */}
+              {/* ==================================
+                  LECTURER
+              ================================== */}
 
               {formData.role === "LECTURER" && (
 
@@ -480,6 +1093,7 @@ function Register() {
                   <div className="auth-extra-title">
                     Thông tin giảng viên
                   </div>
+
 
                   <div className="auth-form-group">
 
@@ -494,6 +1108,7 @@ function Register() {
                       placeholder="GV001"
                       value={formData.lecturerCode}
                       onChange={handleChange}
+                      required
                     />
 
                   </div>
@@ -503,7 +1118,9 @@ function Register() {
               )}
 
 
-              {/* EMPLOYER */}
+              {/* ==================================
+                  EMPLOYER
+              ================================== */}
 
               {formData.role === "EMPLOYER" && (
 
@@ -515,6 +1132,7 @@ function Register() {
 
 
                   <div className="auth-form-grid">
+
 
                     <div className="auth-form-group">
 
@@ -529,6 +1147,7 @@ function Register() {
                         placeholder="Công ty ABC"
                         value={formData.companyName}
                         onChange={handleChange}
+                        required
                       />
 
                     </div>
@@ -547,9 +1166,11 @@ function Register() {
                         placeholder="0312345678"
                         value={formData.taxCode}
                         onChange={handleChange}
+                        required
                       />
 
                     </div>
+
 
                   </div>
 
@@ -558,9 +1179,12 @@ function Register() {
               )}
 
 
-              {/* PASSWORD */}
+              {/* ==================================
+                  PASSWORD
+              ================================== */}
 
               <div className="auth-form-grid">
+
 
                 <div className="auth-form-group">
 
@@ -575,6 +1199,7 @@ function Register() {
                     placeholder="Ít nhất 6 ký tự"
                     value={formData.password}
                     onChange={handleChange}
+                    minLength={6}
                     required
                   />
 
@@ -594,33 +1219,62 @@ function Register() {
                     placeholder="Nhập lại mật khẩu"
                     value={formData.confirmPassword}
                     onChange={handleChange}
+                    minLength={6}
                     required
                   />
 
                 </div>
 
+
               </div>
 
 
+              {/* ==================================
+                  AGREEMENT
+              ================================== */}
+
               <label className="auth-checkbox auth-agreement">
 
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  required
+                />
 
                 <span>
-                  Tôi đồng ý với Điều khoản sử dụng và
-                  Chính sách bảo mật
+
+                  Tôi đồng ý với Điều khoản sử dụng
+                  và Chính sách bảo mật
+
                 </span>
 
               </label>
 
 
+              {/* ==================================
+                  SUBMIT
+              ================================== */}
+
               <button
                 type="submit"
                 className="auth-submit"
+                disabled={loading}
               >
-                Tạo tài khoản
-                <span>→</span>
+
+                {loading
+                  ? "Đang tạo tài khoản..."
+                  : "Tạo tài khoản"
+                }
+
+                {!loading && (
+
+                  <span>
+                    <FaArrowRight />
+                  </span>
+
+                )}
+
               </button>
+
 
             </form>
 
@@ -635,13 +1289,17 @@ function Register() {
 
             </div>
 
+
           </div>
 
         </section>
 
       </div>
+
     </div>
+
   );
 }
+
 
 export default Register;

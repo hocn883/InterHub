@@ -30,7 +30,7 @@ public class StudentApplicationController {
             @RequestParam(defaultValue = "10")int size,
             @AuthenticationPrincipal CustomUserDetails currentUser
     ) {
-        Pageable pageable = PageRequest.of(page, size,  Sort.by(Sort.Direction.DESC, "createdAt"));
+        Pageable pageable = PageRequest.of(page, size,  Sort.by(Sort.Direction.DESC, "createdDate"));
         PageResponse<ApplicationResponse>application=applicationService.getMyApplications(currentUser.getUser(),pageable);
         return ResponseEntity.ok(ApiResponse.<PageResponse<ApplicationResponse>>builder()
                 .code(HttpStatus.OK.value())

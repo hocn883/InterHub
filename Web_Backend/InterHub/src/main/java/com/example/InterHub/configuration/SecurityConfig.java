@@ -1,12 +1,18 @@
 package com.example.InterHub.config;
 
+import com.example.InterHub.security.JwtAuthFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     @Bean
@@ -15,22 +21,21 @@ public class SecurityConfig {
     ) throws Exception {
 
         http
+                .csrf(AbstractHttpConfigurer::disable)
 
-                // Tắt CSRF để test API POST/PUT/DELETE
-                .csrf(csrf -> csrf.disable())
+                // Sử dụng CorsConfig hiện tại
+                .cors(cors -> {})
 
-                // TẤT CẢ URL ĐỀU ĐƯỢC PHÉP
+                // Cho phép tất cả API
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest()
-                        .permitAll()
+                        .anyRequest().permitAll()
                 )
 
-                // Không hiện form login mặc định
-                .formLogin(form -> form.disable())
-
-                // Không dùng HTTP Basic
-                .httpBasic(basic -> basic.disable());
-
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(
+                                SessionCreationPolicy.STATELESS
+                        )
+                );
 
         return http.build();
     }

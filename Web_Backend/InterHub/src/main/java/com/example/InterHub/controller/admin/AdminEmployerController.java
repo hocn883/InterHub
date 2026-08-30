@@ -80,7 +80,7 @@ public class AdminEmployerController {
                 applicationRepository
                         .countByJobEmployerIdAndStatus(
                                 id,
-                                ApplicationStatus.APPROVE
+                                ApplicationStatus.APPROVED
                         );
 
 
@@ -246,7 +246,7 @@ public class AdminEmployerController {
                 applicationRepository
                         .findStudentsByEmployerIdAndStatus(
                                 id,
-                                ApplicationStatus.APPROVE,
+                                ApplicationStatus.APPROVED,
                                 PageRequest.of(page, size)
                         );
 

@@ -34,7 +34,5 @@ public class JobResponse {
 
     private JobStatus status;
 
-    private Employer employerId;
-
-    private String companyName;
+    private EmployerResponse employer;
 }

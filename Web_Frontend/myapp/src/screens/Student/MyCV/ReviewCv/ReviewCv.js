@@ -1,10 +1,6 @@
 import './ReviewCv.css'
 
 function CvReviewCard({ cv }) {
-
-  // ================================
-  // HIỂN THỊ STATUS
-  // ================================
   const getStatusInfo = (status) => {
 
     switch (status) {
@@ -35,22 +31,10 @@ function CvReviewCard({ cv }) {
 
   return (
     <article className="cv-review-card">
-
-      {/* ================================
-          FILE ICON
-      ================================= */}
       <div className="cv-review-icon">
         PDF
       </div>
-
-
-      {/* ================================
-          CONTENT
-      ================================= */}
       <div className="cv-review-content">
-
-
-        {/* HEADER */}
         <div className="cv-review-top">
 
           <div>
@@ -71,11 +55,6 @@ function CvReviewCard({ cv }) {
           </span>
 
         </div>
-
-
-        {/* ================================
-            FEEDBACK
-        ================================= */}
         <div className="cv-review-feedback">
 
           <span className="feedback-label">

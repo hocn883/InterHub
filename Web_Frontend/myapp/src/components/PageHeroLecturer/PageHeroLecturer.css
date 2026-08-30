@@ -1,0 +1,73 @@
+.lecturer-page-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  background: linear-gradient(
+    135deg,
+    #f2fbff 0%,
+    #e9f8ff 55%,
+    #def3ff 100%
+  );
+}
+
+.lecturer-hero-content {
+  position: relative;
+  z-index: 2;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+}
+
+.lecturer-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  margin-bottom: 18px;
+  border-radius: 999px;
+  background: #dff4ff;
+  color: #0284c7;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.lecturer-hero-content h1 {
+  margin: 0 0 16px;
+  color: #17324a;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.lecturer-hero-content h1 span {
+  color: #0ea5e9;
+}
+
+.lecturer-hero-content p {
+  max-width: 620px;
+  margin: 0;
+  color: #5f7485;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.lecturer-hero-decoration {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.09);
+  pointer-events: none;
+}
+
+.lecturer-decoration-one {
+  width: 300px;
+  height: 300px;
+  top: -150px;
+  right: 10%;
+}
+
+.lecturer-decoration-two {
+  width: 180px;
+  height: 180px;
+  bottom: -100px;
+  left: 7%;
+}

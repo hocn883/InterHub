@@ -3,10 +3,10 @@
 ================================= */
 
 .page-container {
-  width: min(1180px, calc(100% - 40px));
+  width: 90%;
+  max-width: 1180px;
   margin: 0 auto;
 }
-
 
 /* =================================
    KHOẢNG CÁCH SECTION CHUNG

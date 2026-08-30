@@ -1,0 +1,432 @@
+/* =========================
+   PAGE
+========================= */
+
+.invite-cv-page {
+  min-height: 100vh;
+  padding: 0;
+  background: #f6f8fb;
+}
+
+.invite-cv-container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.invite-cv-main {
+  padding-top: 45px;
+  padding-bottom: 80px;
+}
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.invite-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.invite-back-button svg {
+  font-size: 18px;
+}
+
+.invite-back-button:hover {
+  color: #6046e9;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.invite-layout {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* =========================
+   COMMON CARD
+========================= */
+
+.invite-candidate-card,
+.invite-form-card {
+  background: #ffffff;
+  border: 1px solid #e6e4ef;
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.03),
+    0 8px 24px rgba(59, 46, 120, 0.04);
+}
+
+/* =========================
+   CANDIDATE CARD
+========================= */
+
+.invite-candidate-card {
+  position: sticky;
+  top: 24px;
+  padding: 24px;
+  text-align: center;
+}
+
+.invite-section-title {
+  margin-bottom: 22px;
+  color: #787087;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.invite-avatar {
+  width: 78px;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  border: 1px solid #d8d0ff;
+  border-radius: 50%;
+  background: #f1eeff;
+  color: #6046e9;
+  font-size: 30px;
+  font-weight: 750;
+}
+
+.invite-candidate-card h2 {
+  margin: 0;
+  color: #252033;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+/* =========================
+   CANDIDATE INFO
+========================= */
+
+.invite-candidate-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.invite-candidate-info > div {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid #eeecf5;
+  border-radius: 10px;
+  background: #faf9fd;
+  text-align: left;
+}
+
+.invite-candidate-info svg {
+  width: 18px;
+  height: 18px;
+  color: #6046e9;
+}
+
+.invite-candidate-info span {
+  color: #7b7488;
+  font-size: 13px;
+}
+
+.invite-candidate-info strong {
+  color: #282232;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* =========================
+   VIEW CV
+========================= */
+
+.invite-view-cv {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  border: 1px solid #d9d3f3;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #6046e9;
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.invite-view-cv:hover {
+  border-color: #9c8bed;
+  background: #f8f6ff;
+  color: #5037d4;
+}
+
+/* =========================
+   FORM CARD
+========================= */
+
+.invite-form-card {
+  padding: 30px;
+}
+
+.invite-form-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+/* =========================
+   FORM GROUP
+========================= */
+
+.invite-form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.invite-form-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #272130;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.invite-form-group label svg {
+  color: #6046e9;
+  font-size: 17px;
+}
+
+.invite-form-group label span {
+  color: #dc2626;
+}
+
+/* =========================
+   SELECT
+========================= */
+
+.invite-form-group select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 42px 0 14px;
+  border: 1px solid #d7d4df;
+  border-radius: 10px;
+  outline: none;
+  background: #ffffff;
+  color: #282232;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.invite-form-group select:hover {
+  border-color: #b9b2ca;
+}
+
+.invite-form-group select:focus {
+  border-color: #6046e9;
+  box-shadow: 0 0 0 3px rgba(96, 70, 233, 0.1);
+}
+
+/* =========================
+   TEXTAREA
+========================= */
+
+.invite-form-group textarea {
+  width: 100%;
+  min-height: 170px;
+  resize: vertical;
+  padding: 14px 14px 32px;
+  border: 1px solid #d7d4df;
+  border-radius: 10px;
+  outline: none;
+  background: #ffffff;
+  color: #282232;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.7;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.invite-form-group textarea::placeholder {
+  color: #a09aaa;
+}
+
+.invite-form-group textarea:hover {
+  border-color: #b9b2ca;
+}
+
+.invite-form-group textarea:focus {
+  border-color: #6046e9;
+  box-shadow: 0 0 0 3px rgba(96, 70, 233, 0.1);
+}
+
+/* =========================
+   CHARACTER COUNT
+========================= */
+
+.invite-character-count {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  color: #a19aaa;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* =========================
+   LOADING / EMPTY
+========================= */
+
+.invite-loading,
+.invite-empty {
+  width: 100%;
+  padding: 16px;
+  border: 1px dashed #d7d2e4;
+  border-radius: 10px;
+  background: #faf9fd;
+  color: #777080;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.invite-empty {
+  color: #655f70;
+}
+
+/* =========================
+   ERROR / SUCCESS
+========================= */
+
+.invite-error,
+.invite-success {
+  padding: 13px 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.invite-error {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.invite-success {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.invite-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 22px;
+  border-top: 1px solid #ebe8f0;
+}
+
+.invite-cancel-button,
+.invite-submit-button {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+/* =========================
+   CANCEL
+========================= */
+
+.invite-cancel-button {
+  border: 1px solid #d5d2dc;
+  background: #ffffff;
+  color: #665f70;
+}
+
+.invite-cancel-button:hover {
+  border-color: #aaa3b6;
+  background: #faf9fc;
+  color: #282232;
+}
+
+/* =========================
+   SUBMIT
+========================= */
+.invite-submit-button {
+  min-width: 145px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #6046e9;
+  background: #6046e9;
+  color: #ffffff;
+  box-shadow: 0 7px 18px rgba(96, 70, 233, 0.18);
+}
+.invite-submit-button svg {
+  font-size: 17px;
+}
+.invite-submit-button:hover:not(:disabled) {
+  border-color: #5037d4;
+  background: #5037d4;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(96, 70, 233, 0.24);
+}
+.invite-submit-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+.invite-submit-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}

@@ -15,14 +15,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CloudinaryService {
 
-    private static final long MAX_FILE_SIZE = 10 * 1024 * 1024;
+    private static final long MAX_FILE_SIZE = 100 * 1024 * 1024;
 
     private static final Set<String> ALLOWED_CONTENT_TYPES = Set.of(
             "application/pdf",
             "application/msword",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     );
-    private static final long MAX_AVATAR_SIZE = 5 * 1024 * 1024;
+    private static final long MAX_AVATAR_SIZE = 100 * 1024 * 1024;
 
     private static final Set<String> ALLOWED_IMAGE_TYPES = Set.of(
             "image/jpeg",
@@ -32,16 +32,16 @@ public class CloudinaryService {
     private final Cloudinary cloudinary;
     public FileUpload uploadCv(MultipartFile file) {
         validateCv(file);
+
         try {
-            String publicId = UUID.randomUUID().toString();
+            String originalFilename = file.getOriginalFilename();
+
             Map<?, ?> result = cloudinary.uploader().upload(
                     file.getBytes(),
                     ObjectUtils.asMap(
                             "folder", "interhub/cvs",
-                            "public_id", publicId,
-                            "resource_type", "raw",
-                            "use_filename", true,
-                            "unique_filename", true
+                            "public_id", originalFilename,
+                            "resource_type", "raw"
                     )
             );
 
@@ -49,7 +49,7 @@ public class CloudinaryService {
                     result.get("secure_url").toString(),
                     result.get("public_id").toString(),
                     result.get("resource_type").toString(),
-                    file.getOriginalFilename()
+                    originalFilename
             );
 
         } catch (IOException exception) {

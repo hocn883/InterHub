@@ -1139,3 +1139,110 @@ a {
 
     border: 1px solid #f5c6cb;
 }
+/* =========================================================
+   STUDENT ASSIGNMENT
+========================================================= */
+
+.assignment-toolbar {
+    display: flex;
+
+    align-items: end;
+
+    gap: 15px;
+
+    padding: 15px;
+
+    border-bottom: 1px solid #dddddd;
+
+    background: #f8f8f8;
+}
+
+
+.assignment-lecturer {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+.assignment-lecturer label {
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #444444;
+}
+
+
+.assignment-lecturer select {
+    min-width: 280px;
+
+    padding: 8px 10px;
+
+    border: 1px solid #cccccc;
+
+    border-radius: 3px;
+
+    background: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 13px;
+}
+
+
+.assign-button {
+    padding: 8px 15px;
+
+    border: none;
+
+    border-radius: 3px;
+
+    background: #417690;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.assign-button:hover {
+    background: #205067;
+}
+
+
+.admin-alert {
+    padding: 12px 15px;
+
+    margin-bottom: 20px;
+
+    border-radius: 3px;
+
+    font-size: 13px;
+}
+
+
+.success-alert {
+    background: #d4edda;
+
+    border: 1px solid #c3e6cb;
+
+    color: #155724;
+}
+
+
+.error-alert {
+    background: #f8d7da;
+
+    border: 1px solid #f5c6cb;
+
+    color: #721c24;
+}

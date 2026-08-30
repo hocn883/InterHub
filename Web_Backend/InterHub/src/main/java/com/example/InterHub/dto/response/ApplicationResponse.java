@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApplicationResponse {
+        private Long id;
         private String coverLetter;
         private String fileCv;
         private ApplicationStatus status;

@@ -1,0 +1,321 @@
+/* =====================================================
+   APPLICATION CARD
+===================================================== */
+
+.job-application-card {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  padding: 20px;
+
+  background: #ffffff;
+  border: 1px solid #ececf3;
+  border-radius: 16px;
+
+  box-shadow: 0 3px 14px rgba(31, 35, 48, 0.04);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.job-application-card:hover {
+  border-color: #d8d1fb;
+  box-shadow: 0 10px 30px rgba(70, 52, 160, 0.08);
+  transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   LEFT CONTENT
+===================================================== */
+
+.job-application-content {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+
+/* =====================================================
+   COMPANY LOGO
+===================================================== */
+
+.job-company-logo {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: #f7f5ff;
+  border: 1px solid #e8e4ff;
+  border-radius: 14px;
+
+  color: #6548e8;
+  font-size: 22px;
+}
+
+.job-company-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* =====================================================
+   MAIN INFORMATION
+===================================================== */
+
+.job-application-info {
+  flex: 1;
+  min-width: 0;
+}
+
+
+/* =====================================================
+   TITLE + STATUS
+===================================================== */
+
+.job-application-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-width: 0;
+  margin-bottom: 5px;
+}
+
+.job-application-title {
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #202437;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.job-application-title:hover {
+  color: #6548e8;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.job-application-status {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+.job-application-status svg {
+  font-size: 10px;
+}
+
+/* PENDING */
+
+.job-application-status.status-pending {
+  background: #fff7df;
+  color: #a66b00;
+}
+
+/* APPROVED */
+
+.job-application-status.status-approved {
+  background: #e9f8f1;
+  color: #16815e;
+}
+
+/* REJECTED */
+
+.job-application-status.status-rejected {
+  background: #fff0f1;
+  color: #c74b59;
+}
+
+
+/* =====================================================
+   COMPANY
+===================================================== */
+
+.job-company-name {
+  margin: 0 0 10px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #858b9c;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   JOB DETAILS
+===================================================== */
+
+.job-application-details {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 8px 18px;
+}
+
+.job-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  min-width: 0;
+
+  color: #666e80;
+
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.job-detail-item svg {
+  flex: 0 0 auto;
+
+  color: #765be6;
+  font-size: 11px;
+}
+
+.job-detail-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.job-application-actions {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* =====================================================
+   COMMON BUTTON
+===================================================== */
+
+.application-action-button {
+  height: 36px;
+
+  box-sizing: border-box;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 0 13px;
+
+  border-radius: 9px;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+
+  text-decoration: none;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.application-action-button svg {
+  font-size: 11px;
+}
+
+.application-action-button:active {
+  transform: scale(0.97);
+}
+
+
+/* =====================================================
+   VIEW BUTTON
+===================================================== */
+
+.view-button {
+  border: 1px solid #ded8fc;
+  background: #f7f5ff;
+  color: #6548e8;
+}
+
+.view-button:hover {
+  border-color: #6548e8;
+  background: #6548e8;
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   DELETE BUTTON
+===================================================== */
+
+.delete-button {
+  border: 1px solid #f0d9dc;
+  background: #ffffff;
+  color: #c75562;
+}
+
+.delete-button:hover {
+  border-color: #efc5ca;
+  background: #fff1f2;
+  color: #b63e4c;
+}

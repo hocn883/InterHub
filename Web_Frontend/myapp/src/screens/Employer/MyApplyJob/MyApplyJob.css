@@ -1,0 +1,192 @@
+/* =========================
+   PAGE
+========================= */
+
+.my-apply-job-page {
+  min-height: 100vh;
+  padding: 0;
+  background: #f6f8fb;
+}
+
+.my-apply-job-container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.my-apply-job-main {
+  padding-top: 45px;
+  padding-bottom: 80px;
+}
+
+/* =========================
+   STATUS TABS
+========================= */
+
+.application-status-tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.application-status-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border: 1px solid #dfe3e8;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #667085;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.application-status-tabs button:hover {
+  border-color: #6046e9;
+  color: #6046e9;
+}
+
+.application-status-tabs button.active {
+  border-color: #6046e9;
+  background: #6046e9;
+  color: #ffffff;
+}
+
+.application-status-tabs button span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #f1f3f5;
+  color: #667085;
+  font-size: 11px;
+}
+
+.application-status-tabs button.active span {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* =========================
+   APPLICATION LIST
+========================= */
+
+.application-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.application-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  padding: 40px 20px;
+  background: #ffffff;
+  border: 1px dashed #d8dde6;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.application-empty h3 {
+  margin: 0 0 8px;
+  color: #344054;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.application-empty p {
+  margin: 0;
+  color: #98a2b3;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.application-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #667085;
+  font-size: 15px;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.application-error {
+  padding: 18px 20px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  border-radius: 10px;
+  color: #be123c;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.application-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.application-pagination button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  padding: 9px 15px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  color: #374151;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.application-pagination button:hover:not(:disabled) {
+  border-color: #6046e9;
+  background: #6046e9;
+  color: #ffffff;
+}
+
+.application-pagination button:disabled {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.application-pagination span {
+  color: #667085;
+  font-size: 14px;
+}

@@ -4,12 +4,16 @@ import com.example.InterHub.dto.request.LoginRequest;
 import com.example.InterHub.dto.request.RegisterRequest;
 import com.example.InterHub.dto.response.ApiResponse;
 import com.example.InterHub.dto.response.AuthResponse;
+import com.example.InterHub.dto.response.UserResponse;
+import com.example.InterHub.security.CustomUserDetails;
 import com.example.InterHub.services.AuthService;
+import com.example.InterHub.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService;
 
     @PostMapping(
             value = "/register",
@@ -46,6 +51,18 @@ public class AuthController {
                                                 .message("Đăng nhập thành công")
                                                         .result(authService.login(request))
                                                                 .build()
+        );
+    }
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<UserResponse>>me(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        String username=userDetails.getUser().getUsername();
+        return ResponseEntity.ok(
+                ApiResponse.<UserResponse>builder()
+                        .code(HttpStatus.OK.value())
+                        .status(HttpStatus.OK.name())
+                        .message("Thong tin cua user dang nhap")
+                        .result(userService.getCurrentUser(username))
+                        .build()
         );
     }
 }

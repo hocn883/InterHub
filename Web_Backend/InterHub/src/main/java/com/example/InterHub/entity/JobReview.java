@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(
-        name = "employer_reviews",
         uniqueConstraints = {
                 @UniqueConstraint(
                         columnNames = {

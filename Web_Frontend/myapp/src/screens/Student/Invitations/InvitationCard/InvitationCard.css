@@ -1,0 +1,146 @@
+.invitation-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  transition: 0.2s ease;
+}
+
+.invitation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+}
+
+.invitation-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.invitation-label {
+  display: inline-block;
+  margin-bottom: 6px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.invitation-card h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 20px;
+}
+
+.invitation-status {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.invitation-status.pending {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.invitation-status.accepted {
+  background: #ecfdf5;
+  color: #15803d;
+}
+
+.invitation-status.rejected {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.invitation-status.cancelled {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.invitation-card-info {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.invitation-card-info span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.invitation-message {
+  margin: 0 0 18px;
+  color: #475569;
+  line-height: 1.6;
+  font-size: 14px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.invitation-card-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.invitation-accept,
+.invitation-reject,
+.invitation-detail {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: 0.2s ease;
+}
+
+.invitation-accept {
+  background: #2563eb;
+  color: white;
+}
+
+.invitation-accept:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.invitation-reject {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.invitation-reject:hover:not(:disabled) {
+  background: #fecaca;
+}
+
+.invitation-detail {
+  background: #f1f5f9;
+  color: #334155;
+  margin-left: auto;
+}
+
+.invitation-detail:hover {
+  background: #e2e8f0;
+}
+
+.invitation-accept:disabled,
+.invitation-reject:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

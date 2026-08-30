@@ -7,6 +7,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class CvUploadResponse {
+    private Long id;
     private String fileUrl;
     private CVStatus status;
     private String lecturerFeedback;

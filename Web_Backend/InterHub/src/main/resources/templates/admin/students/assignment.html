@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Phân công sinh viên | InterHub Admin
+    </title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin/dashboard.css}">
+
+</head>
+
+
+<body>
+
+
+<header class="admin-top-header">
+
+    <div class="header-container">
+
+        <a
+                th:href="@{/admin}"
+                class="admin-brand">
+
+            InterHub Administration
+
+        </a>
+
+        <div class="admin-account">
+
+            <span>
+                Welcome,
+                <strong>Administrator</strong>
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<nav class="admin-navbar">
+
+    <div class="nav-container">
+
+        <a
+                th:href="@{/admin}"
+                class="nav-item">
+
+            Dashboard
+
+        </a>
+
+        <a
+                th:href="@{/admin/students}"
+                class="nav-item active">
+
+            Sinh viên
+
+        </a>
+
+        <a
+                th:href="@{/admin/lecturers}"
+                class="nav-item">
+
+            Giảng viên
+
+        </a>
+
+        <a
+                th:href="@{/admin/employers}"
+                class="nav-item">
+
+            Doanh nghiệp
+
+        </a>
+
+        <a
+                th:href="@{/admin/jobs}"
+                class="nav-item">
+
+            Việc làm
+
+        </a>
+
+        <a
+                th:href="@{/admin/logs}"
+                class="nav-item">
+
+            System Logs
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="breadcrumb">
+
+    <div class="content-container">
+
+        <a th:href="@{/admin}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <a th:href="@{/admin/students}">
+            Sinh viên
+        </a>
+
+        <span>›</span>
+
+        <span>
+            Phân công
+        </span>
+
+    </div>
+
+</div>
+
+
+<main class="content-container">
+
+
+    <div class="page-header">
+
+        <h1>
+            Phân công sinh viên
+        </h1>
+
+        <p>
+            Chọn các sinh viên chưa được phân công
+            và giao cho giảng viên phụ trách.
+        </p>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div
+            th:if="${error}"
+            class="admin-alert error-alert"
+            th:text="${error}">
+
+    </div>
+
+
+    <!-- SUCCESS -->
+
+    <div
+            th:if="${success}"
+            class="admin-alert success-alert"
+            th:text="${success}">
+
+    </div>
+
+
+    <section class="django-module">
+
+
+        <div class="django-module-title">
+
+            <div>
+
+                <h2>
+                    Sinh viên chưa phân công
+                </h2>
+
+                <span
+                        th:text="${totalItems + ' sinh viên'}">
+
+                    0 sinh viên
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <form
+                th:action="@{/admin/students/assign}"
+                method="post">
+
+
+            <div class="assignment-toolbar">
+
+
+                <div class="assignment-lecturer">
+
+
+                    <label>
+                        Giảng viên phụ trách
+                    </label>
+
+
+                    <select
+                            name="lecturerId"
+                            required>
+
+                        <option value="">
+                            -- Chọn giảng viên --
+                        </option>
+
+
+                        <option
+                                th:each="lecturer : ${lecturers}"
+                                th:value="${lecturer.id}"
+                                th:text="${lecturer.fullName}">
+
+                            Nguyễn Văn A
+
+                        </option>
+
+                    </select>
+
+
+                </div>
+
+
+                <button
+                        type="submit"
+                        class="assign-button">
+
+                    Phân công
+
+                </button>
+
+
+            </div>
+
+
+            <div class="admin-table-wrapper">
+
+
+                <table class="admin-table">
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Chọn
+                        </th>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            MSSV
+                        </th>
+
+                        <th>
+                            Họ tên
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Ngành
+                        </th>
+
+                        <th>
+                            Lớp
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    <tr
+                            th:each="student : ${students}">
+
+
+                        <td>
+
+                            <input
+                                    type="checkbox"
+                                    name="studentIds"
+                                    th:value="${student.id}">
+
+                        </td>
+
+
+                        <td
+                                th:text="${student.id}">
+                        </td>
+
+
+                        <td
+                                th:text="${student.mssv}">
+                        </td>
+
+
+                        <td
+                                th:text="${student.fullName}">
+                        </td>
+
+
+                        <td
+                                th:text="${student.email}">
+                        </td>
+
+
+                        <td
+                                th:text="${student.major}">
+                        </td>
+
+
+                        <td
+                                th:text="${student.className}">
+                        </td>
+
+
+                    </tr>
+
+
+                    <tr
+                            th:if="${#lists.isEmpty(students)}">
+
+                        <td
+                                colspan="7"
+                                class="empty-table">
+
+                            Tất cả sinh viên đã được phân công.
+
+                        </td>
+
+                    </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </form>
+
+
+        <!-- PAGINATION -->
+
+        <div class="table-footer">
+
+
+            <div class="result-count">
+
+                Tổng
+
+                <strong
+                        th:text="${totalItems}">
+
+                    0
+
+                </strong>
+
+                sinh viên chưa phân công
+
+            </div>
+
+
+            <div
+                    class="admin-pagination"
+                    th:if="${totalPages > 0}">
+
+
+                <a
+                        th:if="${currentPage > 0}"
+                        th:href="@{/admin/students/assignment(
+                            page=${currentPage - 1},
+                            size=${pageSize}
+                        )}">
+
+                    ‹ Trước
+
+                </a>
+
+
+                <a
+                        th:each="i : ${#numbers.sequence(
+                            0,
+                            totalPages - 1
+                        )}"
+                        th:href="@{/admin/students/assignment(
+                            page=${i},
+                            size=${pageSize}
+                        )}"
+                        th:text="${i + 1}"
+                        th:classappend="${i == currentPage}
+                            ? 'current-page'
+                            : ''">
+
+                </a>
+
+
+                <a
+                        th:if="${currentPage + 1 < totalPages}"
+                        th:href="@{/admin/students/assignment(
+                            page=${currentPage + 1},
+                            size=${pageSize}
+                        )}">
+
+                    Sau ›
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

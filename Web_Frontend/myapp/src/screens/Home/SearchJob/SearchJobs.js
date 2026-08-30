@@ -1,95 +1,133 @@
-import { useState } from 'react'
-import './SearchJobs.css'
+import "./SearchJobs.css";
 
-function SearchJobs() {
-  const [keyword, setKeyword] = useState('')
-  const [location, setLocation] = useState('')
-  const [category, setCategory] = useState('')
-
-  const handleSearch = (event) => {
-    event.preventDefault()
-
-    console.log({ keyword, location, category })
-    // Sau này gọi API tìm việc tại đây.
-  }
-
-  const applyKeyword = (value) => {
-    setKeyword(value)
-  }
-
+function SearchJobs({
+  keyword,
+  setKeyword,
+  salary,
+  setSalary,
+  location,
+  setLocation,
+  handleSearch,
+  handleReset,
+}) {
   return (
-    <section className="job-search-section">
-      <div className="section-container">
-        <div className="job-search-heading">
-          <div>
-            <span>Tìm kiếm cơ hội</span>
-            <h2>Tìm công việc phù hợp với bạn</h2>
-          </div>
-          <p>Lọc nhanh theo từ khóa, địa điểm và ngành nghề.</p>
+    <div className="home-job-search">
+
+      <form
+        className="home-job-search-form"
+        onSubmit={handleSearch}
+      >
+
+        {/* JOB NAME */}
+
+        <div className="home-search-field home-search-keyword">
+
+          <i className="bi bi-search"></i>
+
+          <input
+            type="text"
+            placeholder="Tìm kiếm theo tên công việc"
+            value={keyword}
+            onChange={(event) =>
+              setKeyword(event.target.value)
+            }
+          />
+
         </div>
 
-        <form className="job-search-box" onSubmit={handleSearch}>
-          <div className="job-search-field job-search-keyword">
-            <span className="job-search-icon">⌕</span>
-            <input
-              type="text"
-              value={keyword}
-              placeholder="Tên công việc, vị trí hoặc kỹ năng..."
-              onChange={(event) => setKeyword(event.target.value)}
-            />
-          </div>
 
-          <div className="job-search-divider" />
+        {/* SALARY */}
 
-          <div className="job-search-field">
-            <span className="job-search-icon">⌖</span>
-            <select
-              value={location}
-              onChange={(event) => setLocation(event.target.value)}
-              aria-label="Chọn địa điểm"
-            >
-              <option value="">Tất cả địa điểm</option>
-              <option value="HCM">TP. Hồ Chí Minh</option>
-              <option value="HN">Hà Nội</option>
-              <option value="DN">Đà Nẵng</option>
-              <option value="CT">Cần Thơ</option>
-            </select>
-          </div>
+        <div className="home-search-field home-search-select">
 
-          <div className="job-search-divider" />
+          <i className="bi bi-cash-stack"></i>
 
-          <div className="job-search-field">
-            <span className="job-search-icon">▦</span>
-            <select
-              value={category}
-              onChange={(event) => setCategory(event.target.value)}
-              aria-label="Chọn ngành nghề"
-            >
-              <option value="">Tất cả ngành nghề</option>
-              <option value="IT">Công nghệ thông tin</option>
-              <option value="MARKETING">Marketing</option>
-              <option value="BUSINESS">Kinh doanh</option>
-              <option value="ACCOUNTING">Kế toán</option>
-              <option value="DESIGN">Thiết kế</option>
-            </select>
-          </div>
+          <select
+            value={salary}
+            onChange={(event) =>
+              setSalary(event.target.value)
+            }
+          >
+            <option value="">
+              Mức lương
+            </option>
 
-          <button className="job-search-button" type="submit">
-            Tìm việc
-          </button>
-        </form>
+            <option value="3000000">
+              Từ 3 triệu
+            </option>
 
-        <div className="job-search-keywords">
-          <span>Từ khóa phổ biến:</span>
-          {['Java', 'React JS', 'Marketing', 'Không yêu cầu kinh nghiệm'].map((item) => (
-            <button key={item} type="button" onClick={() => applyKeyword(item)}>
-              {item}
-            </button>
-          ))}
+            <option value="5000000">
+              Từ 5 triệu
+            </option>
+
+            <option value="7000000">
+              Từ 7 triệu
+            </option>
+
+            <option value="10000000">
+              Từ 10 triệu
+            </option>
+
+            <option value="15000000">
+              Từ 15 triệu
+            </option>
+          </select>
+
+          <i className="bi bi-chevron-down home-select-arrow"></i>
+
         </div>
-      </div>
-    </section>
-  )
+
+
+        {/* LOCATION */}
+
+        <div className="home-search-field">
+
+          <i className="bi bi-geo-alt"></i>
+
+          <input
+            type="text"
+            placeholder="Nhập địa điểm"
+            value={location}
+            onChange={(event) =>
+              setLocation(event.target.value)
+            }
+          />
+
+        </div>
+
+
+        {/* SEARCH */}
+
+        <button
+          className="home-search-submit"
+          type="submit"
+        >
+          <i className="bi bi-search"></i>
+
+          <span>
+            Tìm kiếm
+          </span>
+        </button>
+
+
+        {/* RESET */}
+
+        <button
+          className="home-search-reset"
+          type="button"
+          onClick={handleReset}
+        >
+          <i className="bi bi-funnel"></i>
+
+          <span>
+            Bỏ lọc
+          </span>
+        </button>
+
+      </form>
+
+    </div>
+  );
 }
 
-export default SearchJobs
+export default SearchJobs;

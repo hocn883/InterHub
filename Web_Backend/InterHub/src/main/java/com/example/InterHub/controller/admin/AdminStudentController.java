@@ -1,9 +1,11 @@
 package com.example.InterHub.controller.admin;
 
 import com.example.InterHub.entity.Application;
+import com.example.InterHub.entity.Lecturer;
 import com.example.InterHub.entity.Student;
 import com.example.InterHub.enums.ApplicationStatus;
 import com.example.InterHub.repository.ApplicationRepository;
+import com.example.InterHub.repository.LecturerRepository;
 import com.example.InterHub.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -23,6 +27,7 @@ public class AdminStudentController {
     private final StudentRepository studentRepository;
 
     private final ApplicationRepository applicationRepository;
+    private final LecturerRepository lecturerRepository;
 
 
     // =====================================================
@@ -98,7 +103,7 @@ public class AdminStudentController {
                 applicationRepository
                         .findFirstByStudentIdAndStatusOrderByCreatedDateDesc(
                                 id,
-                                ApplicationStatus.APPROVE
+                                ApplicationStatus.APPROVED
                         );
 
 
@@ -188,5 +193,150 @@ public class AdminStudentController {
 
 
         return "admin/students/applications";
+    }
+    @GetMapping("/assignment")
+    public String assignmentPage(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model
+    ) {
+
+        Page<Student> studentPage =
+                studentRepository.findByLecturerIsNull(
+                        PageRequest.of(page, size)
+                );
+
+
+        model.addAttribute(
+                "students",
+                studentPage.getContent()
+        );
+
+        model.addAttribute(
+                "currentPage",
+                studentPage.getNumber()
+        );
+
+        model.addAttribute(
+                "totalPages",
+                studentPage.getTotalPages()
+        );
+
+        model.addAttribute(
+                "totalItems",
+                studentPage.getTotalElements()
+        );
+
+        model.addAttribute(
+                "pageSize",
+                studentPage.getSize()
+        );
+
+
+        model.addAttribute(
+                "lecturers",
+                lecturerRepository.findAll()
+        );
+
+
+        return "admin/students/assignment";
+    }
+    @PostMapping("/assign")
+    public String assignStudents(
+            @RequestParam List<Long> studentIds,
+            @RequestParam Long lecturerId,
+            RedirectAttributes redirectAttributes
+    ) {
+
+        Lecturer lecturer =
+                lecturerRepository
+                        .findById(lecturerId)
+                        .orElseThrow();
+
+
+        List<Student> students =
+                studentRepository.findAllById(studentIds);
+
+
+        // =========================
+        // KIỂM TRA SỐ LƯỢNG
+        // =========================
+
+        long currentCount =
+                studentRepository
+                        .countByLecturerId(lecturerId);
+
+
+        int selectedCount =
+                students.size();
+
+
+        if (currentCount + selectedCount > 10) {
+
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    "Không thể phân công. Giảng viên "
+                            + lecturer.getFullName()
+                            + " hiện đang quản lý "
+                            + currentCount
+                            + " sinh viên. "
+                            + "Chỉ được tối đa 10 sinh viên."
+            );
+
+            return "redirect:/admin/students/assignment";
+        }
+
+
+        // =========================
+        // PHÂN CÔNG
+        // =========================
+
+        for (Student student : students) {
+
+            student.setLecturer(lecturer);
+
+        }
+
+
+        studentRepository.saveAll(students);
+
+
+        redirectAttributes.addFlashAttribute(
+                "success",
+                "Đã phân công "
+                        + selectedCount
+                        + " sinh viên cho "
+                        + lecturer.getFullName()
+        );
+
+
+        return "redirect:/admin/students/assignment";
+    }
+    @PostMapping("/{id}/unassign")
+    public String unassignStudent(
+            @PathVariable Long id,
+            RedirectAttributes redirectAttributes
+    ) {
+
+        Student student =
+                studentRepository
+                        .findById(id)
+                        .orElseThrow();
+
+
+        student.setLecturer(null);
+
+
+        studentRepository.save(student);
+
+
+        redirectAttributes.addFlashAttribute(
+                "success",
+                "Đã xóa phân công sinh viên "
+                        + student.getFullName()
+        );
+
+
+        return "redirect:/admin/students";
     }
 }

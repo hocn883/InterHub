@@ -1,216 +1,243 @@
-import './MyCv.css'
-import CvReviewCard from './ReviewCv/ReviewCv'
+import "./MyCv.css";
+import { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../../../contexts/UserContext";
+import { authApi, endpoints } from "../../../utils/api";
+import PageHero from "../../../components/PageHero/PageHero";
 
 function MyCv() {
+  const { currentUser } = useContext(UserContext);
+  const lecturer = currentUser?.lecturer;
 
-  // ================================
-  // DỮ LIỆU GIẢ GIẢNG VIÊN
-  // Sau này lấy từ user/student API
-  // ================================
-  const lecturer = {
-    id: 1,
-    fullName: 'Nguyễn Văn Minh',
-    lecturerCode: 'GV001',
-    email: 'minh.nguyen@ou.edu.vn',
-    department: 'Khoa Công nghệ thông tin',
-  }
+  const [cvList, setCvList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  useEffect(() => {
+    const loadCvs = async () => {
+      try {
+        setLoading(true);
 
-  // ================================
-  // DỮ LIỆU CV GIẢ
-  // Sau này gọi:
-  // GET /api/student/cvs
-  // ================================
-  const cvList = [
-    {
-      id: 1,
-      fileName: 'CV_NguyenThaiHoc_Backend.pdf',
-      fileUrl: '#',
-      sentDate: '10/08/2026',
-      status: 'APPROVED',
-      feedback:
-        'CV trình bày khá tốt. Em nên bổ sung thêm phần mô tả dự án Spring Boot và làm rõ công nghệ đã sử dụng.',
-    },
+        const token = localStorage.getItem("access-token");
 
-    {
-      id: 2,
-      fileName: 'CV_NguyenThaiHoc_Frontend.pdf',
-      fileUrl: '#',
-      sentDate: '08/08/2026',
-      status: 'PENDING',
-      feedback: null,
-    },
+        const response = await authApi(token).get(
+          endpoints.myCvs
+        );
 
-    {
-      id: 3,
-      fileName: 'CV_NguyenThaiHoc_Old.pdf',
-      fileUrl: '#',
-      sentDate: '01/08/2026',
-      status: 'REJECTED',
-      feedback:
-        'CV còn thiếu thông tin dự án và kỹ năng chuyên môn. Em chỉnh sửa lại rồi gửi bản mới.',
-    },
-  ]
+        setCvList(response.data.result.content || []);
+      } catch (error) {
+        console.error(error);
+        setError("Không thể tải danh sách CV");
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    loadCvs();
+  }, []);
 
-  // ================================
-  // GỬI CV
-  // Sau này có thể mở modal upload
-  // ================================
-  const handleUploadCv = () => {
-    console.log('Upload CV')
-  }
+  const getStatus = (status) => {
+    switch (status) {
+      case "APPROVED":
+        return {
+          text: "Đã duyệt",
+          className: "approved",
+        };
 
+      case "REJECTED":
+        return {
+          text: "Cần chỉnh sửa",
+          className: "rejected",
+        };
+
+      default:
+        return {
+          text: "Đang chờ",
+          className: "pending",
+        };
+    }
+  };
 
   return (
-    <div className="lecturer-workspace-page">
+    <div className="mycv-page">
+      <PageHero
+        badge="HỒ SƠ THỰC TẬP"
+        title="CV"
+        highlight="của tôi"
+        description="Theo dõi CV đã gửi, trạng thái xét duyệt và phản hồi từ giảng viên hướng dẫn."
+      />
 
-      {/* ================================
-          HERO
-      ================================= */}
-      <section className="lecturer-workspace-hero">
+      <main className="mycv-container mycv-main-content">
+        {lecturer && (
+          <section className="mycv-lecturer">
+            <div className="mycv-lecturer-avatar">
+              {lecturer.avatarUrl ? (
+                <img
+                  src={lecturer.avatarUrl}
+                  alt={lecturer.fullName}
+                />
+              ) : (
+                "GV"
+              )}
+            </div>
 
-        <div className="page-container lecturer-workspace-hero-content">
+            <div className="mycv-lecturer-info">
+              <span>GIẢNG VIÊN HƯỚNG DẪN</span>
+              <strong>{lecturer.fullName}</strong>
+              <p>@{lecturer.username}</p>
+            </div>
+          </section>
+        )}
 
-          <div>
-            <span className="lecturer-workspace-badge">
-              🎓 HỖ TRỢ THỰC TẬP
-            </span>
-
-            <h1>
-              Làm việc với
-              <span> giảng viên</span>
-            </h1>
-
-            <p>
-              Gửi CV cho giảng viên phụ trách,
-              nhận đánh giá và chỉnh sửa hồ sơ
-              trước khi ứng tuyển doanh nghiệp.
-            </p>
-          </div>
-
-
-          <button
-            className="btn btn-primary"
-            onClick={handleUploadCv}
-          >
-            + Gửi CV cho giảng viên
-          </button>
-
-        </div>
-
-      </section>
-
-
-      {/* ================================
-          MAIN
-      ================================= */}
-      <main className="page-container lecturer-workspace-main">
-
-
-        {/* ================================
-            GIẢNG VIÊN PHỤ TRÁCH
-        ================================= */}
-        <section className="lecturer-information-section">
-
-          <div className="lecturer-section-heading">
+        <section className="mycv-list-section">
+          <div className="mycv-section-heading">
             <div>
-              <span>GIẢNG VIÊN PHỤ TRÁCH</span>
+              <span className="mycv-label">
+                CV ĐÃ GỬI
+              </span>
 
-              <h2>Giảng viên hướng dẫn của bạn</h2>
+              <h2>Lịch sử gửi CV</h2>
+            </div>
+
+            <div className="mycv-heading-actions">
+              <span className="mycv-total">
+                {cvList.length} CV
+              </span>
+
+              <Link
+                to="/mycv/send"
+                className="mycv-send-button"
+              >
+                + Gửi CV mới
+              </Link>
             </div>
           </div>
 
-
-          <div className="lecturer-information-card">
-
-            <div className="lecturer-avatar">
-              GV
+          {loading && (
+            <div className="mycv-loading">
+              <span className="mycv-spinner"></span>
+              Đang tải danh sách CV...
             </div>
+          )}
 
+          {!loading && error && (
+            <div className="mycv-error">
+              {error}
+            </div>
+          )}
 
-            <div className="lecturer-information">
+          {!loading &&
+            !error &&
+            cvList.length === 0 && (
+              <div className="mycv-empty">
+                <h3>Chưa có CV nào</h3>
 
-              <h3>
-                {lecturer.fullName}
-              </h3>
+                <p>
+                  Bạn chưa gửi CV cho giảng viên hướng dẫn.
+                </p>
 
-              <p>
-                {lecturer.department}
-              </p>
-
-
-              <div className="lecturer-meta">
-
-                <div>
-                  <span>Mã giảng viên</span>
-                  <strong>
-                    {lecturer.lecturerCode}
-                  </strong>
-                </div>
-
-                <div>
-                  <span>Email</span>
-                  <strong>
-                    {lecturer.email}
-                  </strong>
-                </div>
-
+                <Link
+                  to="/mycv/send"
+                  className="mycv-empty-button"
+                >
+                  Gửi CV đầu tiên
+                </Link>
               </div>
+            )}
 
-            </div>
+          {!loading &&
+            !error &&
+            cvList.length > 0 && (
+              <div className="mycv-cards">
+                {cvList.map((cv, index) => {
+                  const status = getStatus(cv.status);
 
-          </div>
+                  return (
+                    <article
+                      className="mycv-card"
+                      key={cv.fileUrl || index}
+                    >
+                      <div className="mycv-card-header">
+                        <div className="mycv-card-title">
+                          <div className="mycv-file-icon">
+                            CV
+                          </div>
 
+                          <div>
+                            <h3>CV thực tập</h3>
+
+                            <p>
+                              Gửi ngày {cv.createdDate}
+                            </p>
+                          </div>
+                        </div>
+
+                        <span
+                          className={`mycv-status ${status.className}`}
+                        >
+                          {status.text}
+                        </span>
+                      </div>
+
+                      <div className="mycv-card-information">
+                        <div>
+                          <span>Sinh viên</span>
+                          <strong>{cv.studentName}</strong>
+                        </div>
+
+                        <div>
+                          <span>Mã sinh viên</span>
+                          <strong>
+                            {currentUser?.mssv || cv.studentId}
+                          </strong>
+                        </div>
+
+                        <div>
+                          <span>Ngày gửi</span>
+                          <strong>{cv.createdDate}</strong>
+                        </div>
+
+                        <div>
+                          <span>Giảng viên</span>
+                          <strong>
+                            {lecturer?.fullName || "Chưa cập nhật"}
+                          </strong>
+                        </div>
+                      </div>
+
+                      <div className="mycv-feedback">
+                        <span>
+                          PHẢN HỒI GIẢNG VIÊN
+                        </span>
+
+                        {cv.lecturerFeedback ? (
+                          <p>{cv.lecturerFeedback}</p>
+                        ) : (
+                          <p className="mycv-no-feedback">
+                            Chưa có phản hồi từ giảng viên.
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="mycv-card-actions">
+                        <a
+                          href={cv.fileUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mycv-view-file"
+                        >
+                          Xem file CV
+                        </a>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
         </section>
-
-
-        {/* ================================
-            DANH SÁCH CV
-        ================================= */}
-        <section className="lecturer-cv-section">
-
-          <div className="lecturer-section-heading">
-
-            <div>
-              <span>CV ĐÃ GỬI</span>
-
-              <h2>
-                Phản hồi từ giảng viên
-              </h2>
-
-              <p>
-                Theo dõi trạng thái xét duyệt
-                và nhận góp ý cho từng CV.
-              </p>
-            </div>
-
-
-            <div className="cv-total">
-              <strong>{cvList.length}</strong>
-              <span>CV đã gửi</span>
-            </div>
-
-          </div>
-
-
-          <div className="lecturer-cv-list">
-
-            {cvList.map((cv) => (
-              <CvReviewCard
-                key={cv.id}
-                cv={cv}
-              />
-            ))}
-
-          </div>
-
-        </section>
-
       </main>
-
     </div>
-  )
+  );
 }
 
-export default MyCv
+export default MyCv;

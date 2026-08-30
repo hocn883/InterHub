@@ -20,10 +20,6 @@ import java.time.LocalDateTime;
 )
 
 public class ChatRoom extends BaseEntity {
-
-    @Column(name = "room_id", nullable = false, unique = true)
-    private String roomId;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user1_id", nullable = false)
     private User user1;

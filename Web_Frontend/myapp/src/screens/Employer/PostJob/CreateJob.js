@@ -1,78 +1,84 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import './CreateJob.css'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { endpoints, authApi } from "../../../utils/api";
+
+import "./CreateJob.css";
 
 function CreateJob() {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  // ==========================================
-  // FORM ĐĂNG TIN
-  // Sau này gửi POST /api/jobs
-  // ==========================================
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    requirements: '',
-    deadline: '',
-    salary: '',
-    startDate: '',
-    endDate: '',
+    title: "",
+    description: "",
+    requirements: "",
+    salary: "",
     quantity: 1,
-    location: '',
-  })
+    location: "",
+    deadline: "",
+    startDate: "",
+    endDate: "",
+  });
 
-
-  // ==========================================
-  // HANDLE INPUT
-  // ==========================================
   const handleChange = (event) => {
+    const { name, value } = event.target;
 
-    const { name, value } = event.target
-
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    })
-  }
+    }));
+  };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  // ==========================================
-  // SUBMIT
-  // ==========================================
-  const handleSubmit = (event) => {
+    const token = localStorage.getItem("access-token");
 
-    event.preventDefault()
+    if (!token) {
+      alert("Bạn chưa đăng nhập!");
+      navigate("/login");
+      return;
+    }
 
-    console.log('Job request:', formData)
+    const data = {
+      ...formData,
+      salary: Number(formData.salary),
+      quantity: Number(formData.quantity),
+    };
 
-    /*
-      Sau này:
+    try {
+      const res = await authApi(token).post(
+        endpoints.employerJob,
+        data
+      );
 
-      axios.post(
-        '/api/jobs',
-        formData
-      )
-      .then(() => {
-        navigate('/employer/jobs')
-      })
-    */
-  }
+      console.log("Job created:", res.data);
 
+      alert("Tạo công việc thành công!");
+
+      navigate("/employer/jobs");
+
+    } catch (error) {
+      console.error("Create job error:", error);
+
+      console.log(
+        "Server error:",
+        error.response?.data
+      );
+
+      alert(
+        error.response?.data?.message ||
+        "Tạo công việc thất bại!"
+      );
+    }
+  };
 
   return (
     <div className="create-job-page">
 
-      {/* =====================================
-          HERO
-      ====================================== */}
-
       <section className="create-job-hero">
-
         <div className="page-container create-job-hero-content">
 
           <div>
-
             <span className="create-job-badge">
               💼 TUYỂN DỤNG
             </span>
@@ -86,27 +92,19 @@ function CreateJob() {
               Tạo vị trí thực tập mới và tiếp cận
               sinh viên phù hợp trên hệ thống InternHub.
             </p>
-
           </div>
 
-
           <button
+            type="button"
             className="btn btn-outline"
-            onClick={() =>
-              navigate('/employer/jobs')
-            }
+            onClick={() => navigate("/employer/jobs")}
           >
             ← Quản lý tin
           </button>
 
         </div>
-
       </section>
 
-
-      {/* =====================================
-          MAIN
-      ====================================== */}
 
       <main className="page-container create-job-main">
 
@@ -115,18 +113,12 @@ function CreateJob() {
           onSubmit={handleSubmit}
         >
 
-
-          {/* =====================================
-              THÔNG TIN CƠ BẢN
-          ====================================== */}
+          {/* THÔNG TIN CƠ BẢN */}
 
           <section className="create-job-card">
 
             <div className="create-job-heading">
-
-              <span>
-                THÔNG TIN CƠ BẢN
-              </span>
+              <span>THÔNG TIN CƠ BẢN</span>
 
               <h2>
                 Thông tin việc làm
@@ -136,9 +128,10 @@ function CreateJob() {
                 Nhập những thông tin chính của
                 vị trí đang tuyển.
               </p>
-
             </div>
 
+
+            {/* TITLE */}
 
             <div className="job-form-group">
 
@@ -161,6 +154,8 @@ function CreateJob() {
 
             <div className="job-form-row">
 
+              {/* LOCATION */}
+
               <div className="job-form-group">
 
                 <label>
@@ -180,18 +175,23 @@ function CreateJob() {
               </div>
 
 
+              {/* SALARY */}
+
               <div className="job-form-group">
 
                 <label>
                   Mức lương
+                  <span>*</span>
                 </label>
 
                 <input
                   type="number"
                   name="salary"
                   placeholder="5000000"
+                  min="0"
                   value={formData.salary}
                   onChange={handleChange}
+                  required
                 />
 
               </div>
@@ -200,6 +200,8 @@ function CreateJob() {
 
 
             <div className="job-form-row">
+
+              {/* QUANTITY */}
 
               <div className="job-form-group">
 
@@ -219,6 +221,8 @@ function CreateJob() {
 
               </div>
 
+
+              {/* DEADLINE */}
 
               <div className="job-form-group">
 
@@ -242,9 +246,7 @@ function CreateJob() {
           </section>
 
 
-          {/* =====================================
-              NỘI DUNG
-          ====================================== */}
+          {/* MÔ TẢ */}
 
           <section className="create-job-card">
 
@@ -266,6 +268,8 @@ function CreateJob() {
             </div>
 
 
+            {/* DESCRIPTION */}
+
             <div className="job-form-group">
 
               <label>
@@ -276,13 +280,11 @@ function CreateJob() {
               <textarea
                 name="description"
                 rows="8"
-                placeholder={
-                  `Ví dụ:
+                placeholder={`Ví dụ:
 - Tham gia phát triển hệ thống Backend
 - Xây dựng REST API
 - Làm việc với MySQL
-- Hỗ trợ kiểm thử và sửa lỗi`
-                }
+- Hỗ trợ kiểm thử và sửa lỗi`}
                 value={formData.description}
                 onChange={handleChange}
                 required
@@ -291,26 +293,24 @@ function CreateJob() {
             </div>
 
 
+            {/* REQUIREMENTS */}
+
             <div className="job-form-group">
 
               <label>
                 Yêu cầu ứng viên
-                <span>*</span>
               </label>
 
               <textarea
                 name="requirements"
                 rows="8"
-                placeholder={
-                  `Ví dụ:
+                placeholder={`Ví dụ:
 - Sinh viên ngành CNTT
 - Có kiến thức Java
 - Biết Spring Boot là lợi thế
-- Có khả năng làm việc nhóm`
-                }
+- Có khả năng làm việc nhóm`}
                 value={formData.requirements}
                 onChange={handleChange}
-                required
               />
 
             </div>
@@ -318,17 +318,13 @@ function CreateJob() {
           </section>
 
 
-          {/* =====================================
-              THỜI GIAN THỰC TẬP
-          ====================================== */}
+          {/* THỜI GIAN */}
 
           <section className="create-job-card">
 
             <div className="create-job-heading">
 
-              <span>
-                THỜI GIAN
-              </span>
+              <span>THỜI GIAN</span>
 
               <h2>
                 Thời gian thực tập
@@ -339,10 +335,13 @@ function CreateJob() {
 
             <div className="job-form-row">
 
+              {/* START DATE */}
+
               <div className="job-form-group">
 
                 <label>
                   Ngày bắt đầu
+                  <span>*</span>
                 </label>
 
                 <input
@@ -350,15 +349,19 @@ function CreateJob() {
                   name="startDate"
                   value={formData.startDate}
                   onChange={handleChange}
+                  required
                 />
 
               </div>
 
 
+              {/* END DATE */}
+
               <div className="job-form-group">
 
                 <label>
                   Ngày kết thúc
+                  <span>*</span>
                 </label>
 
                 <input
@@ -366,6 +369,7 @@ function CreateJob() {
                   name="endDate"
                   value={formData.endDate}
                   onChange={handleChange}
+                  required
                 />
 
               </div>
@@ -375,18 +379,14 @@ function CreateJob() {
           </section>
 
 
-          {/* =====================================
-              ACTION
-          ====================================== */}
+          {/* BUTTON */}
 
           <div className="create-job-actions">
 
             <button
               type="button"
               className="btn btn-outline"
-              onClick={() =>
-                navigate('/employer/jobs')
-              }
+              onClick={() => navigate("/employer/jobs")}
             >
               Hủy
             </button>
@@ -406,7 +406,7 @@ function CreateJob() {
       </main>
 
     </div>
-  )
+  );
 }
 
-export default CreateJob
+export default CreateJob;

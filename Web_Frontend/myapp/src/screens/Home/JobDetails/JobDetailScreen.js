@@ -1,287 +1,388 @@
 import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "./JobDetailScreen.css";
 
-function JobDetailScreen({ jobs = [], savedJobIds = [], onSave }) {
+function JobDetailScreen() {
   const { jobId } = useParams();
 
-  const job = jobs.find((item) => String(item.id) === String(jobId));
+  const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  if (!job) {
+  useEffect(() => {
+    const fetchJobDetail = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await axios.get(
+          `http://localhost:8080/api/jobs/${jobId}`
+        );
+
+        setJob(response.data.result);
+      } catch (error) {
+        console.error("Không thể lấy chi tiết công việc:", error);
+
+        setError(
+          error.response?.data?.message ||
+          "Không thể tải thông tin công việc."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (jobId) {
+      fetchJobDetail();
+    }
+  }, [jobId]);
+
+  if (loading) {
+    return (
+      <div className="job-detail-loading">
+        Đang tải thông tin công việc...
+      </div>
+    );
+  }
+
+  if (error || !job) {
     return (
       <div className="job-detail-not-found">
         <h2>Không tìm thấy công việc</h2>
-        <p>Công việc này có thể đã bị xóa hoặc không còn tồn tại.</p>
 
-        <Link to="/jobs" className="back-to-jobs-button">
-          Quay lại danh sách việc làm
+        <p>
+          {error ||
+            "Công việc này có thể đã bị xóa hoặc không còn tồn tại."}
+        </p>
+
+        <Link
+          to="/"
+          className="back-to-jobs-button"
+        >
+          Quay lại trang chủ
         </Link>
       </div>
     );
   }
 
-  const isSaved = savedJobIds.includes(job.id);
+  const companyName =
+    job.employer?.companyName ||
+    job.employer?.fullName ||
+    "Chưa cập nhật";
 
-  const handleSave = () => {
-    if (onSave) {
-      onSave(job.id);
-    }
-  };
+  const salary = job.salary
+    ? `${Number(job.salary).toLocaleString("vi-VN")} VNĐ`
+    : "Thỏa thuận";
 
   return (
     <main className="job-detail-page">
       <div className="job-detail-container">
+
+        {/* BREADCRUMB */}
         <nav className="job-breadcrumb">
-          <Link to="/">Trang chủ</Link>
+          <Link to="/">
+            Trang chủ
+          </Link>
+
           <span>/</span>
-          <Link to="/jobs">Việc làm</Link>
-          <span>/</span>
-          <span>{job.title}</span>
+
+          <span>
+            {job.title}
+          </span>
         </nav>
 
+
+        {/* JOB HEADER */}
         <section className="job-detail-hero">
-          {job.featured && (
-            <div className="job-detail-featured">Công việc nổi bật</div>
-          )}
 
           <div className="job-detail-heading">
+
+            {/* COMPANY AVATAR */}
             <div className="job-detail-company-logo">
-              {job.companyLogo}
+              {job.employer?.avatarUrl ? (
+                <img
+                  src={job.employer.avatarUrl}
+                  alt={companyName}
+                />
+              ) : (
+                companyName.charAt(0).toUpperCase()
+              )}
             </div>
 
+
+            {/* JOB TITLE */}
             <div className="job-detail-title-group">
-              <h1>{job.title}</h1>
+
+              <h1>
+                {job.title}
+              </h1>
 
               <p className="job-detail-company-name">
-                {job.company}
+                {companyName}
               </p>
 
               <div className="job-detail-tags">
-                <span>📍 {job.location}</span>
-                <span>💼 {job.type}</span>
-                <span>🕒 {job.experience}</span>
+
+                <span>
+                  {job.location || "Chưa cập nhật địa điểm"}
+                </span>
+
+                <span>
+                  {job.status || "OPEN"}
+                </span>
+
               </div>
+
             </div>
 
-            <button
-              type="button"
-              className={`job-detail-save-button ${
-                isSaved ? "saved" : ""
-              }`}
-              onClick={handleSave}
-            >
-              <span>{isSaved ? "♥" : "♡"}</span>
-              {isSaved ? "Đã lưu" : "Lưu việc làm"}
-            </button>
           </div>
 
-          <div className="job-detail-summary">
-            <div className="summary-item">
-              <span className="summary-icon">💰</span>
 
+          {/* JOB SUMMARY */}
+          <div className="job-detail-summary">
+
+            <div className="summary-item">
               <div>
                 <small>Mức lương</small>
-                <strong>{job.salary}</strong>
+
+                <strong>
+                  {salary}
+                </strong>
               </div>
             </div>
 
-            <div className="summary-item">
-              <span className="summary-icon">📅</span>
 
+            <div className="summary-item">
               <div>
                 <small>Hạn ứng tuyển</small>
-                <strong>{job.deadline}</strong>
+
+                <strong>
+                  {job.deadline || "Chưa cập nhật"}
+                </strong>
               </div>
             </div>
 
-            <div className="summary-item">
-              <span className="summary-icon">👥</span>
 
+            <div className="summary-item">
               <div>
                 <small>Số lượng tuyển</small>
-                <strong>{job.quantity || 1} người</strong>
+
+                <strong>
+                  {job.quantity || 1} vị trí
+                </strong>
               </div>
             </div>
+
 
             <div className="summary-item">
-              <span className="summary-icon">🏢</span>
-
               <div>
-                <small>Hình thức</small>
-                <strong>{job.type}</strong>
+                <small>Trạng thái</small>
+
+                <strong>
+                  {job.status || "Chưa cập nhật"}
+                </strong>
               </div>
             </div>
+
           </div>
+
         </section>
 
+
         <div className="job-detail-layout">
+
+          {/* MAIN CONTENT */}
           <section className="job-detail-main">
+
+
+            {/* DESCRIPTION */}
             <article className="job-detail-section">
-              <h2>Mô tả công việc</h2>
+
+              <h2>
+                Mô tả công việc
+              </h2>
 
               <div className="job-detail-text">
-                {job.description ? (
-                  <p>{job.description}</p>
-                ) : (
-                  <>
-                    <p>
-                      Tham gia phát triển và bảo trì các chức năng của hệ
-                      thống.
-                    </p>
-
-                    <p>
-                      Phối hợp với các thành viên trong nhóm để phân tích
-                      yêu cầu, xây dựng chức năng và kiểm thử sản phẩm.
-                    </p>
-                  </>
-                )}
+                <p>
+                  {job.description ||
+                    "Chưa cập nhật mô tả công việc."}
+                </p>
               </div>
+
             </article>
 
+
+            {/* REQUIREMENTS */}
             <article className="job-detail-section">
-              <h2>Yêu cầu ứng viên</h2>
 
-              {job.requirements ? (
-                <p className="job-detail-text">{job.requirements}</p>
-              ) : (
-                <ul className="job-detail-list">
-                  <li>
-                    Sinh viên ngành Công nghệ thông tin hoặc ngành liên
-                    quan.
-                  </li>
-                  <li>
-                    Có kiến thức cơ bản về lập trình và cơ sở dữ liệu.
-                  </li>
-                  <li>
-                    Có tinh thần học hỏi, chủ động và trách nhiệm.
-                  </li>
-                  <li>
-                    Có khả năng làm việc độc lập và làm việc nhóm.
-                  </li>
-                </ul>
-              )}
-            </article>
+              <h2>
+                Yêu cầu ứng viên
+              </h2>
 
-            <article className="job-detail-section">
-              <h2>Kỹ năng cần thiết</h2>
-
-              <div className="job-detail-skills">
-                {job.skills?.map((skill) => (
-                  <span key={skill}>{skill}</span>
-                ))}
+              <div className="job-detail-text">
+                <p>
+                  {job.requirements ||
+                    "Chưa cập nhật yêu cầu ứng viên."}
+                </p>
               </div>
+
             </article>
 
-            <article className="job-detail-section">
-              <h2>Quyền lợi</h2>
 
-              <ul className="job-detail-list">
-                <li>
-                  Được hướng dẫn và làm việc trong môi trường thực tế.
-                </li>
-                <li>
-                  Có cơ hội tham gia các dự án của doanh nghiệp.
-                </li>
-                <li>
-                  Được xác nhận thực tập sau khi hoàn thành.
-                </li>
-                <li>
-                  Có cơ hội trở thành nhân viên chính thức.
-                </li>
-              </ul>
+            {/* JOB PERIOD */}
+            <article className="job-detail-section">
+
+              <h2>
+                Thời gian thực tập
+              </h2>
+
+              <div className="job-detail-text">
+
+                <p>
+                  <strong>Ngày bắt đầu: </strong>
+                  {job.startDate || "Chưa cập nhật"}
+                </p>
+
+                <p>
+                  <strong>Ngày kết thúc: </strong>
+                  {job.endDate || "Chưa cập nhật"}
+                </p>
+
+              </div>
+
             </article>
 
+
+            {/* LOCATION */}
             <article className="job-detail-section">
-              <h2>Địa điểm làm việc</h2>
+
+              <h2>
+                Địa điểm làm việc
+              </h2>
 
               <div className="job-location-box">
-                <span>📍</span>
 
                 <div>
-                  <strong>{job.location}</strong>
+                  <strong>
+                    {job.location || "Chưa cập nhật"}
+                  </strong>
+
                   <p>
-                    Địa chỉ cụ thể sẽ được doanh nghiệp cung cấp khi ứng
-                    viên được liên hệ.
+                    Địa chỉ cụ thể sẽ được doanh nghiệp cung cấp
+                    trong quá trình tuyển dụng.
                   </p>
                 </div>
+
               </div>
+
             </article>
+
           </section>
 
+
+          {/* SIDEBAR */}
           <aside className="job-detail-sidebar">
+
+
+            {/* APPLY CARD */}
             <div className="apply-card">
+
               <div className="apply-card-header">
-                <span>Hạn nộp hồ sơ</span>
-                <strong>{job.deadline}</strong>
+
+                <span>
+                  Hạn nộp hồ sơ
+                </span>
+
+                <strong>
+                  {job.deadline || "Chưa cập nhật"}
+                </strong>
+
               </div>
 
-              <button type="button" className="apply-now-button">
-                Ứng tuyển ngay
-              </button>
-
-              <button
-                type="button"
-                className={`sidebar-save-button ${
-                  isSaved ? "saved" : ""
-                }`}
-                onClick={handleSave}
-              >
-                {isSaved ? "♥ Đã lưu việc làm" : "♡ Lưu việc làm"}
-              </button>
-
-              <p className="application-note">
-                Hãy kiểm tra kỹ CV và thông tin cá nhân trước khi ứng
-                tuyển.
-              </p>
-            </div>
-
-            <div className="company-card">
-              <h3>Thông tin công ty</h3>
-
-              <div className="company-card-heading">
-                <div className="company-card-logo">
-                  {job.companyLogo}
-                </div>
-
-                <div>
-                  <strong>{job.company}</strong>
-                  <span>Nhà tuyển dụng đã xác thực</span>
-                </div>
-              </div>
-
-              <div className="company-card-info">
-                <p>
-                  <span>👥</span>
-                  Quy mô: {job.companySize || "50 - 100 nhân viên"}
-                </p>
-
-                <p>
-                  <span>📍</span>
-                  Địa điểm: {job.location}
-                </p>
-
-                <p>
-                  <span>🌐</span>
-                  Website: {job.website || "Đang cập nhật"}
-                </p>
-              </div>
 
               <Link
-                to={`/companies/${job.companyId || job.id}`}
-                className="view-company-link"
+                to={`/applications/${jobId}`}
+                className="apply-now-button"
               >
-                Xem trang công ty →
+                Ứng tuyển ngay
               </Link>
+
+
+              <p className="application-note">
+                Hãy kiểm tra kỹ CV và thông tin cá nhân trước khi
+                ứng tuyển.
+              </p>
+
             </div>
 
+
+            {/* COMPANY CARD */}
+            <div className="company-card">
+
+              <h3>
+                Thông tin công ty
+              </h3>
+
+              <div className="company-card-heading">
+
+                <div className="company-card-logo">
+
+                  {job.employer?.avatarUrl ? (
+                    <img
+                      src={job.employer.avatarUrl}
+                      alt={companyName}
+                    />
+                  ) : (
+                    companyName.charAt(0).toUpperCase()
+                  )}
+
+                </div>
+
+
+                <div>
+
+                  <strong>
+                    {companyName}
+                  </strong>
+
+                  <span>
+                    Nhà tuyển dụng đã xác thực
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <div className="company-card-info">
+
+                <p>
+                  Địa điểm:{" "}
+                  {job.location || "Đang cập nhật"}
+                </p>
+
+              </div>
+
+            </div>
+
+
+            {/* WARNING */}
             <div className="job-warning-card">
-              <h3>⚠️ Lưu ý an toàn</h3>
+
+              <h3>
+                Lưu ý an toàn
+              </h3>
 
               <p>
-                Không cung cấp thông tin tài khoản ngân hàng hoặc chuyển
-                tiền cho nhà tuyển dụng.
+                Không cung cấp thông tin tài khoản ngân hàng hoặc
+                chuyển tiền cho nhà tuyển dụng.
               </p>
+
             </div>
+
           </aside>
+
         </div>
       </div>
     </main>

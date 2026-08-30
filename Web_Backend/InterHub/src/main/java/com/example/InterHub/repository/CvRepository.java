@@ -3,6 +3,8 @@ package com.example.InterHub.repository;
 import com.example.InterHub.entity.CvUpload;
 import com.example.InterHub.enums.CVStatus;
 import org.hibernate.type.descriptor.converter.spi.JpaAttributeConverter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,11 +14,6 @@ import java.util.Optional;
 public interface CvRepository extends JpaRepository<CvUpload,Long> {
     List<CvUpload> findByStudentIdOrderByCreatedDateDesc(Long studentId);
     List<CvUpload> findByLecturerIdOrderByCreatedDateDesc(Long lecturerId);
-    List<CvUpload> findAllByLecturerIdAndStatusOrderByCreatedDateDesc(
-            Long lecturerId,
-            CVStatus status
-    );
-
     Optional<CvUpload> findByIdAndStudentId(
             Long cvId,
             Long studentId
@@ -26,6 +23,5 @@ public interface CvRepository extends JpaRepository<CvUpload,Long> {
             Long cvId,
             Long lecturerId
     );
-
-
+    Page<CvUpload> findByStatus(CVStatus cvStatus, Pageable pageable);
 }

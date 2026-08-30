@@ -1,0 +1,73 @@
+.employer-page-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  background: linear-gradient(
+    135deg,
+    #f5f1ff 0%,
+    #ece6ff 55%,
+    #e2d9ff 100%
+  );
+}
+
+.employer-hero-content {
+  position: relative;
+  z-index: 2;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+}
+
+.employer-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  margin-bottom: 18px;
+  border-radius: 999px;
+  background: #dfd7ff;
+  color: #5638dd;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.employer-hero-content h1 {
+  margin: 0 0 16px;
+  color: #241d38;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.employer-hero-content h1 span {
+  color: #5638dd;
+}
+
+.employer-hero-content p {
+  max-width: 620px;
+  margin: 0;
+  color: #625a75;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.employer-hero-decoration {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(86, 56, 221, 0.1);
+  pointer-events: none;
+}
+
+.employer-decoration-one {
+  width: 300px;
+  height: 300px;
+  top: -150px;
+  right: 10%;
+}
+
+.employer-decoration-two {
+  width: 180px;
+  height: 180px;
+  bottom: -100px;
+  left: 7%;
+}

@@ -9,12 +9,19 @@ import com.example.InterHub.entity.Lecturer;
 import com.example.InterHub.entity.Student;
 import com.example.InterHub.entity.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel="spring")
 public interface UserMapper {
 
     StudentResponse toStudentResponse(Student student);
-
+    @Mapping(source = "companyName", target = "companyName")
+    @Mapping(source = "taxCode", target = "taxCode")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "avatarUrl", target = "avatarUrl")
+    @Mapping(source="phone ",target ="phone")
+    @Mapping(source="email",target="email")
+    @Mapping(source = "gender", target="gender")
     EmployerResponse toEmployerResponse(Employer employer);
 
     LecturerResponse toLecturerResponse(Lecturer lecturer);

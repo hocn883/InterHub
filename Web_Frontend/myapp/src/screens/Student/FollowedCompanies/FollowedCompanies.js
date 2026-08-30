@@ -1,107 +1,98 @@
-import './FollowedCompanies.css'
-import FollowedCompanyCard from './FollowedCompaniesCard'
+import { useEffect, useState } from "react";
+import "./FollowedCompanies.css";
+import FollowedCompanyCard from "./FollowedCompanyCard/FollowedCompanyCard";
+import { authApi, endpoints } from "../../../utils/api";
+import PageHero from "../../../components/PageHero/PageHero";
 
 const FollowedCompanies = () => {
+  const [followedCompanies, setFollowedCompanies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [, setFollowLoading] = useState(false);
 
-    // ==========================================
-    // DỮ LIỆU GIẢ
-    // Sau này thay bằng API:
-    // GET /api/students/followed-companies
-    // ==========================================
-    const followedCompanies = [
-        {
-            id: 1,
-            companyName: 'FPT Software',
-            shortName: 'FPT',
-            field: 'Công nghệ thông tin',
-            location: 'TP. Hồ Chí Minh',
-            followers: 1250,
-            openJobs: 12,
-            description:
-                'Công ty công nghệ hàng đầu Việt Nam với nhiều cơ hội thực tập cho sinh viên.',
-        },
-        {
-            id: 2,
-            companyName: 'VNG Corporation',
-            shortName: 'VNG',
-            field: 'Phần mềm & Internet',
-            location: 'TP. Hồ Chí Minh',
-            followers: 980,
-            openJobs: 8,
-            description:
-                'Môi trường trẻ trung, năng động với nhiều vị trí Backend, Frontend và Mobile.',
-        },
-        {
-            id: 3,
-            companyName: 'NashTech',
-            shortName: 'NT',
-            field: 'Software Outsourcing',
-            location: 'TP. Hồ Chí Minh',
-            followers: 720,
-            openJobs: 5,
-            description:
-                'Doanh nghiệp phát triển phần mềm quốc tế với nhiều chương trình Internship.',
-        },
-    ]
+  useEffect(() => {
+    loadFollowedCompanies();
+  }, []);
 
-    // ==========================================
-    // HỦY FOLLOW
-    // Sau này gọi API DELETE hoặc POST unfollow
-    // ==========================================
-    const handleUnfollow = (companyId) => {
-        console.log('Unfollow company:', companyId)
+  const loadFollowedCompanies = async () => {
+    try {
+      const token = localStorage.getItem("access-token");
+
+      const response = await authApi(token).get(
+        endpoints.followed
+      );
+
+      const companies = response.data.result.content.map(
+        (follow) => ({
+          ...follow.employer,
+          followId: follow.id,
+          createdDate: follow.createdDate,
+        })
+      );
+
+      setFollowedCompanies(companies);
+    } catch (error) {
+      console.error(
+        "Lỗi load followed companies:",
+        error
+      );
+    } finally {
+      setLoading(false);
     }
+  };
 
-    return (
-        <main className="followed-companies-page">
+  const handleUnfollow = async (companyId) => {
+    try {
+      setFollowLoading(true);
 
-            <section className="page-container">
+      const token = localStorage.getItem("access-token");
 
-                <div className="followed-company-heading">
+      await authApi(token).delete(
+        endpoints.followEmployer(companyId)
+      );
 
-                    <div>
-                        <span className="page-badge">
-                            🏢 DOANH NGHIỆP
-                        </span>
+      setFollowedCompanies((prev) =>
+        prev.filter(
+          (company) => company.id !== companyId
+        )
+      );
+    } catch (error) {
+      console.error("Unfollow error:", error);
 
-                        <h1 className="page-title">
-                            Doanh nghiệp <span>đã theo dõi</span>
-                        </h1>
+      alert(
+        error.response?.data?.message ||
+          "Không thể hủy theo dõi doanh nghiệp."
+      );
+    } finally {
+      setFollowLoading(false);
+    }
+  };
 
-                        <p className="page-description">
-                            Theo dõi các doanh nghiệp bạn quan tâm và
-                            cập nhật cơ hội thực tập mới nhất.
-                        </p>
-                    </div>
+  if (loading) {
+    return <div>Đang tải...</div>;
+  }
 
+  return (
+    <main className="followed-companies-page">
+      <PageHero
+        badge="DOANH NGHIỆP"
+        title="Doanh nghiệp"
+        highlight="đã theo dõi"
+        description="Theo dõi các doanh nghiệp bạn quan tâm và cập nhật những cơ hội thực tập mới nhất."
+      />
 
-                    <div className="followed-company-stat">
-                        <strong>
-                            {followedCompanies.length}
-                        </strong>
+      <section className="page-container followed-companies-content">
+        <div className="followed-company-grid">
+          {followedCompanies.map((company) => (
+            <FollowedCompanyCard
+              key={company.id}
+              company={company}
+              onUnfollow={handleUnfollow}
+            />
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+};
 
-                        <span>Đang theo dõi</span>
-                    </div>
-
-                </div>
-
-
-                <div className="followed-company-grid">
-
-                    {followedCompanies.map((company) => (
-                        <FollowedCompanyCard
-                            key={company.id}
-                            company={company}
-                            onUnfollow={handleUnfollow}
-                        />
-                    ))}
-
-                </div>
-
-            </section>
-
-        </main>
-    )
-}
-
-export default FollowedCompanies
+export default FollowedCompanies;
