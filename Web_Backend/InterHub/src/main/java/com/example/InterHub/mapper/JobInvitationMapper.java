@@ -6,11 +6,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface JobInvitationMapper {
-    @Mapping(source = "student.id", target = "studentId")
-    @Mapping(source = "student.fullName", target = "studentName")
-    @Mapping(source = "job.id", target = "jobId")
-    @Mapping(source = "job.title", target = "jobTitle")
+    @Mapping(source = "student", target = "student")
+    @Mapping(source = "job", target = "job")
     @Mapping(source = "cv.id", target = "cvId")
     @Mapping(source = "cv.fileUrl", target = "fileCv")
+    @Mapping(source = "job.employer",target="employer")
     JobInvitationResponse toResponse(JobInvitation jobInvitation);
 }

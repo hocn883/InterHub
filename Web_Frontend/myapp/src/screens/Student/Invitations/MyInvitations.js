@@ -17,10 +17,8 @@ function MyInvitations() {
   const loadInvitations = async () => {
     try {
       setLoading(true);
-
       const token = localStorage.getItem("access-token");
       const response = await authApi(token).get(endpoints.myinvitations);
-
       setInvitations(response.data?.result?.content || []);
     } catch (err) {
       console.error(err);
@@ -42,7 +40,8 @@ function MyInvitations() {
 
       const token = localStorage.getItem("access-token");
 
-      await authApi(token).post(endpoints.acceptJobInvitation(id));
+      await authApi(token).patch
+      (endpoints.studentAccept(id));
 
       updateStatus(id, "ACCEPTED");
       alert("Đã chấp nhận lời mời");
@@ -56,11 +55,8 @@ function MyInvitations() {
   const handleReject = async (id) => {
     try {
       setActionLoading(true);
-
       const token = localStorage.getItem("access-token");
-
-      await authApi(token).post(endpoints.rejectJobInvitation(id));
-
+      await authApi(token).patch(endpoints.studentReject(id));
       updateStatus(id, "REJECTED");
       alert("Đã từ chối lời mời");
     } catch (err) {

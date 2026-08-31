@@ -1,0 +1,69 @@
+.minimal-template {
+  min-height: 1123px;
+  padding: 58px;
+  background: #ffffff;
+  color: #191919;
+  font-family: Arial, sans-serif;
+}
+
+.minimal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.minimal-header h1 {
+  margin: 0 0 8px;
+  font-size: 35px;
+  font-weight: 500;
+}
+
+.minimal-header h2 {
+  margin: 0 0 13px;
+  color: #727272;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.minimal-header p {
+  margin: 0;
+  color: #777777;
+  font-size: 10px;
+}
+
+.minimal-header img {
+  width: 95px;
+  height: 95px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.minimal-divider {
+  height: 2px;
+  margin: 31px 0;
+  background: #222222;
+}
+
+.minimal-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 48px;
+}
+
+.minimal-section {
+  margin-bottom: 31px;
+}
+
+.minimal-section h3 {
+  margin: 0 0 11px;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.minimal-section p {
+  margin: 0;
+  color: #555555;
+  font-size: 10.5px;
+  line-height: 1.85;
+  white-space: pre-line;
+}

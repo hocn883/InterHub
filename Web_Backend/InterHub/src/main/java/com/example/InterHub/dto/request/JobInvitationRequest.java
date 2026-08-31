@@ -13,5 +13,7 @@ public class JobInvitationRequest {
     @NotNull
     private Long cvId;
     @NotNull
+    private String title;
+    @NotNull
     private String message;
 }

@@ -28,43 +28,22 @@ public class JobInvitationService {
     private final ApplicationRepository applicationRepository;
     private final JobInvitationMapper jobInvitationMapper;
     private final PageMapper pageMapper;
+    private final SystemLogService systemLogService;
     @Transactional
-    public JobInvitationResponse inviteStudent(
-            Employer employer,
-            Long jobId,
-            JobInvitationRequest request
-    ) {
-        Job job = jobRepository
-                .findByIdAndEmployerId(jobId, employer.getId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Job không tồn tại hoặc không thuộc nhà tuyển dụng"
-                        )
-                );
-        CvUpload cv = cvRepository
-                .findById(request.getCvId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Không tìm thấy CV"
-                        )
-                );
+    public JobInvitationResponse inviteStudent(Employer employer, Long jobId, JobInvitationRequest request)
+    {
+        Job job = jobRepository.findByIdAndEmployerId(jobId, employer.getId()).orElseThrow(() -> new ResourceNotFoundException(
+                "Job không tồn tại hoặc không thuộc nhà tuyển dụng"));
+        CvUpload cv = cvRepository.findById(request.getCvId()).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy CV"));
         Student student = cv.getStudent();
-        boolean alreadyApplied =
-                applicationRepository.existsByStudentIdAndJobId(
-                        student.getId(),
-                        job.getId()
-                );
+        boolean alreadyApplied = applicationRepository.existsByStudentIdAndJobId(student.getId(), job.getId());
         if (alreadyApplied) {
-            throw new ConflictException(
-                    "Sinh viên này đã ứng tuyển vào công việc"
+            throw new ConflictException("Sinh viên này đã ứng tuyển vào công việc"
             );
         }
-        boolean alreadyInvited =
-                jobInvitationRepository.existsByStudentIdAndJobId(
-                        student.getId(),
-                        job.getId()
-                );
-        if (alreadyInvited) {
+        boolean alreadyInvited = jobInvitationRepository.existsByStudentIdAndJobId(student.getId(), job.getId());
+        if (alreadyInvited)
+        {
             throw new DuplicateResourceException(
                     "Bạn đã gửi lời mời cho sinh viên này"
             );
@@ -72,61 +51,50 @@ public class JobInvitationService {
         JobInvitation jobInvitation = JobInvitation.builder()
                 .student(student)
                 .job(job)
+                .title(request.getTitle())
                 .cv(cv)
                 .message(request.getMessage())
                 .status(JobInvitationStatus.PENDING)
                 .build();
         jobInvitationRepository.save(jobInvitation);
+        systemLogService.saveLog(
+                employer,
+                Action.SEND_JOB_INVITATION.name(),
+                "Gửi lời mời công việc ID: " + jobInvitation.getId() +
+                        " cho sinh viên ID: " + student.getId()
+        );
         return jobInvitationMapper.toResponse(jobInvitation);
     }
     @Transactional
-    public JobInvitationResponse acceptJobInvitation(
-            Student student,
-            Long jobInvitationId
-    ) {
-        JobInvitation jobInvitation =
-                jobInvitationRepository
-                        .findById(jobInvitationId)
-                        .orElseThrow();
-        boolean alreadyApplied =
-                applicationRepository
-                        .existsByStudentIdAndJobId(
-                                student.getId(),
-                                jobInvitation.getJob().getId()
-                        );
-
-        if (alreadyApplied) {
-            throw new RuntimeException(
-                    "Bạn đã ứng tuyển vào công việc này"
-            );
+    public JobInvitationResponse acceptJobInvitation(Student student, Long jobInvitationId)
+    {
+        JobInvitation jobInvitation = jobInvitationRepository.findById(jobInvitationId).orElseThrow();
+        boolean alreadyApplied = applicationRepository.existsByStudentIdAndJobId(student.getId(), jobInvitation.getJob().getId());
+        if (alreadyApplied)
+        {
+            throw new RuntimeException("Bạn đã ứng tuyển vào công việc này");
         }
-        jobInvitation.setStatus(
-                JobInvitationStatus.ACCEPTED
-        );
-        Application application =
-                Application.builder()
-                        .student(student)
-                        .job(jobInvitation.getJob())
-                        .fileCv(
-                                jobInvitation
-                                        .getCv().getFileUrl()
-                        )
-                        .coverLetter(null)
-                        .status(ApplicationStatus.PENDING)
-                        .source(ApplicationSource.EMPLOYER_INVITED)
-                        .build();
-
+        jobInvitation.setStatus(JobInvitationStatus.ACCEPTED);
+        Application application = Application.builder()
+                .student(student)
+                .job(jobInvitation.getJob())
+                .fileCv(jobInvitation.getCv().getFileUrl())
+                .coverLetter(null)
+                .status(ApplicationStatus.APPROVED)
+                .source(ApplicationSource.EMPLOYER_INVITED)
+                .build();
         applicationRepository.save(application);
+        systemLogService.saveLog(
+                student,
+                Action.ACCEPT_JOB_INVITATION.name(),
+                "Chấp nhận lời mời công việc ID: " + jobInvitationId
+        );
         return jobInvitationMapper.toResponse(jobInvitation);
     }
     @Transactional(readOnly = true)
-    public PageResponse<JobInvitationResponse> getEmployerJobInvitations(
-            Employer employer,
-            Pageable pageable
-    ) {
-        Page<JobInvitation>pageInvitation=jobInvitationRepository.findAllByJobEmployerId(
-                employer.getId(), pageable
-        );
+    public PageResponse<JobInvitationResponse> getEmployerJobInvitations(Employer employer, Pageable pageable)
+    {
+        Page<JobInvitation>pageInvitation=jobInvitationRepository.findAllByJobEmployerId(employer.getId(), pageable);
         Page<JobInvitationResponse>page=pageInvitation.map(jobInvitationMapper::toResponse);
         return pageMapper.toPageResponse(page);
     }
@@ -140,39 +108,37 @@ public class JobInvitationService {
         return pageMapper.toPageResponse(page);
     }
     @Transactional
-    public JobInvitationResponse rejectJobInvitation(
-            Student student,
-            Long jobInvitationId
-    ) {
-        JobInvitation jobInvitation = jobInvitationRepository
-                .findById(jobInvitationId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Không tìm thấy lời mời")
-                );
-        if (jobInvitation.getStatus() != JobInvitationStatus.PENDING) {
+    public JobInvitationResponse rejectJobInvitation(Student student, Long jobInvitationId)
+    {
+        JobInvitation jobInvitation = jobInvitationRepository.findById(jobInvitationId).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy lời mời"));
+        if (jobInvitation.getStatus() != JobInvitationStatus.PENDING)
+        {
             throw new ConflictException("Lời mời này đã được xử lý");
         }
-
         jobInvitation.setStatus(JobInvitationStatus.REJECTED);
-
+        systemLogService.saveLog(
+                student,
+                Action.REJECT_JOB_INVITATION.name(),
+                "Từ chối lời mời công việc ID: " + jobInvitationId
+        );
         return jobInvitationMapper.toResponse(jobInvitation);
     }
     @Transactional
-    public JobInvitationResponse cancelJobInvitation(
-            Employer employer,
-            Long jobInvitationId
-    ) {
-        JobInvitation jobInvitation = jobInvitationRepository
-                .findById(jobInvitationId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Không tìm thấy lời mời")
-                );
-        if (jobInvitation.getStatus() != JobInvitationStatus.PENDING) {
+    public JobInvitationResponse cancelJobInvitation(Employer employer, Long jobInvitationId)
+    {
+        JobInvitation jobInvitation = jobInvitationRepository.findById(jobInvitationId).orElseThrow(() ->
+                new ResourceNotFoundException("Không tìm thấy lời mời")
+        );
+        if (jobInvitation.getStatus() != JobInvitationStatus.PENDING)
+        {
             throw new ConflictException("Chỉ có thể hủy lời mời đang chờ");
         }
-
         jobInvitation.setStatus(JobInvitationStatus.CANCELLED);
-
+        systemLogService.saveLog(
+                employer,
+                Action.CANCEL_JOB_INVITATION.name(),
+                "Hủy lời mời công việc ID: " + jobInvitationId
+        );
         return jobInvitationMapper.toResponse(jobInvitation);
     }
 }

@@ -1,0 +1,178 @@
+.employer-invitation-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 20px 22px;
+  border: 1px solid #e5e8ef;
+  border-radius: 15px;
+  background: #ffffff;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.employer-invitation-card:hover {
+  transform: translateY(-2px);
+  border-color: #ddd7fa;
+  box-shadow:
+    0 14px 30px
+    rgba(37, 46, 68, 0.07);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.employer-invitation-card-main {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* =========================
+   ICON
+========================= */
+
+.employer-invitation-card-icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 13px;
+  background: #f0ecff;
+  color: #6046e9;
+  font-size: 21px;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.employer-invitation-card-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.employer-invitation-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 16px;
+}
+
+.employer-invitation-card-code {
+  display: block;
+  margin-bottom: 5px;
+  color: #9aa0ac;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.employer-invitation-card-header h3 {
+  margin: 0;
+  color: #293247;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.employer-invitation-status {
+  flex-shrink: 0;
+  padding: 6px 9px;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.employer-invitation-status-pending {
+  background: #fff7e7;
+  color: #b06b15;
+}
+
+.employer-invitation-status-accepted {
+  background: #e8f8f2;
+  color: #168464;
+}
+
+.employer-invitation-status-rejected {
+  background: #fff0f0;
+  color: #bd4141;
+}
+
+/* =========================
+   META
+========================= */
+
+.employer-invitation-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 17px 35px;
+}
+
+.employer-invitation-card-meta > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.employer-invitation-card-meta > div > svg {
+  flex-shrink: 0;
+  color: #778094;
+  font-size: 14px;
+}
+
+.employer-invitation-card-meta > div > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.employer-invitation-card-meta span {
+  color: #9aa1ae;
+  font-size: 8px;
+}
+
+.employer-invitation-card-meta strong {
+  color: #586173;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* =========================
+   DETAIL BUTTON
+========================= */
+
+.employer-invitation-detail-button {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border: 1px solid #ded9f7;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #6046e9;
+  font-size: 10px;
+  font-weight: 750;
+  transition: 0.2s ease;
+}
+
+.employer-invitation-detail-button:hover {
+  border-color: #cfc7f8;
+  background: #f5f2ff;
+}
+
+.employer-invitation-detail-button svg {
+  font-size: 12px;
+}

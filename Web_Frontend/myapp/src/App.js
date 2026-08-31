@@ -4,8 +4,8 @@ import { UserContext } from "./contexts/UserContext";
 import { useContext } from "react";
 import MainLayout from "./Layout/MainLayout";
 import Home from "./screens/Home/Home";
-import Login from "./screens/Auth/Login";
-import Register from "./screens/Auth/Register";
+import Login from "./screens/Auth/Login/Login";
+import Register from "./screens/Auth/Register/Register";
 import JobDetailScreen from "./screens/Home/JobDetails/JobDetailScreen";
 import CompanyDetails from "./screens/Home/CompaniesDetails/CompanyDetails";
 import MyApplications from "./screens/Student/MyApplications/MyApplications";
@@ -25,7 +25,9 @@ import SuggestedCv from "./screens/Employer/SuggestedCv/SuggestedCv";
 import EmployerInvite from "./screens/Employer/SuggestedCv/EmployerInvite/EmployerInvite";
 import ReviewJob from "./screens/Student/MyApplications/ReviewJob/ReviewJob";
 import MyInvitations from "./screens/Student/Invitations/MyInvitations";
-
+import Applications   from "./screens/Student/Applications/Applications";
+import EmployerInvitations from "./screens/Employer/EmployerInvitations/EmployerInvitations";
+import EmployerInvitationDetails from "./screens/Employer/EmployerInvitations/EmployerInvitationDetails/EmployerInvitationDetails";
 function App() {
   const { currentUser } = useContext(UserContext);
 
@@ -34,7 +36,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
         <Route element={<ProtectedRoute currentUser={currentUser} />}>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
@@ -56,6 +57,9 @@ function App() {
             <Route path="/cv/suggestedCv" element={<SuggestedCv />} />
             <Route path="/profile" element={<Profile currentUser={currentUser} />} />
             <Route path="/mycv/send" element={<SendCv />} />
+            <Route path="/jobs/:jobId/apply" element={<Applications />} />
+            <Route path="/employer/invitations" element={<EmployerInvitations/>} />
+             <Route path="/employer/invitations/:invitationId" element={<EmployerInvitationDetails/>} />
           </Route>
         </Route>
       </Routes>

@@ -1,21 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../../../contexts/UserContext";
 import api, {
   endpoints,
   authApi,
-} from "../../utils/api";
+} from "../../../utils/api";
 
 import {
   FaUser,
   FaLock,
   FaEye,
   FaEyeSlash,
-  FaGoogle,
 } from "react-icons/fa";
 
-import "./Auth.css";
+import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -43,9 +42,6 @@ function Login() {
 
     setError("");
 
-    // ==============================
-    // VALIDATE
-    // ==============================
     if (
       !username.trim() ||
       !password.trim()
@@ -59,9 +55,6 @@ function Login() {
     try {
       setLoading(true);
 
-      // ==============================
-      // LOGIN
-      // ==============================
       const response = await api.post(
         endpoints.login,
         {
@@ -72,9 +65,6 @@ function Login() {
 
       const data = response.data;
 
-      // ==============================
-      // GET TOKEN
-      // ==============================
       const token =
         data?.result?.acesToken;
 
@@ -84,17 +74,11 @@ function Login() {
         );
       }
 
-      // ==============================
-      // SAVE TOKEN
-      // ==============================
       localStorage.setItem(
         "access-token",
         token
       );
 
-      // ==============================
-      // GET CURRENT USER
-      // ==============================
       const userResponse =
         await authApi(token).get(
           endpoints.currentUser
@@ -109,57 +93,22 @@ function Login() {
         );
       }
 
-      // ==============================
-      // UPDATE USER CONTEXT
-      // ==============================
       setCurrentUser(currentUser);
 
-      // ==============================
-      // REDIRECT HOME
-      // ==============================
       navigate("/", {
         replace: true,
       });
 
-    } catch (error) {
+    } catch (err) {
       console.error(
         "Login error:",
-        error
+        err.response
       );
 
-      // ==============================
-      // ERROR 401
-      // ==============================
-      if (
-        error.response?.status === 401
-      ) {
-        setError(
-          "Tên đăng nhập hoặc mật khẩu không đúng."
-        );
-      }
+      setError(
+        err.response?.data?.message
+      );
 
-      // ==============================
-      // ERROR 400
-      // ==============================
-      else if (
-        error.response?.status === 400
-      ) {
-        setError(
-          error.response?.data?.message ||
-            "Thông tin đăng nhập không hợp lệ."
-        );
-      }
-
-      // ==============================
-      // OTHER ERROR
-      // ==============================
-      else {
-        setError(
-          error.response?.data?.message ||
-            error.message ||
-            "Không thể đăng nhập. Vui lòng thử lại."
-        );
-      }
     } finally {
       setLoading(false);
     }
@@ -167,23 +116,12 @@ function Login() {
 
   return (
     <div className="auth-page">
-
-      {/* ==============================
-          DECORATION
-      ============================== */}
-
       <div className="auth-decoration auth-decoration-one"></div>
 
       <div className="auth-decoration auth-decoration-two"></div>
 
       <div className="auth-container">
-
-        {/* ==============================
-            LEFT
-        ============================== */}
-
         <section className="auth-introduction">
-
           <Link
             to="/"
             className="auth-brand"
@@ -204,7 +142,6 @@ function Login() {
           </Link>
 
           <div className="auth-intro-content">
-
             <div className="auth-badge">
               KHOA CÔNG NGHỆ THÔNG TIN
             </div>
@@ -225,7 +162,6 @@ function Login() {
             </p>
 
             <div className="auth-school">
-
               <div className="auth-school-logo">
                 OU
               </div>
@@ -239,13 +175,10 @@ function Login() {
                   Khoa Công nghệ Thông tin
                 </strong>
               </div>
-
             </div>
 
             <div className="auth-features">
-
               <div className="auth-feature">
-
                 <div className="auth-feature-icon">
                   ✓
                 </div>
@@ -260,11 +193,9 @@ function Login() {
                     từ doanh nghiệp đối tác
                   </span>
                 </div>
-
               </div>
 
               <div className="auth-feature">
-
                 <div className="auth-feature-icon">
                   ✓
                 </div>
@@ -279,11 +210,9 @@ function Login() {
                     với doanh nghiệp
                   </span>
                 </div>
-
               </div>
 
               <div className="auth-feature">
-
                 <div className="auth-feature-icon">
                   ✓
                 </div>
@@ -298,32 +227,19 @@ function Login() {
                     tiến trình thực tập
                   </span>
                 </div>
-
               </div>
-
             </div>
-
           </div>
 
           <div className="auth-footer-text">
             © 2026 InternHub · Khoa Công nghệ
             Thông tin · OU
           </div>
-
         </section>
 
-        {/* ==============================
-            RIGHT
-        ============================== */}
-
         <section className="auth-form-area">
-
           <div className="auth-card">
-
-            {/* MOBILE BRAND */}
-
             <div className="auth-mobile-brand">
-
               <div className="auth-brand-logo">
                 IH
               </div>
@@ -331,13 +247,9 @@ function Login() {
               <strong>
                 InternHub
               </strong>
-
             </div>
 
-            {/* HEADER */}
-
             <div className="auth-card-header">
-
               <span className="auth-label">
                 CHÀO MỪNG TRỞ LẠI
               </span>
@@ -350,31 +262,21 @@ function Login() {
                 Đăng nhập để tiếp tục sử dụng
                 hệ thống InternHub
               </p>
-
             </div>
 
-            {/* FORM */}
-
             <form onSubmit={handleLogin}>
-
-              {/* ERROR */}
-
               {error && (
                 <div className="auth-error">
                   {error}
                 </div>
               )}
 
-              {/* USERNAME */}
-
               <div className="auth-form-group">
-
                 <label>
                   Tên đăng nhập
                 </label>
 
                 <div className="auth-input-wrapper">
-
                   <span className="auth-input-icon">
                     <FaUser />
                   </span>
@@ -391,32 +293,15 @@ function Login() {
                     autoComplete="username"
                     disabled={loading}
                   />
-
                 </div>
-
               </div>
 
-              {/* PASSWORD */}
-
               <div className="auth-form-group">
-
-                <div className="auth-label-row">
-
-                  <label>
-                    Mật khẩu
-                  </label>
-
-                  <Link
-                    to="/forgot-password"
-                    className="auth-forgot"
-                  >
-                    Quên mật khẩu?
-                  </Link>
-
-                </div>
+                <label>
+                  Mật khẩu
+                </label>
 
                 <div className="auth-input-wrapper">
-
                   <span className="auth-input-icon">
                     <FaLock />
                   </span>
@@ -447,6 +332,11 @@ function Login() {
                       )
                     }
                     disabled={loading}
+                    aria-label={
+                      showPassword
+                        ? "Ẩn mật khẩu"
+                        : "Hiện mật khẩu"
+                    }
                   >
                     {showPassword ? (
                       <FaEyeSlash />
@@ -454,33 +344,26 @@ function Login() {
                       <FaEye />
                     )}
                   </button>
-
                 </div>
-
               </div>
 
-              {/* REMEMBER */}
+              <div className="auth-login-options">
+                <label className="auth-checkbox">
+                  <input
+                    type="checkbox"
+                  />
 
-              <label className="auth-checkbox">
-
-                <input
-                  type="checkbox"
-                />
-
-                <span>
-                  Ghi nhớ đăng nhập
-                </span>
-
-              </label>
-
-              {/* SUBMIT */}
+                  <span>
+                    Ghi nhớ đăng nhập
+                  </span>
+                </label>
+              </div>
 
               <button
                 type="submit"
                 className="auth-submit"
                 disabled={loading}
               >
-
                 {loading
                   ? "Đang đăng nhập..."
                   : "Đăng nhập"}
@@ -490,52 +373,28 @@ function Login() {
                     →
                   </span>
                 )}
-
               </button>
 
+              <div className="auth-forgot-wrapper">
+                <Link
+                  to="/forgot-password"
+                  className="auth-forgot"
+                >
+                  Quên mật khẩu?
+                </Link>
+              </div>
             </form>
 
-            {/* DIVIDER */}
-
-            <div className="auth-divider">
-              <span>
-                hoặc
-              </span>
-            </div>
-
-            {/* GOOGLE */}
-
-            <button
-              type="button"
-              className="auth-google"
-            >
-
-              <div className="auth-google-icon">
-                <FaGoogle />
-              </div>
-
-              Đăng nhập với Google
-
-            </button>
-
-            {/* REGISTER */}
-
             <div className="auth-switch">
-
               Chưa có tài khoản?
 
               <Link to="/register">
                 Đăng ký ngay
               </Link>
-
             </div>
-
           </div>
-
         </section>
-
       </div>
-
     </div>
   );
 }

@@ -10,23 +10,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JobInvitationRepository
         extends JpaRepository<JobInvitation, Long> {
-
     boolean existsByStudentIdAndJobId(
             Long studentId,
             Long jobId
     );
-
     boolean existsByStudentIdAndJobIdAndStatus(
             Long studentId,
             Long jobId,
             JobInvitationStatus status
     );
-
     Page<JobInvitation> findAllByStudentId(
             Long studentId,
             Pageable pageable
     );
-
     Page<JobInvitation> findAllByJobId(
             Long jobId,
             Pageable pageable

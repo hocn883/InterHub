@@ -35,6 +35,8 @@ const roleMenus = {
     { label: 'Trang chủ', href: '/' },
     { label: 'Tin tuyển dụng', href: '/employer/jobs' },
     { label: 'Ứng viên Nổi Bật', href: '/cv/suggestedCv' },
+    { label: 'Thư mời', href: '/employer/invitations' },
+    { label: 'Sinh Viên đã tuyển dụng', href: '/employer/postjob' },
   ]
 }
 

@@ -6,20 +6,21 @@ import com.example.InterHub.dto.response.PageResponse;
 import com.example.InterHub.entity.Employer;
 import com.example.InterHub.entity.Job;
 import com.example.InterHub.entity.User;
+import com.example.InterHub.enums.Action;
 import com.example.InterHub.enums.EmployerStatus;
 import com.example.InterHub.enums.JobStatus;
+import com.example.InterHub.exception.ConflictException;
+import com.example.InterHub.exception.ForbiddenException;
+import com.example.InterHub.exception.ResourceNotFoundException;
 import com.example.InterHub.mapper.JobMapper;
 import com.example.InterHub.mapper.PageMapper;
 import com.example.InterHub.repository.EmployerRepository;
 import com.example.InterHub.repository.JobRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-
+import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class JobService {
@@ -29,100 +30,107 @@ public class JobService {
     private final PageMapper pageMapper;
     private final SystemLogService systemLogService;
     @Transactional(readOnly = true)
-    public PageResponse<JobResponse> getAllJobs(Pageable pageable) {
+    public PageResponse<JobResponse> getAllJobs(Pageable pageable)
+    {
         Page<Job> jobPage = jobRepository.findAll(pageable);
-        Page<JobResponse>page=jobPage.map(jobMapper::toResponse);
+        Page<JobResponse> page = jobPage.map(jobMapper::toResponse);
         return pageMapper.toPageResponse(page);
     }
-    public JobResponse create(User currentUser, PostJobRequest request)
-    {
-        Employer employer=(Employer)currentUser;
-        if(employer.getStatus()!= EmployerStatus.APPROVED)
-        {
-            throw new RuntimeException(
-                    "Nhà tuyển dụng chưa được admin duyệt."
-            );
+    @Transactional
+    public JobResponse create(User currentUser, PostJobRequest request) {
+        Employer employer = (Employer) currentUser;
+        if (employer.getStatus() != EmployerStatus.APPROVED) {
+            throw new ForbiddenException(
+                    "Nhà tuyển dụng chưa được Admin duyệt");
         }
         Job job = jobMapper.toEntity(request);
         job.setEmployer(employer);
         job.setStatus(JobStatus.OPEN);
-        Job saveJob=jobRepository.save(job);
-        systemLogService.saveLog(
-                employer,
-                "CREATE_JOB",
-                "Doanh nghiệp " + employer.getUsername()
-                        + " đã đăng công việc " + saveJob.getTitle()
-        );
-        return jobMapper.toResponse(saveJob);
+        Job savedJob = jobRepository.save(job);
+        systemLogService.saveLog(employer, Action.CREATE_JOB.name(),
+                "Doanh nghiệp " + employer.getUsername() + " đã đăng công việc "+ savedJob.getTitle());
+        return jobMapper.toResponse(savedJob);
     }
-    @Transactional(readOnly=true)
-    public JobResponse getJobById(Long id)
-    {
-        Job job= jobRepository.findJobById(id).orElseThrow();
+    @Transactional(readOnly = true)
+    public JobResponse getJobById(Long id) {
+        Job job = jobRepository.findJobById(id).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy công việc"));
         return jobMapper.toResponse(job);
     }
-    @Transactional(readOnly=true)
-    public PageResponse<JobResponse> searchJobs(String kw,Pageable pageable) {
-        Page<Job>jobPage=jobRepository.findByTitleContainingIgnoreCase(kw,pageable);
-        Page<JobResponse>page=jobPage.map(jobMapper::toResponse);
+    @Transactional(readOnly = true)
+    public PageResponse<JobResponse> searchJobs(
+            String kw,
+            Pageable pageable
+    ) {
+        Page<Job> jobPage = jobRepository.findByTitleContainingIgnoreCase(kw, pageable);
+        Page<JobResponse> page = jobPage.map(jobMapper::toResponse);
         return pageMapper.toPageResponse(page);
     }
     @Transactional
     public void deleteJob(Long id, User currentUser) {
-        Employer employer = (Employer)currentUser;
-        Job job= jobRepository.findByIdAndEmployerId(id,employer.getId()).orElseThrow();
+        Employer  employer = (Employer) currentUser;
+        Job job = jobRepository.findByIdAndEmployerId(id, employer.getId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Không tìm thấy công việc hoặc bạn không có quyền xóa"
+                        ));
         jobRepository.delete(job);
-        systemLogService.saveLog(
-                employer,
-                "DELETED_JOB",
-                "Doanh nghiệp " + employer.getUsername()
-                        + " đã xóa công việc " + job.getTitle()
-        );
+        systemLogService.saveLog(employer,
+                Action.DELETE_JOB.name(),
+                "Doanh nghiệp "
+                        + employer.getUsername()
+                        + " đã xóa công việc "
+                        + job.getTitle());
     }
     @Transactional
     public JobResponse updateJobs(Long id, User currentUser, PostJobRequest request)
     {
-        Job job = jobRepository.findByIdAndEmployerId(id, currentUser.getId()).orElseThrow();
+        if (!(currentUser instanceof Employer employer)) {
+            throw new ForbiddenException(
+                    "Chỉ nhà tuyển dụng mới có thể cập nhật công việc"
+            );
+        }
+        Job job = jobRepository.findByIdAndEmployerId(id, employer.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy công việc hoặc bạn không có quyền cập nhật"));
         return jobMapper.toResponse(job);
     }
-    @Transactional
-    public PageResponse<JobResponse> getMyJobs(User currentUser,Pageable pageable)
+    @Transactional(readOnly = true)
+    public PageResponse<JobResponse> getMyJobs(User currentUser, Pageable pageable)
     {
-        Page<Job>jobPage=jobRepository.findJobByEmployerId(currentUser.getId(),pageable);
-        Page<JobResponse>page=jobPage.map(jobMapper::toResponse);
+        if (!(currentUser instanceof Employer employer))
+        {
+            throw new ForbiddenException("Chỉ nhà tuyển dụng mới có thể xem công việc của mình");
+        }
+        Page<Job> jobPage = jobRepository.findJobByEmployerId(employer.getId(),pageable);
+        Page<JobResponse> page = jobPage.map(jobMapper::toResponse);
+        return pageMapper.toPageResponse(page);
+    }
+    @Transactional(readOnly = true)
+    public PageResponse<JobResponse> getJobsByEmployerId(Long id, Pageable pageable) {
+        Page<Job> jobPage = jobRepository.findJobByEmployerId(id, pageable);
+        Page<JobResponse> page = jobPage.map(jobMapper::toResponse);
         return pageMapper.toPageResponse(page);
     }
     @Transactional
-    public PageResponse<JobResponse>getJobsByEmployerId(Long id,Pageable pageable)
-    {
-        Page<Job>jobPage=jobRepository.findJobByEmployerId(id,pageable);
-        Page<JobResponse>page=jobPage.map(jobMapper::toResponse);
-        return pageMapper.toPageResponse(page);
-    }
-    @Transactional
-    public JobResponse closeJob(
-            Long jobId,
-            User currentUser
+    public JobResponse closeJob(Long jobId, User currentUser
     ) {
-        Job job = jobRepository.findById(jobId)
-                .orElseThrow(
-                        () -> new RuntimeException(
-                                "Không tìm thấy Job"
-                        )
-                );
-        if (!job.getEmployer().getId()
-                .equals(currentUser.getId())) {
-            throw new RuntimeException(
-                    "Bạn không có quyền đóng Job này"
-            );
-        }
+        Employer  employer = (Employer) currentUser;
+        Job job = jobRepository.findById(jobId).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy công việc"));
+        if (!job.getEmployer().getId().equals(employer.getId())) {
+            throw new ForbiddenException(
+                    "Bạn không có quyền đóng công việc này");}
         if (job.getStatus() == JobStatus.CLOSED) {
-            throw new RuntimeException(
-                    "Job đã được đóng"
-            );
-        }
+            throw new ConflictException(
+                    "Công việc đã được đóng trước đó");}
         job.setStatus(JobStatus.CLOSED);
         Job savedJob = jobRepository.save(job);
+        systemLogService.saveLog(
+                employer,
+                Action.UPDATE_JOB.name(),
+                "Doanh nghiệp "
+                        + employer.getUsername()
+                        + " đã đóng công việc "
+                        + savedJob.getTitle()
+        );
         return jobMapper.toResponse(savedJob);
     }
 }

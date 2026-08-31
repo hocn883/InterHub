@@ -1,60 +1,90 @@
 import "./MyCv.css";
-import { useEffect, useState, useContext } from "react";
+import {useContext, useEffect, useState,} from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContext";
-import { authApi, endpoints } from "../../../utils/api";
+import {authApi,endpoints} from "../../../utils/api";
 import PageHero from "../../../components/PageHero/PageHero";
-
+import CvCard from "./CvCard/CvCard";
 function MyCv() {
-  const { currentUser } = useContext(UserContext);
-  const lecturer = currentUser?.lecturer;
-
-  const [cvList, setCvList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const loadCvs = async () => {
-      try {
-        setLoading(true);
-
-        const token = localStorage.getItem("access-token");
-
-        const response = await authApi(token).get(
+  const { currentUser } =
+    useContext(UserContext);
+  const lecturer =
+    currentUser?.lecturer;
+  const [cvList, setCvList] =
+    useState([]);
+  const [loading, setLoading] =
+    useState(true);
+  const [error, setError] =
+    useState("");
+  const [deletingId, setDeletingId] =
+    useState(null);
+  const loadCvs = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      const token =
+        localStorage.getItem(
+          "access-token"
+        );
+      const response =
+        await authApi(token).get(
           endpoints.myCvs
         );
-
-        setCvList(response.data.result.content || []);
-      } catch (error) {
-        console.error(error);
-        setError("Không thể tải danh sách CV");
-      } finally {
-        setLoading(false);
-      }
-    };
-
+      setCvList(
+        response.data.result?.content ||
+          []
+      );
+    } catch (err) {
+      console.error(err);
+      setError(
+        err.response?.data?.message ||
+          "Không thể tải danh sách CV"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     loadCvs();
   }, []);
 
-  const getStatus = (status) => {
-    switch (status) {
-      case "APPROVED":
-        return {
-          text: "Đã duyệt",
-          className: "approved",
-        };
+  const handleDeleteCv = async (
+    cv
+  ) => {
+    if (cv.status !== "PENDING") {
+      alert(
+        "Chỉ có thể xóa CV đang chờ duyệt");
+      return;
+    }
 
-      case "REJECTED":
-        return {
-          text: "Cần chỉnh sửa",
-          className: "rejected",
-        };
-
-      default:
-        return {
-          text: "Đang chờ",
-          className: "pending",
-        };
+    const confirmDelete =
+      window.confirm(
+        "Bạn có chắc muốn xóa CV này không?"
+      );
+    if (!confirmDelete) {
+      return;
+    }
+    try {
+      setDeletingId(cv.id);
+      const token =
+        localStorage.getItem(
+          "access-token"
+        );
+      await authApi(token).delete(
+        endpoints.myCv(cv.id)
+      );
+      setCvList((prev) => prev.filter((item) =>
+            item.id !== cv.id
+        ));
+      alert("Xóa CV thành công");
+    } catch (err) {
+      console.error(err);
+      alert(
+        err.response?.data?.message ||
+          "Không thể xóa CV"
+      );
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -73,8 +103,12 @@ function MyCv() {
             <div className="mycv-lecturer-avatar">
               {lecturer.avatarUrl ? (
                 <img
-                  src={lecturer.avatarUrl}
-                  alt={lecturer.fullName}
+                  src={
+                    lecturer.avatarUrl
+                  }
+                  alt={
+                    lecturer.fullName
+                  }
                 />
               ) : (
                 "GV"
@@ -82,9 +116,17 @@ function MyCv() {
             </div>
 
             <div className="mycv-lecturer-info">
-              <span>GIẢNG VIÊN HƯỚNG DẪN</span>
-              <strong>{lecturer.fullName}</strong>
-              <p>@{lecturer.username}</p>
+              <span>
+                GIẢNG VIÊN HƯỚNG DẪN
+              </span>
+
+              <strong>
+                {lecturer.fullName}
+              </strong>
+
+              <p>
+                @{lecturer.username}
+              </p>
             </div>
           </section>
         )}
@@ -96,13 +138,29 @@ function MyCv() {
                 CV ĐÃ GỬI
               </span>
 
-              <h2>Lịch sử gửi CV</h2>
+              <h2>
+                Lịch sử gửi CV
+              </h2>
             </div>
 
             <div className="mycv-heading-actions">
               <span className="mycv-total">
                 {cvList.length} CV
               </span>
+
+              <Link
+                to="/cv/scoring"
+                className="mycv-feature-button"
+              >
+                Chấm điểm CV
+              </Link>
+
+              <Link
+                to="/cv/templates"
+                className="mycv-ai-button"
+              >
+                Tạo CV bằng AI
+              </Link>
 
               <Link
                 to="/mycv/send"
@@ -115,7 +173,8 @@ function MyCv() {
 
           {loading && (
             <div className="mycv-loading">
-              <span className="mycv-spinner"></span>
+              <span className="mycv-spinner" />
+
               Đang tải danh sách CV...
             </div>
           )}
@@ -130,10 +189,13 @@ function MyCv() {
             !error &&
             cvList.length === 0 && (
               <div className="mycv-empty">
-                <h3>Chưa có CV nào</h3>
+                <h3>
+                  Chưa có CV nào
+                </h3>
 
                 <p>
-                  Bạn chưa gửi CV cho giảng viên hướng dẫn.
+                  Bạn chưa gửi CV cho
+                  giảng viên hướng dẫn.
                 </p>
 
                 <Link
@@ -149,89 +211,31 @@ function MyCv() {
             !error &&
             cvList.length > 0 && (
               <div className="mycv-cards">
-                {cvList.map((cv, index) => {
-                  const status = getStatus(cv.status);
-
-                  return (
-                    <article
-                      className="mycv-card"
-                      key={cv.fileUrl || index}
-                    >
-                      <div className="mycv-card-header">
-                        <div className="mycv-card-title">
-                          <div className="mycv-file-icon">
-                            CV
-                          </div>
-
-                          <div>
-                            <h3>CV thực tập</h3>
-
-                            <p>
-                              Gửi ngày {cv.createdDate}
-                            </p>
-                          </div>
-                        </div>
-
-                        <span
-                          className={`mycv-status ${status.className}`}
-                        >
-                          {status.text}
-                        </span>
-                      </div>
-
-                      <div className="mycv-card-information">
-                        <div>
-                          <span>Sinh viên</span>
-                          <strong>{cv.studentName}</strong>
-                        </div>
-
-                        <div>
-                          <span>Mã sinh viên</span>
-                          <strong>
-                            {currentUser?.mssv || cv.studentId}
-                          </strong>
-                        </div>
-
-                        <div>
-                          <span>Ngày gửi</span>
-                          <strong>{cv.createdDate}</strong>
-                        </div>
-
-                        <div>
-                          <span>Giảng viên</span>
-                          <strong>
-                            {lecturer?.fullName || "Chưa cập nhật"}
-                          </strong>
-                        </div>
-                      </div>
-
-                      <div className="mycv-feedback">
-                        <span>
-                          PHẢN HỒI GIẢNG VIÊN
-                        </span>
-
-                        {cv.lecturerFeedback ? (
-                          <p>{cv.lecturerFeedback}</p>
-                        ) : (
-                          <p className="mycv-no-feedback">
-                            Chưa có phản hồi từ giảng viên.
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="mycv-card-actions">
-                        <a
-                          href={cv.fileUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="mycv-view-file"
-                        >
-                          Xem file CV
-                        </a>
-                      </div>
-                    </article>
-                  );
-                })}
+                {cvList.map(
+                  (cv, index) => (
+                    <CvCard
+                      key={
+                        cv.id ||
+                        cv.fileUrl ||
+                        index
+                      }
+                      cv={cv}
+                      currentUser={
+                        currentUser
+                      }
+                      lecturer={
+                        lecturer
+                      }
+                      onDelete={
+                        handleDeleteCv
+                      }
+                      deleting={
+                        deletingId ===
+                        cv.id
+                      }
+                    />
+                  )
+                )}
               </div>
             )}
         </section>

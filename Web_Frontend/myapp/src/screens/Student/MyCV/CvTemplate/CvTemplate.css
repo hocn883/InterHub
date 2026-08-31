@@ -1,16 +1,23 @@
 /* =========================================================
-   CV BUILDER PAGE
+   PAGE
 ========================================================= */
 
 .cv-builder-page {
-  min-height: calc(100vh - 72px);
-  background: #f5f7fb;
-  padding: 36px 0 70px;
+  min-height: 100vh;
+  padding: 32px 0 60px;
+  overflow-x: auto;
+  background: #f7f9fc;
 }
 
+.cv-builder-page * {
+  box-sizing: border-box;
+}
+
+/*
+  CÙNG CONTAINER VỚI PROJECT CHÍNH
+*/
 .cv-builder-container {
-  width: 1320px;
-  max-width: calc(100% - 40px);
+  width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
 }
 
@@ -19,59 +26,63 @@
 ========================================================= */
 
 .cv-builder-header {
-  margin-bottom: 28px;
+  width: 100%;
+  margin: 0 0 28px;
 }
 
 .cv-header-badge {
-  display: inline-flex;
-  align-items: center;
-
-  padding: 6px 11px;
-
-  border-radius: 20px;
-
-  background: #eff6ff;
-  color: #2563eb;
-
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  border: 1px solid rgba(96, 70, 233, 0.12);
+  border-radius: 999px;
+  background: #eef3ff;
+  color: #2458a6;
   font-size: 11px;
-  font-weight: 800;
-
+  font-weight: 700;
   letter-spacing: 1px;
 }
 
 .cv-builder-header h1 {
-  margin: 10px 0 7px;
-
+  margin: 0 0 8px;
   color: #172033;
-
-  font-size: 32px;
+  font-size: 30px;
   line-height: 1.2;
-  font-weight: 750;
 }
 
 .cv-builder-header p {
   margin: 0;
-
-  max-width: 720px;
-
-  color: #667085;
-
+  color: #7a8290;
   font-size: 14px;
-  line-height: 1.6;
 }
 
 /* =========================================================
    MAIN LAYOUT
+
+   FORM | CV | TEMPLATE
 ========================================================= */
 
 .cv-builder-layout {
   display: grid;
 
-  grid-template-columns: 430px minmax(0, 1fr);
+  grid-template-columns:
+    320px
+    794px
+    150px;
 
-  gap: 28px;
+  gap: 16px;
+
+  width: max-content;
 
   align-items: start;
+
+  /*
+    QUAN TRỌNG:
+    KHÔNG CENTER.
+    Mép trái form sẽ thẳng với header CV
+    và container của project chính.
+  */
+  justify-content: start;
 }
 
 /* =========================================================
@@ -79,340 +90,385 @@
 ========================================================= */
 
 .cv-form-card {
-  background: #ffffff;
-
-  border: 1px solid #e5e7eb;
+  width: 320px;
+  padding: 22px;
+  border: 1px solid #edf0f5;
   border-radius: 16px;
-
-  padding: 25px;
+  background: #ffffff;
+  box-shadow:
+    0 5px 25px
+    rgba(27, 39, 66, 0.07);
 }
 
 /* =========================================================
-   FORM HEADER
+   FORM HEADING
 ========================================================= */
 
 .card-heading {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 24px;
 }
 
 .card-heading h2 {
-  margin: 0;
-
-  color: #172033;
-
+  margin: 0 0 5px;
+  color: #1e293b;
   font-size: 19px;
-  font-weight: 750;
+  line-height: 1.25;
 }
 
 .card-heading p {
-  margin: 5px 0 0;
-
-  color: #98a2b3;
-
-  font-size: 12px;
+  margin: 0;
+  color: #8a93a3;
+  font-size: 11px;
 }
 
 .card-heading > span {
-  width: 30px;
-  height: 30px;
-
-  border-radius: 50%;
-
-  background: #eff6ff;
-  color: #2563eb;
-
   display: flex;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-
+  border-radius: 10px;
+  background: #edf3ff;
+  color: #2458a6;
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 /* =========================================================
-   AVATAR UPLOAD
+   AVATAR
 ========================================================= */
 
 .avatar-upload-section {
   display: flex;
   align-items: center;
-
-  gap: 15px;
-
-  margin-top: 22px;
-  padding: 15px;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-
-  background: #f8fafc;
+  gap: 13px;
+  margin-bottom: 21px;
+  padding: 13px;
+  border: 1px solid #e7ebf1;
+  border-radius: 11px;
+  background: #ffffff;
 }
 
 .avatar-preview {
-  width: 74px;
-  height: 74px;
-
-  flex-shrink: 0;
-
-  border-radius: 50%;
-
-  overflow: hidden;
-
-  background: #dbeafe;
-  color: #2563eb;
-
   display: flex;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-
-  font-size: 27px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #eaf1ff;
+  color: #2458a6;
+  font-size: 23px;
   font-weight: 700;
 }
 
 .avatar-preview img {
   width: 100%;
   height: 100%;
-
   object-fit: cover;
 }
 
 .avatar-information {
   display: flex;
+  min-width: 0;
   flex-direction: column;
-
-  gap: 4px;
+  align-items: flex-start;
 }
 
 .avatar-information strong {
-  color: #344054;
-
-  font-size: 13px;
+  margin-bottom: 3px;
+  color: #283347;
+  font-size: 12px;
 }
 
-.avatar-information span {
-  color: #98a2b3;
-
-  font-size: 11px;
+.avatar-information > span {
+  margin-bottom: 7px;
+  color: #9ba3af;
+  font-size: 9px;
 }
 
 .avatar-button {
-  width: fit-content;
-
-  margin-top: 5px;
-  padding: 7px 12px;
-
+  padding: 6px 9px;
+  border: 1px solid #dce3ed;
   border-radius: 7px;
-
-  background: #2563eb;
-  color: #ffffff;
-
-  font-size: 11px;
-  font-weight: 700;
-
+  background: #ffffff;
+  color: #315f9c;
   cursor: pointer;
-
-  transition: 0.2s;
+  font-size: 10px;
+  font-weight: 600;
+  transition: 0.2s ease;
 }
 
 .avatar-button:hover {
-  background: #1d4ed8;
+  border-color: #9ab5d8;
+  background: #f8fbff;
 }
 
 /* =========================================================
-   FORM GROUP
+   FORM
 ========================================================= */
 
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
 .form-group {
-  margin-top: 17px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
   display: block;
-
-  margin-bottom: 7px;
-
-  color: #344054;
-
-  font-size: 13px;
-  font-weight: 650;
+  margin-bottom: 6px;
+  color: #394458;
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-
-  box-sizing: border-box;
-
-  border: 1px solid #d9dee8;
-  border-radius: 8px;
-
-  padding: 11px 12px;
-
-  background: #ffffff;
-  color: #172033;
-
-  font-family: inherit;
-
-  font-size: 13px;
-
   outline: none;
-
-  transition: 0.2s;
+  border: 1px solid #dfe4eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #273244;
+  font-family: inherit;
+  font-size: 11px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .form-group input {
-  height: 42px;
+  height: 40px;
+  padding: 0 11px;
 }
 
 .form-group textarea {
-  resize: vertical;
-
-  min-height: 80px;
-
+  padding: 10px 11px;
   line-height: 1.5;
+  resize: vertical;
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #aab2bf;
+  color: #a0a7b3;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #2563eb;
-
-  box-shadow: 0 0 0 3px #eff6ff;
+  border-color: #6791ce;
+  box-shadow:
+    0 0 0 3px
+    rgba(73, 121, 190, 0.1);
 }
 
 /* =========================================================
-   TWO COLUMN FORM
-========================================================= */
+   CV PREVIEW COLUMN
 
-.form-row {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 12px;
-}
-
-/* =========================================================
-   RIGHT COLUMN
+   KHÔNG HEADER "XEM TRƯỚC"
+   CV NẰM NGANG ĐẦU FORM
 ========================================================= */
 
 .cv-preview-column {
-  min-width: 0;
-}
-
-/* =========================================================
-   TEMPLATE SELECTOR - VERY COMPACT
-========================================================= */
-
-.template-selector {
-  background: #ffffff;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-
-  padding: 13px 15px;
-}
-
-/* =========================================================
-   TEMPLATE HEADER
-========================================================= */
-
-.selector-header {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-}
-
-.selector-header .section-number {
-  display: inline;
-
-  margin-right: 7px;
-}
-
-.selector-header h2 {
-  display: inline;
-
+  width: 794px;
+  min-width: 794px;
   margin: 0;
-
-  color: #172033;
-
-  font-size: 16px;
-  font-weight: 750;
-}
-
-.selector-header p {
-  display: none;
-}
-
-.template-count {
-  padding: 4px 8px;
-
-  border-radius: 20px;
-
-  background: #f2f4f7;
-  color: #667085;
-
-  font-size: 10px;
-  font-weight: 600;
+  padding: 0;
 }
 
 /* =========================================================
-   TEMPLATE LIST
+   CV PAPER
 ========================================================= */
 
-.template-list {
-  display: grid;
-
-  grid-template-columns: repeat(6, 1fr);
-
-  gap: 7px;
-
-  margin-top: 12px;
+.cv-paper-area {
+  width: 794px;
+  margin: 0;
+  padding: 0;
 }
 
-/* =========================================================
-   TEMPLATE OPTION
-========================================================= */
+.cv-paper-wrapper {
+  width: 794px;
+  margin: 0;
+  padding: 0;
+}
 
-.template-option {
-  min-width: 0;
-
-  padding: 4px;
-
-  border: 1px solid #e4e7ec;
-  border-radius: 7px;
-
+/*
+  A4:
+  794 x 1123 px
+*/
+.cv-paper {
+  width: 794px;
+  min-height: 1123px;
+  margin: 0;
+  overflow: hidden;
   background: #ffffff;
-
-  text-align: left;
-
-  cursor: pointer;
-
-  transition: all 0.15s ease;
-}
-
-.template-option:hover {
-  border-color: #9dbcf3;
-
-  transform: translateY(-1px);
-}
-
-.template-option.selected {
-  border: 2px solid #2563eb;
-
-  padding: 3px;
-
-  background: #f8fbff;
-
   box-shadow:
-    0 2px 8px rgba(37, 99, 235, 0.1);
+    0 6px 26px
+    rgba(26, 36, 55, 0.14);
+}
+
+/* =========================================================
+   NO TEMPLATE
+========================================================= */
+
+.no-template {
+  display: flex;
+  min-height: 1123px;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #98a2b3;
+  font-size: 14px;
+}
+
+/* =========================================================
+   TEMPLATE COLUMN
+
+   NẰM NGOÀI CV
+========================================================= */
+
+.template-column {
+  width: 150px;
+  min-width: 150px;
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================================================
+   TEMPLATE HEADING
+========================================================= */
+
+.template-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.template-heading h2 {
+  margin: 7px 0 4px;
+  color: #1e293b;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.template-heading p {
+  margin: 0;
+  color: #929aa7;
+  font-size: 10px;
+}
+
+.section-number {
+  display: inline-flex;
+  min-height: 25px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 9px;
+  border-radius: 7px;
+  background: #eeeaff;
+  color: #635bce;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   TEMPLATE SCROLL
+
+   CHỈ DANH SÁCH TEMPLATE CUỘN
+========================================================= */
+
+.template-scroll {
+  width: 100%;
+  height: 1035px;
+  padding-right: 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.template-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.template-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.template-scroll::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: #cbd2dc;
+}
+
+.template-scroll::-webkit-scrollbar-thumb:hover {
+  background: #aeb7c4;
+}
+
+/* =========================================================
+   TEMPLATE CARD
+========================================================= */
+
+.template-card {
+  display: block;
+  width: 100%;
+  margin: 0 0 11px;
+  padding: 6px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.template-card:last-child {
+  margin-bottom: 0;
+}
+
+.template-card:hover {
+  transform: translateY(-1px);
+  border-color: #dce3ec;
+  background: #ffffff;
+}
+
+.template-card.active {
+  border-color: #316bbd;
+  background: #ffffff;
+  box-shadow:
+    0 3px 15px
+    rgba(38, 77, 132, 0.1);
+}
+
+.template-card > strong {
+  display: block;
+  margin-top: 6px;
+  overflow: hidden;
+  color: #344054;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.template-card > span {
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  color: #98a0ad;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* =========================================================
@@ -420,819 +476,76 @@
 ========================================================= */
 
 .template-thumbnail {
-  position: relative;
-
-  width: 100%;
-
-  aspect-ratio: 210 / 297;
-
+  height: 122px;
   overflow: hidden;
-
-  box-sizing: border-box;
-
-  border: 1px solid #edf0f4;
-
+  padding: 9px;
+  border: 1px solid #e2e7ee;
+  border-radius: 6px;
   background: #ffffff;
-
-  padding: 5px;
 }
 
-/* =========================================================
-   THUMBNAIL HEADER
-========================================================= */
-
-.thumbnail-top {
+.thumb-header {
   display: flex;
-
   align-items: center;
-
   gap: 5px;
+  margin-bottom: 9px;
+  padding-bottom: 7px;
+  border-bottom:
+    3px solid
+    var(--template-color);
 }
 
-.thumbnail-avatar {
-  width: 16px;
-  height: 16px;
-
+.thumb-avatar {
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
-
   border-radius: 50%;
-
-  background: #d9dee8;
+  background:
+    var(--template-color);
 }
 
-.thumbnail-header-lines {
-  flex: 1;
+.thumb-heading {
+  width: 100%;
 }
 
-.thumbnail-name {
+.thumb-heading span,
+.thumb-heading small,
+.thumb-line,
+.thumb-title {
+  display: block;
+  border-radius: 10px;
+  background: #dce1e8;
+}
+
+.thumb-heading span {
   width: 70%;
-  height: 3px;
-
-  margin-bottom: 4px;
-
-  background: #2563eb;
-}
-
-.thumbnail-small-line {
-  width: 45%;
-  height: 2px;
-
-  background: #d9dee8;
-}
-
-.thumbnail-section-title {
-  width: 32%;
-  height: 3px;
-
-  margin-top: 9px;
-  margin-bottom: 5px;
-
-  background: #2563eb;
-}
-
-.thumbnail-line {
-  width: 100%;
-  height: 2px;
-
+  height: 4px;
   margin-bottom: 3px;
-
-  background: #e0e4ea;
-}
-
-.thumbnail-line.short {
-  width: 65%;
-}
-
-/* =========================================================
-   THUMBNAIL CLASSIC
-========================================================= */
-
-.thumbnail-classic {
-  font-family: Georgia, serif;
-}
-
-.thumbnail-classic .thumbnail-top {
-  justify-content: center;
-
-  flex-direction: column;
-}
-
-.thumbnail-classic .thumbnail-avatar {
-  margin: 0 auto;
-}
-
-.thumbnail-classic .thumbnail-name {
-  margin: 0 auto 4px;
-
-  background: #172033;
-}
-
-.thumbnail-classic .thumbnail-section-title {
-  background: #172033;
-}
-
-/* =========================================================
-   THUMBNAIL MINIMAL
-========================================================= */
-
-.thumbnail-minimal .thumbnail-name {
-  background: #172033;
-}
-
-.thumbnail-minimal .thumbnail-section-title {
-  background: #172033;
-}
-
-/* =========================================================
-   THUMBNAIL SIDEBAR
-========================================================= */
-
-.thumbnail-sidebar {
-  padding-left: 38%;
-}
-
-.thumbnail-sidebar-block {
-  position: absolute;
-
-  left: 0;
-  top: 0;
-  bottom: 0;
-
-  width: 32%;
-
-  background: #172033;
-}
-
-/* =========================================================
-   THUMBNAIL PROFESSIONAL
-========================================================= */
-
-.thumbnail-professional .thumbnail-name,
-.thumbnail-professional .thumbnail-section-title {
-  background: #344054;
-}
-
-/* =========================================================
-   THUMBNAIL STUDENT
-========================================================= */
-
-.thumbnail-student {
-  background: #f8fbff;
-}
-
-.thumbnail-student .thumbnail-section-title {
-  background: #2563eb;
-}
-
-/* =========================================================
-   TEMPLATE NAME
-========================================================= */
-
-.template-name {
-  margin-top: 4px;
-
-  color: #344054;
-
-  font-size: 9px;
-  line-height: 1.1;
-
-  font-weight: 700;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-}
-
-.template-description {
-  display: none;
-}
-
-/* =========================================================
-   CV PREVIEW CARD
-========================================================= */
-
-.cv-preview-card {
-  margin-top: 16px;
-
-  background: #ffffff;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-
-  padding: 22px;
-}
-
-/* =========================================================
-   PREVIEW HEADER
-========================================================= */
-
-.preview-header {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-}
-
-.preview-header h2 {
-  margin: 0;
-
-  color: #172033;
-
-  font-size: 19px;
-  font-weight: 750;
-}
-
-.preview-header p {
-  margin: 4px 0 0;
-
-  color: #98a2b3;
-
-  font-size: 12px;
-}
-
-.a4-badge {
-  padding: 6px 10px;
-
-  border-radius: 7px;
-
-  background: #f2f4f7;
-  color: #667085;
-
-  font-size: 11px;
-  font-weight: 700;
-}
-
-/* =========================================================
-   CV PAPER AREA
-========================================================= */
-
-.cv-paper-wrapper {
-  margin-top: 22px;
-
-  padding: 30px;
-
-  background: #f2f4f7;
-
-  border-radius: 12px;
-
-  overflow: auto;
-}
-
-/* =========================================================
-   A4 PAPER
-========================================================= */
-
-.cv-paper {
-  width: 794px;
-  min-height: 1123px;
-
-  margin: 0 auto;
-
-  box-sizing: border-box;
-
-  background: #ffffff;
-
-  color: #172033;
-
-  box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.12);
-}
-
-/* =========================================================
-   CV AVATAR
-========================================================= */
-
-.cv-avatar {
-  width: 96px;
-  height: 96px;
-
-  flex-shrink: 0;
-
-  overflow: hidden;
-
-  border-radius: 50%;
-
-  background: #e5e7eb;
-  color: #2563eb;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  font-size: 32px;
-  font-weight: 700;
-}
-
-.cv-avatar img {
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-}
-
-/* =========================================================
-   CV CONTACT
-========================================================= */
-
-.cv-contact {
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 18px;
-
-  margin-top: 10px;
-
-  color: #667085;
-
-  font-size: 12px;
-
-  line-height: 1.4;
-}
-
-/* =========================================================
-   COMMON CV SECTION
-========================================================= */
-
-.cv-section {
-  margin-top: 30px;
-}
-
-.cv-section h3 {
-  margin: 0 0 10px;
-
-  color: #2563eb;
-
-  font-size: 14px;
-  line-height: 1.3;
-
-  font-weight: 800;
-
-  letter-spacing: 0.7px;
-}
-
-.cv-section p {
-  margin: 0;
-
-  color: #475467;
-
-  font-size: 13px;
-
-  line-height: 1.7;
-
-  white-space: pre-line;
-}
-
-/* =========================================================
-   MODERN TEMPLATE
-========================================================= */
-
-.template-modern {
-  padding: 55px;
-}
-
-.modern-header {
-  display: flex;
-
-  align-items: center;
-
-  gap: 22px;
-
-  padding-bottom: 25px;
-
-  border-bottom: 3px solid #2563eb;
-}
-
-.modern-header h1 {
-  margin: 0;
-
-  color: #172033;
-
-  font-size: 32px;
-
-  line-height: 1.15;
-
-  font-weight: 800;
-}
-
-.modern-header h2 {
-  margin: 8px 0;
-
-  color: #2563eb;
-
-  font-size: 16px;
-
-  line-height: 1.3;
-
-  font-weight: 700;
-}
-
-/* =========================================================
-   CLASSIC TEMPLATE
-========================================================= */
-
-.template-classic {
-  padding: 55px;
-
-  font-family: Georgia, serif;
-}
-
-.classic-header {
-  display: flex;
-
-  align-items: center;
-
-  gap: 25px;
-}
-
-.classic-header h1 {
-  margin: 0;
-
-  color: #172033;
-
-  font-size: 32px;
-
-  line-height: 1.15;
-}
-
-.classic-header h2 {
-  margin: 8px 0;
-
-  color: #667085;
-
-  font-size: 15px;
-
-  font-weight: 400;
-}
-
-.classic-divider {
-  height: 1px;
-
-  margin: 25px 0;
-
-  background: #172033;
-}
-
-.template-classic .cv-section h3 {
-  color: #172033;
-
-  border-bottom: 1px solid #d9dee8;
-
-  padding-bottom: 7px;
-
-  font-size: 14px;
-}
-
-.template-classic .cv-section p {
-  font-size: 13px;
-
-  line-height: 1.75;
-}
-
-.template-classic .cv-contact {
-  font-size: 12px;
-}
-
-/* =========================================================
-   MINIMAL TEMPLATE
-========================================================= */
-
-.template-minimal {
-  padding: 55px;
-}
-
-.minimal-header {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  padding-bottom: 25px;
-
-  border-bottom: 1px solid #d9dee8;
-}
-
-.minimal-header h1 {
-  margin: 0;
-
-  color: #172033;
-
-  font-size: 34px;
-
-  line-height: 1.15;
-
-  font-weight: 500;
-}
-
-.minimal-header p {
-  margin: 8px 0;
-
-  color: #667085;
-
-  font-size: 15px;
-}
-
-.template-minimal .cv-section h3 {
-  color: #172033;
-
-  font-size: 14px;
-}
-
-.template-minimal .cv-section p {
-  font-size: 13px;
-
-  line-height: 1.7;
-}
-
-.template-minimal .cv-contact {
-  font-size: 12px;
-}
-
-.minimal-grid {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 35px;
-}
-
-/* =========================================================
-   SIDEBAR TEMPLATE
-========================================================= */
-
-.template-sidebar {
-  padding: 0;
-
-  overflow: hidden;
-}
-
-.sidebar-layout {
-  display: grid;
-
-  grid-template-columns: 30% 70%;
-
-  min-height: 1123px;
-}
-
-.sidebar {
-  padding: 40px 25px;
-
-  background: #172033;
-
-  color: #ffffff;
-}
-
-.sidebar .cv-avatar {
-  width: 95px;
-  height: 95px;
-
-  margin: 0 auto 18px;
-}
-
-.sidebar > h1 {
-  margin: 0;
-
-  text-align: center;
-
-  color: #ffffff;
-
-  font-size: 21px;
-
-  line-height: 1.3;
-}
-
-.sidebar > h2 {
-  margin: 7px 0 20px;
-
-  color: #93c5fd;
-
-  text-align: center;
-
-  font-size: 12px;
-
-  line-height: 1.4;
-
-  font-weight: 600;
-}
-
-.sidebar-contact {
-  padding: 15px 0;
-
-  border-top: 1px solid #475467;
-}
-
-.sidebar-contact .cv-contact {
-  flex-direction: column;
-
-  gap: 8px;
-
-  color: #d0d5dd;
-
-  font-size: 11px;
-}
-
-.sidebar-section {
-  margin-top: 25px;
-}
-
-.sidebar-section h3 {
-  margin: 0 0 8px;
-
-  color: #93c5fd;
-
-  font-size: 12px;
-
-  letter-spacing: 0.5px;
-}
-
-.sidebar-section p {
-  margin: 0;
-
-  color: #d0d5dd;
-
-  font-size: 11px;
-
-  line-height: 1.7;
-
-  white-space: pre-line;
-}
-
-.sidebar-main {
-  padding: 45px 38px;
-}
-
-.sidebar-main .cv-section p {
-  font-size: 13px;
-
-  line-height: 1.7;
-}
-
-.sidebar-main .cv-section h3 {
-  font-size: 14px;
-}
-
-/* =========================================================
-   PROFESSIONAL TEMPLATE
-========================================================= */
-
-.template-professional {
-  padding: 55px;
-}
-
-.professional-header {
-  display: flex;
-
-  align-items: center;
-
-  gap: 22px;
-}
-
-.professional-header h1 {
-  margin: 0;
-
-  color: #172033;
-
-  font-size: 32px;
-
-  line-height: 1.15;
-
-  text-transform: uppercase;
-}
-
-.professional-header h2 {
-  margin: 7px 0;
-
-  color: #667085;
-
-  font-size: 15px;
-
-  font-weight: 500;
-}
-
-.template-professional > .cv-contact {
-  margin-top: 18px;
-
-  font-size: 12px;
+  background:
+    var(--template-color);
 }
 
-.professional-line {
+.thumb-heading small {
+  width: 45%;
   height: 3px;
-
-  margin: 18px 0;
-
-  background: #172033;
 }
 
-.template-professional .cv-section h3 {
-  color: #172033;
-
-  border-bottom: 1px solid #d9dee8;
-
-  padding-bottom: 7px;
-
-  font-size: 14px;
+.thumb-title {
+  width: 35%;
+  height: 4px;
+  margin: 7px 0 5px;
+  background:
+    var(--template-color);
 }
 
-.template-professional .cv-section p {
-  font-size: 13px;
-
-  line-height: 1.7;
+.thumb-line {
+  width: 100%;
+  height: 3px;
+  margin-bottom: 4px;
 }
 
-/* =========================================================
-   STUDENT TEMPLATE
-========================================================= */
-
-.template-student {
-  padding: 48px;
-}
-
-.student-header {
-  display: flex;
-
-  align-items: center;
-
-  gap: 22px;
-
-  padding-bottom: 23px;
-
-  border-bottom: 3px solid #2563eb;
-}
-
-.student-header h1 {
-  margin: 0;
-
-  color: #172033;
-
-  font-size: 32px;
-
-  line-height: 1.15;
-}
-
-.student-header h2 {
-  margin: 7px 0;
-
-  color: #2563eb;
-
-  font-size: 16px;
-}
-
-.student-header p {
-  margin: 5px 0;
-
-  color: #667085;
-
-  font-size: 12px;
-}
-
-.student-objective {
-  margin-top: 24px;
-
-  padding: 16px;
-
-  border-left: 4px solid #2563eb;
-
-  background: #eff6ff;
-}
-
-.student-objective h3 {
-  margin: 0 0 8px;
-
-  color: #2563eb;
-
-  font-size: 13px;
-}
-
-.student-objective p {
-  margin: 0;
-
-  color: #475467;
-
-  font-size: 13px;
-
-  line-height: 1.7;
-}
-
-.student-columns {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 30px;
-}
-
-.template-student .cv-section h3 {
-  font-size: 14px;
-}
-
-.template-student .cv-section p {
-  font-size: 13px;
-
-  line-height: 1.7;
+.thumb-line.short {
+  width: 65%;
 }
 
 /* =========================================================
@@ -1240,101 +553,56 @@
 ========================================================= */
 
 .cv-error {
-  margin-top: 16px;
-
-  padding: 12px 14px;
-
-  border: 1px solid #fecdd3;
-
+  margin-top: 13px;
+  padding: 11px 13px;
+  border: 1px solid #ffd7d7;
   border-radius: 8px;
-
-  background: #fff1f2;
-
-  color: #be123c;
-
-  font-size: 12px;
-
-  line-height: 1.5;
-}
-
-/* =========================================================
-   ACTION BUTTONS
-========================================================= */
-
-.cv-actions {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 12px;
-
-  margin-top: 20px;
-}
-
-.download-button,
-.generate-button {
-  min-height: 48px;
-
-  border: none;
-
-  border-radius: 9px;
-
-  font-family: inherit;
-
-  font-size: 13px;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition: 0.2s;
-}
-
-.download-button {
-  background: #172033;
-
-  color: #ffffff;
-}
-
-.download-button:hover {
-  background: #101828;
-
-  transform: translateY(-1px);
-}
-
-.generate-button {
-  background: #2563eb;
-
-  color: #ffffff;
-}
-
-.generate-button:hover {
-  background: #1d4ed8;
-
-  transform: translateY(-1px);
-}
-
-.generate-button:disabled {
-  background: #98a2b3;
-
-  cursor: not-allowed;
-
-  transform: none;
-}
-
-.download-button span,
-.generate-button span {
-  margin-right: 7px;
-}
-
-.action-hint {
-  margin: 10px 0 0;
-
-  color: #98a2b3;
-
-  text-align: center;
-
+  background: #fff0f0;
+  color: #c13737;
   font-size: 11px;
 }
 
+/* =========================================================
+   ACTIONS
+========================================================= */
 
+.cv-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 17px;
+}
+
+.cv-actions button {
+  height: 42px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.download-button {
+  background: #edf2f8;
+  color: #274f85;
+}
+
+.download-button:hover {
+  background: #e1e9f3;
+}
+
+.generate-button {
+  background: #6046e9;
+  color: #ffffff;
+}
+
+.generate-button:hover:not(:disabled) {
+  background: #5138d8;
+}
+
+.generate-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}

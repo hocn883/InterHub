@@ -20,7 +20,6 @@ import lombok.*;
         }
 )
 public class Application extends BaseEntity {
-    @Column(nullable=false)
     private String coverLetter;
     @Column(name = "file_path", length = 1000)
     private String fileCv;

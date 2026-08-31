@@ -29,6 +29,7 @@ export const endpoints = {
   //cv
   sendCv:"/student/cvs",
   myCvs:"/student/cvs",
+  myCv:(cvId)=>`/student/cvs/${cvId}`,
   //followe
   followed:"/student/follows",
   followEmployer:(employerId)=>`/student/follows/${employerId}`,
@@ -39,10 +40,9 @@ export const endpoints = {
   rejectApplication:(applicationId) => `/employer/application/${applicationId}/reject`,
   //Invitation
   invitation:(jobId)=>`/employer/job-invitations/${jobId}`,
-  acceptInvitation:(invitationId) => `/student/invitations/${invitationId}/accept`,
-  rejectInvitation:(invitationId) => `/student/invitations/${invitationId}/reject`,
-
-
+  employerInvitation:"/employer/job-invitations",
+  acceptInvitation:(invitationId) => `/student/job-invitations/${invitationId}/accept`,
+  rejectInvitation:(invitationId) => `/student/job-invitations/${invitationId}/reject`,
   //lecturer
   lecturer:"/lecturer/students",
   //lecturerCv
@@ -53,6 +53,8 @@ export const endpoints = {
   suggestedCv:"/cvs-suggested",
   //students
   myinvitations:"/student/job-invitations",
+  studentAccept:(invitationId) => `/student/job-invitations/${invitationId}/accept`,
+  studentReject:(invitationId) => `/student/job-invitations/${invitationId}/reject`,
 };
 export const authApi = (token) => {
   return axios.create({

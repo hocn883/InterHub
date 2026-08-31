@@ -29,8 +29,8 @@ function InvitationDetails() {
       const token =
         localStorage.getItem("access-token");
 
-      await authApi(token).post(
-        endpoints.acceptJobInvitation(invitationId)
+      await authApi(token).patch(
+        endpoints.studentAccept(invitationId)
       );
 
       setInvitation((prev) => ({
@@ -56,8 +56,8 @@ function InvitationDetails() {
       const token =
         localStorage.getItem("access-token");
 
-      await authApi(token).post(
-        endpoints.rejectJobInvitation(invitationId)
+      await authApi(token).patch(
+        endpoints.studentReject(invitationId)
       );
 
       setInvitation((prev) => ({

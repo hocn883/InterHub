@@ -34,61 +34,27 @@ public class FollowService {
             Student student,
             Long employerId
     ) {
-        Employer employer = employerRepository
-                .findById(employerId)
-                .orElseThrow(() ->
-                        new RuntimeException("Không tìm thấy doanh nghiệp")
-                );
-
-        boolean existed =
-                followRepository.existsByStudentAndEmployer(
-                        student,
-                        employer
-                );
-
-        if (existed) {
+        Employer employer = employerRepository.findById(employerId).orElseThrow(() -> new RuntimeException("Không tìm thấy doanh nghiệp"));
+        boolean existed = followRepository.existsByStudentAndEmployer(student, employer);
+        if (existed)
+        {
             throw new RuntimeException(
                     "Bạn đã theo dõi doanh nghiệp này"
             );
         }
-
-        Follow follow =
-                Follow.builder()
-                        .student(student)
-                        .employer(employer)
-                        .build();
-
+        Follow follow = Follow.builder().student(student).employer(employer).build();
         followRepository.save(follow);
     }
     @Transactional
-    public void unfollowEmployer(
-            Student student,
-            Long employerId
-    ) {
-        Employer employer = employerRepository
-                .findById(employerId)
-                .orElseThrow(() ->
-                        new RuntimeException("Không tìm thấy doanh nghiệp")
-                );
-
-        Follow follow =
-                followRepository
-                        .findByStudentAndEmployer(
-                                student,
-                                employer
-                        )
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Bạn chưa theo dõi doanh nghiệp này"
-                                )
-                        );
-
+    public void unfollowEmployer(Student student, Long employerId)
+    {
+        Employer employer = employerRepository.findById(employerId).orElseThrow(() -> new RuntimeException("Không tìm thấy doanh nghiệp"));
+        Follow follow = followRepository.findByStudentAndEmployer(student, employer)
+                        .orElseThrow(() -> new RuntimeException("Bạn chưa theo dõi doanh nghiệp này"));
         followRepository.delete(follow);
     }
     @Transactional(readOnly=true)
-    public boolean isFollowing(
-            Student student,
-            Long employerId
+    public boolean isFollowing(Student student, Long employerId
     ) {
         return followRepository.existsByStudentIdAndEmployerId(
                         student.getId(),
