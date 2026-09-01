@@ -11,115 +11,60 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AiCvScoreService {
-
     private final PdfService pdfService;
-
     private final PdfImageService pdfImageService;
-
     private final GeminiService geminiService;
-
     private final ObjectMapper objectMapper;
-
-
     public AiCvScoreResponse scoreCv(
             AiCvScoreRequest request
     ) {
-
         if (
                 request.getFile() == null ||
                         request.getFile().isEmpty()
         ) {
-
             throw new IllegalArgumentException(
                     "CV không được để trống"
             );
         }
-
-
-        if (
-                request.getTargetPosition() == null ||
-                        request.getTargetPosition().isBlank()
+        if (request.getTargetPosition() == null ||
+                request.getTargetPosition().isBlank()
         ) {
-
             throw new IllegalArgumentException(
                     "Vị trí ứng tuyển không được để trống"
             );
         }
-
-
-        // ==========================================
-        // STEP 1
-        // Đọc text từ PDF
-        // ==========================================
-
         String text =
                 pdfService.extractText(
                         request.getFile()
                 );
-
-
-        // ==========================================
-        // STEP 2
-        // Nếu PDF có text
-        // ==========================================
-
         String aiResult;
-
-
         if (
                 text != null &&
                         !text.isBlank()
         ) {
-
             System.out.println(
                     "PDF có text → dùng Gemini Text"
             );
-
-
             String prompt =
                     buildTextPrompt(
                             request.getTargetPosition(),
                             text
                     );
-
-
             aiResult =
                     geminiService.generate(
-                            prompt
-                    );
+                            prompt);
 
         }
-
-
-        // ==========================================
-        // STEP 3
-        // PDF không có text
-        // ==========================================
-
         else {
-
             System.out.println(
                     "PDF không có text → dùng Gemini Vision"
             );
-
-
             List<byte[]> images =
                     pdfImageService.convertToImages(
                             request.getFile()
                     );
-
-
-            String prompt =
-                    buildVisionPrompt(
-                            request.getTargetPosition()
-                    );
-
-
-            aiResult =
-                    geminiService.generateWithImages(
-                            prompt,
-                            images
-                    );
+            String prompt = buildVisionPrompt(request.getTargetPosition());
+            aiResult = geminiService.generateWithImages(prompt, images);
         }
 
 
@@ -148,12 +93,10 @@ public class AiCvScoreService {
             );
         }
     }
-
     private String buildTextPrompt(
             String position,
             String cvText
     ) {
-
         return """
                 Bạn là chuyên gia tuyển dụng.
                 
@@ -166,7 +109,7 @@ public class AiCvScoreService {
                 %s
                 
                 Hãy đánh giá:
-                
+           
                 1. Mức độ phù hợp với vị trí.
                 2. Kỹ năng.
                 3. Học vấn.
@@ -200,11 +143,9 @@ public class AiCvScoreService {
                 cvText
         );
     }
-
     private String buildVisionPrompt(
             String position
     ) {
-
         return """
                 Bạn là chuyên gia tuyển dụng.
                 
@@ -234,7 +175,7 @@ public class AiCvScoreService {
                 Chấm điểm từ 0 đến 100.
                 
                 Không được bịa thông tin.
-                
+              
                 Chỉ trả về JSON:
                 
                 {
@@ -251,32 +192,22 @@ public class AiCvScoreService {
     private String cleanJson(
             String text
     ) {
-
         text = text.trim();
-
         if (text.startsWith("```json")) {
-
             text =
                     text.substring(7)
                             .trim();
         }
-
         if (text.startsWith("```")) {
-
             text =
                     text.substring(3)
-                            .trim();
-        }
-
+                            .trim();}
         if (text.endsWith("```")) {
-
-            text =
-                    text.substring(
+            text = text.substring(
                             0,
                             text.length() - 3
                     ).trim();
         }
-
         return text;
     }
 }

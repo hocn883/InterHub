@@ -1,6 +1,7 @@
 package com.example.InterHub.services;
 
 import com.example.InterHub.dto.request.PostJobRequest;
+import com.example.InterHub.dto.request.SearchJobRequest;
 import com.example.InterHub.dto.response.JobResponse;
 import com.example.InterHub.dto.response.PageResponse;
 import com.example.InterHub.entity.Employer;
@@ -18,9 +19,13 @@ import com.example.InterHub.repository.EmployerRepository;
 import com.example.InterHub.repository.JobRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class JobService {
@@ -132,5 +137,70 @@ public class JobService {
                         + savedJob.getTitle()
         );
         return jobMapper.toResponse(savedJob);
+    }
+    //tim kim job//
+    public PageResponse<JobResponse> searchJobs(SearchJobRequest request, Pageable pageable
+    ) {
+        if (request.getRadius() != null && request.getRadius() <= 0) {
+            throw new RuntimeException("Bán kính phải lớn hơn 0");
+        }
+        Page<Job> jobs = jobRepository.findAll(pageable);
+        List<JobResponse> filteredJobs = jobs.stream()
+                .filter(job -> matchTitle(
+                        job,
+                        request.getTitle()
+                ))    .filter(job ->
+                        request.getSalary() == null ||
+                                job.getSalary().compareTo(request.getSalary()) >= 0
+                ).filter(job -> matchDistance(
+                        job,
+                        request.getLatitude(),
+                        request.getLongitude(),
+                        request.getRadius()
+                )).filter(job->job.getStatus() == JobStatus.CLOSED)
+                .map(jobMapper::toResponse)
+                .toList();
+        Page<JobResponse> page = new PageImpl<>(filteredJobs, pageable, filteredJobs.size()
+        );
+        return pageMapper.toPageResponse(page);
+    }
+    private boolean matchTitle(Job job, String title) {
+        if (title == null || title.isBlank()) {
+            return true;
+        }
+        if (job.getTitle() == null) {
+            return false;
+        }
+        return job.getTitle().toLowerCase().contains(title.trim().toLowerCase());
+    }
+    private boolean matchDistance(Job job, Double latitude, Double longitude, Double radius
+    ) {
+        if (
+                latitude == null || longitude == null || radius == null
+        ) {
+            return true;
+        }
+        if (
+                job.getLatitude() == null || job.getLongitude() == null
+        ) {
+            return false;
+        }
+        double distance = calculateDistance(latitude, longitude, job.getLatitude(), job.getLongitude()
+        );
+        return distance <= radius;
+    }
+    private double calculateDistance(double lat1, double lon1, double lat2, double lon2
+    ) {
+        final double EARTH_RADIUS = 6371.0;
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2)
+                        * Math.sin(latDistance / 2)
+                        + Math.cos(Math.toRadians(lat1))
+                        * Math.cos(Math.toRadians(lat2))
+                        * Math.sin(lonDistance / 2)
+                        * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return EARTH_RADIUS * c;
     }
 }

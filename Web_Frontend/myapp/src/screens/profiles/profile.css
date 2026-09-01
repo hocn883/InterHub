@@ -10,10 +10,6 @@
   margin: 0 auto;
 }
 
-/* =========================================
-   LAYOUT
-========================================= */
-
 .profile-layout {
   display: grid;
   grid-template-columns: 290px 1fr;
@@ -21,44 +17,27 @@
   align-items: start;
 }
 
-/* =========================================
-   SIDEBAR
-========================================= */
-
 .profile-sidebar {
   padding: 28px 24px;
-
   background: #ffffff;
-
   border: 1px solid #e2e8f0;
   border-radius: 14px;
-
   text-align: center;
-
-  box-shadow: 0 4px 14px
-    rgba(15, 23, 42, 0.04);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
-
-/* AVATAR */
 
 .profile-avatar {
   width: 92px;
   height: 92px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   margin: 0 auto 16px;
-
   overflow: hidden;
-
   background: #eff6ff;
   color: #2563eb;
-
   border: 3px solid #dbeafe;
   border-radius: 50%;
-
   font-size: 32px;
   font-weight: 800;
 }
@@ -69,46 +48,30 @@
   object-fit: cover;
 }
 
-/* NAME */
-
 .profile-sidebar h1 {
   margin: 0 0 8px;
-
   color: #0f172a;
-
   font-size: 20px;
   font-weight: 800;
 }
-
-/* ROLE */
 
 .profile-role {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   padding: 5px 11px;
-
   background: #eff6ff;
   color: #2563eb;
-
   border-radius: 999px;
-
   font-size: 12px;
   font-weight: 700;
 }
 
-/* =========================================
-   CONTACT
-========================================= */
-
 .profile-contact {
   margin: 24px 0;
   padding: 18px 0;
-
   border-top: 1px solid #e2e8f0;
   border-bottom: 1px solid #e2e8f0;
-
   text-align: left;
 }
 
@@ -116,11 +79,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
-
   margin-bottom: 14px;
-
   color: #64748b;
-
   font-size: 13px;
 }
 
@@ -130,53 +90,37 @@
 
 .profile-contact svg {
   flex-shrink: 0;
-
   color: #2563eb;
-
   font-size: 16px;
 }
 
 .profile-contact span {
   min-width: 0;
-
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* =========================================
-   SIDEBAR BUTTONS
-========================================= */
-
 .profile-edit-button,
 .profile-logout-button {
   width: 100%;
   height: 42px;
-
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-
   border-radius: 9px;
-
   font-family: inherit;
   font-size: 13px;
   font-weight: 700;
-
   cursor: pointer;
-
   transition: 0.2s ease;
 }
 
-/* EDIT */
-
 .profile-edit-button {
   margin-bottom: 10px;
-
   background: #2563eb;
   color: #ffffff;
-
   border: 1px solid #2563eb;
 }
 
@@ -185,12 +129,9 @@
   border-color: #1d4ed8;
 }
 
-/* LOGOUT */
-
 .profile-logout-button {
   background: #ffffff;
   color: #dc2626;
-
   border: 1px solid #fecaca;
 }
 
@@ -199,82 +140,52 @@
   border-color: #f87171;
 }
 
-/* =========================================
-   CONTENT
-========================================= */
-
 .profile-content {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* =========================================
-   CARD
-========================================= */
-
 .profile-card {
   padding: 26px;
-
   background: #ffffff;
-
   border: 1px solid #e2e8f0;
   border-radius: 14px;
-
-  box-shadow: 0 4px 14px
-    rgba(15, 23, 42, 0.04);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
-
-/* =========================================
-   CARD TITLE
-========================================= */
 
 .profile-card-title {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-
   padding-bottom: 18px;
   margin-bottom: 22px;
-
   border-bottom: 1px solid #e2e8f0;
 }
 
 .profile-card-title > svg {
   flex-shrink: 0;
-
   margin-top: 2px;
-
   color: #2563eb;
-
   font-size: 20px;
 }
 
 .profile-card-title h2 {
   margin: 0 0 5px;
-
   color: #0f172a;
-
   font-size: 18px;
   font-weight: 800;
 }
 
 .profile-card-title p {
   margin: 0;
-
   color: #64748b;
-
   font-size: 13px;
 }
-
-/* =========================================
-   INFO GRID
-========================================= */
 
 .profile-info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-
   column-gap: 40px;
   row-gap: 24px;
 }
@@ -287,36 +198,25 @@
 
 .profile-info-item span {
   color: #64748b;
-
   font-size: 12px;
   font-weight: 500;
 }
 
 .profile-info-item strong {
   color: #0f172a;
-
   font-size: 14px;
   font-weight: 700;
-
   word-break: break-word;
 }
-
-/* =========================================
-   RELATED BOX
-========================================= */
 
 .profile-related-box {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 16px;
-
   margin-top: 24px;
   padding: 16px 18px;
-
   background: #f8fafc;
-
   border: 1px solid #dbeafe;
   border-radius: 10px;
 }
@@ -329,33 +229,24 @@
 
 .profile-related-box span {
   color: #64748b;
-
   font-size: 12px;
 }
 
 .profile-related-box strong {
   color: #0f172a;
-
   font-size: 14px;
   font-weight: 700;
 }
 
 .profile-related-box p {
   margin: 0;
-
   color: #64748b;
-
   font-size: 12px;
 }
-
-/* =========================================
-   ACTIONS
-========================================= */
 
 .profile-action-row {
   display: flex;
   gap: 10px;
-
   margin-top: 24px;
 }
 
@@ -363,29 +254,20 @@
 .profile-outline-button,
 .profile-link-button {
   min-height: 40px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   padding: 0 16px;
-
   border-radius: 8px;
-
   font-size: 13px;
   font-weight: 700;
-
   text-decoration: none;
-
   transition: 0.2s ease;
 }
-
-/* PRIMARY */
 
 .profile-primary-button {
   background: #2563eb;
   color: #ffffff;
-
   border: 1px solid #2563eb;
 }
 
@@ -394,13 +276,10 @@
   border-color: #1d4ed8;
 }
 
-/* OUTLINE */
-
 .profile-outline-button,
 .profile-link-button {
   background: #ffffff;
   color: #2563eb;
-
   border: 1px solid #93c5fd;
 }
 

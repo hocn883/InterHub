@@ -13,26 +13,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class JobResponse {
     private Long id;
-
     private String title;
-
     private String description;
-
     private String requirements;
-
     private LocalDate deadline;
-
     private BigDecimal salary;
-
     private LocalDate startDate;
-
     private LocalDate endDate;
-
     private Integer quantity;
-
     private String location;
-
     private JobStatus status;
-
     private EmployerResponse employer;
 }

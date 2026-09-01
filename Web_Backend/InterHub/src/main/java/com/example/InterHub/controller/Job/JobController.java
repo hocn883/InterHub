@@ -3,6 +3,7 @@ package com.example.InterHub.controller.Job;
 import com.example.InterHub.dto.request.ApplicationRequest;
 import com.example.InterHub.dto.request.RegisterRequest;
 import com.example.InterHub.dto.request.ReviewRequest;
+import com.example.InterHub.dto.request.SearchJobRequest;
 import com.example.InterHub.dto.response.*;
 import com.example.InterHub.entity.JobReview;
 import com.example.InterHub.entity.Student;
@@ -96,5 +97,16 @@ public class JobController {
                         .result(response)
                         .build()
         );
+    }
+    @GetMapping("/search")
+    public ApiResponse<PageResponse<JobResponse>> searchJobs(
+            @ModelAttribute SearchJobRequest request,
+            Pageable pageable
+    ) {
+        return ApiResponse.<PageResponse<JobResponse>>builder()
+                .code(HttpStatus.OK.value())
+                .status(HttpStatus.OK.name())
+                .result(jobService.searchJobs(request, pageable))
+                .build();
     }
 }

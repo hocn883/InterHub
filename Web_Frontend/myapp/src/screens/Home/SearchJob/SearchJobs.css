@@ -1,267 +1,206 @@
 .home-job-search {
   width: 100%;
-  margin: 22px 0 30px;
-  padding: 12px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #f7f4ff 0%,
-      #f5f9ff 55%,
-      #effaf8 100%
-    );
-
-  border: 1px solid #e4e0f5;
-  border-radius: 14px;
-
-  box-shadow:
-    0 8px 24px rgba(59, 50, 110, 0.06);
+  margin-top: 28px;
 }
-
-
-/* ======================================================
-   FORM
-====================================================== */
 
 .home-job-search-form {
   width: 100%;
-
-  display: grid;
-
-  grid-template-columns:
-    minmax(300px, 1.7fr)
-    minmax(180px, 0.85fr)
-    minmax(220px, 1fr)
-    135px
-    105px;
-
-  align-items: center;
-
-  gap: 8px;
-}
-
-
-/* ======================================================
-   FIELD
-====================================================== */
-
-.home-search-field {
-  position: relative;
-
-  height: 46px;
-
   display: flex;
   align-items: center;
-
-  background: rgba(255, 255, 255, 0.94);
-
-  border: 1px solid #dedfee;
-  border-radius: 9px;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+  gap: 10px;
+  padding: 10px;
+  background: #ffffff;
+  border: 1px solid #e8e8ee;
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(37, 31, 74, 0.08);
 }
 
+.home-search-field {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: #f8f8fb;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
 
 .home-search-field:hover {
-  border-color: #cbc4ee;
+  background: #ffffff;
+  border-color: #ddd8f8;
 }
-
 
 .home-search-field:focus-within {
   background: #ffffff;
-
-  border-color: #8e7bea;
-
-  box-shadow:
-    0 0 0 3px rgba(96, 70, 233, 0.1);
+  border-color: #6046e9;
+  box-shadow: 0 0 0 3px rgba(96, 70, 233, 0.08);
 }
-
-
-/* ======================================================
-   LEFT ICON
-====================================================== */
 
 .home-search-field > i:first-child {
-  position: absolute;
-
-  left: 14px;
-
-  color: #7669b5;
-
-  font-size: 17px;
-
-  pointer-events: none;
-
-  z-index: 2;
+  flex-shrink: 0;
+  margin-left: 14px;
+  color: #777487;
+  font-size: 16px;
 }
 
-
-/* ======================================================
-   INPUT
-====================================================== */
-
-.home-search-field input {
-  width: 100%;
-  height: 100%;
-
-  padding: 0 14px 0 42px;
-
-  border: none;
-  outline: none;
-
-  background: transparent;
-
-  color: #30384c;
-
-  font-family: inherit;
-  font-size: 13px;
-}
-
-
-.home-search-field input::placeholder {
-  color: #8d93a5;
-}
-
-
-/* ======================================================
-   SELECT
-====================================================== */
-
+.home-search-field input,
 .home-search-field select {
   width: 100%;
   height: 100%;
-
-  padding: 0 38px 0 42px;
-
   border: none;
   outline: none;
-
-  appearance: none;
-  -webkit-appearance: none;
-
   background: transparent;
-
-  color: #60687a;
-
+  color: #292736;
+  font-size: 14px;
   font-family: inherit;
-  font-size: 13px;
-
-  cursor: pointer;
 }
 
+.home-search-field input {
+  padding: 0 14px 0 11px;
+}
+
+.home-search-field input::placeholder {
+  color: #a0a0aa;
+}
+
+.home-search-keyword {
+  flex: 1.25;
+  min-width: 220px;
+}
+
+.home-search-salary {
+  width: 155px;
+  flex: 0 0 155px;
+}
+
+.home-search-select select {
+  appearance: none;
+  cursor: pointer;
+  padding: 0 32px 0 10px;
+}
+
+.home-search-salary select {
+  padding-left: 9px;
+}
 
 .home-select-arrow {
   position: absolute;
-
-  right: 13px;
-
-  color: #9188bb;
-
-  font-size: 11px;
-
+  right: 11px;
   pointer-events: none;
+  color: #8f8c9b;
+  font-size: 11px;
 }
 
+.home-search-location {
+  flex: 1;
+  min-width: 210px;
+  cursor: pointer;
+}
 
-/* ======================================================
-   SEARCH BUTTON
-====================================================== */
+.home-search-location input {
+  cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-right: 34px;
+}
+
+.home-location-clear {
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  right: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #898694;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.home-location-clear:hover {
+  background: #eceaf5;
+  color: #6046e9;
+}
+
+.home-location-clear i {
+  font-size: 12px;
+}
+
+.home-search-radius {
+  width: 92px;
+  flex: 0 0 92px;
+}
+
+.home-search-radius select {
+  padding-left: 12px;
+  padding-right: 26px;
+}
+
+.home-search-radius select:disabled {
+  color: #aaa8b2;
+  cursor: not-allowed;
+}
+
+.home-search-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
 
 .home-search-submit {
-  height: 46px;
-
-  display: inline-flex;
+  height: 48px;
+  padding: 0 20px;
+  display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 7px;
-
-  padding: 0 18px;
-
-  border: 1px solid #6046e9;
-  border-radius: 9px;
-
+  border: none;
+  border-radius: 10px;
   background: #6046e9;
-
   color: #ffffff;
-
-  font-family: inherit;
   font-size: 13px;
-  font-weight: 750;
-
-  white-space: nowrap;
-
+  font-weight: 700;
   cursor: pointer;
-
-  box-shadow:
-    0 6px 15px rgba(96, 70, 233, 0.16);
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  white-space: nowrap;
+  transition: 0.2s ease;
 }
-
 
 .home-search-submit:hover {
-  background: #5239d5;
-
-  box-shadow:
-    0 8px 20px rgba(96, 70, 233, 0.22);
-
+  background: #5238dc;
   transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(96, 70, 233, 0.24);
 }
-
-
-.home-search-submit:active {
-  transform: translateY(0);
-}
-
-
-/* ======================================================
-   RESET
-====================================================== */
 
 .home-search-reset {
-  height: 46px;
-
-  display: inline-flex;
+  height: 35px;
+  padding: 0 10px;
+  display: flex;
   align-items: center;
   justify-content: center;
-
-  gap: 6px;
-
-  padding: 0 14px;
-
-  border: 1px solid #ded9f7;
-  border-radius: 9px;
-
+  gap: 5px;
+  border: 1px solid #dedde5;
+  border-radius: 8px;
   background: #ffffff;
-
-  color: #6554b3;
-
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 700;
-
-  white-space: nowrap;
-
+  color: #787582;
+  font-size: 11px;
+  font-weight: 600;
   cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
+  white-space: nowrap;
+  transition: 0.2s ease;
 }
 
-
 .home-search-reset:hover {
-  background: #f3f0ff;
-
-  border-color: #cfc5fa;
-
+  border-color: #c9c2f5;
+  background: #f7f5ff;
   color: #6046e9;
+}
+
+.home-search-reset i {
+  font-size: 12px;
 }

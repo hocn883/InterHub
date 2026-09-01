@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './Style/Style.css'
+import "leaflet/dist/leaflet.css";
 import { UserProvider } from './contexts/UserContext';
 import { BrowserRouter } from 'react-router-dom';
 

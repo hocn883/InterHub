@@ -16,10 +16,14 @@ export const endpoints = {
   //EmployerJob
   employerJob:"/employer/jobs",
   employerDeleteJob:(jobId) => `/employer/jobs/${jobId}`,
+  //Student
+  student:"/students",
   // User
   currentUser: "/auth/me",
+  updateUser:"/update-profile",
   // Jobs
   jobs: "/jobs",
+  searchJobs: "/jobs/search",
   jobDetail: (jobId) => `/jobs/${jobId}`,
   jobReview:(jobId) => `/jobs/${jobId}/reviews`,
   // students

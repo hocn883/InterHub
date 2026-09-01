@@ -34,6 +34,10 @@ public class Job extends BaseEntity {
     private Integer quantity;
     @Column(nullable=false)
     private String location;
+    @Column(nullable=false)
+    private Double longitude;
+    @Column(nullable=false)
+    private Double latitude;
     @ManyToOne(fetch=FetchType.LAZY,optional=false)
     @JoinColumn(name = "employer_id",nullable=false)
     private Employer employer;

@@ -28,8 +28,9 @@ import MyInvitations from "./screens/Student/Invitations/MyInvitations";
 import Applications   from "./screens/Student/Applications/Applications";
 import EmployerInvitations from "./screens/Employer/EmployerInvitations/EmployerInvitations";
 import EmployerInvitationDetails from "./screens/Employer/EmployerInvitations/EmployerInvitationDetails/EmployerInvitationDetails";
+import EditProfile from "./screens/profiles/editprofile/EditProfile";
 function App() {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser , setCurrentUser} = useContext(UserContext);
 
   return (
     <div className="App">
@@ -59,12 +60,12 @@ function App() {
             <Route path="/mycv/send" element={<SendCv />} />
             <Route path="/jobs/:jobId/apply" element={<Applications />} />
             <Route path="/employer/invitations" element={<EmployerInvitations/>} />
-             <Route path="/employer/invitations/:invitationId" element={<EmployerInvitationDetails/>} />
+            <Route path="/employer/invitations/:invitationId" element={<EmployerInvitationDetails/>} />
+            <Route path="/profile/edit" element={<EditProfile currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
           </Route>
         </Route>
       </Routes>
     </div>
   );
 }
-
 export default App;
