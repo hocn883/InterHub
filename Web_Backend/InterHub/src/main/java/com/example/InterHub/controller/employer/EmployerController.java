@@ -92,5 +92,41 @@ public class EmployerController {
                         .result(response)
                         .build()
         );
+
     }
+    @GetMapping("/student-apply/approved")
+    public ResponseEntity<ApiResponse<PageResponse<ApplicationResponse>>> getStudentApplyApproval(
+            @AuthenticationPrincipal CustomUserDetails currentUser
+            , @RequestParam(defaultValue = "0") int page
+            , @RequestParam(defaultValue = "10") int size)
+    {
+        Pageable pageable = PageRequest.of(page,size,Sort.by(Sort.Direction.DESC, "createdDate"));
+        PageResponse<ApplicationResponse>response=employerService.getApprovedStudents(currentUser.getUser().getId(),  pageable);
+        return ResponseEntity.ok(
+                ApiResponse.<PageResponse<ApplicationResponse>>builder()
+                        .code(HttpStatus.OK.value())
+                        .status(HttpStatus.OK.name())
+                        .message("Danh sach student")
+                        .result(response)
+                        .build()
+        );
+    }
+    @GetMapping("/student-apply/reject")
+    public ResponseEntity<ApiResponse<PageResponse<ApplicationResponse>>> getStudentApplyReject(
+            @AuthenticationPrincipal CustomUserDetails currentUser
+            , @RequestParam(defaultValue = "0") int page
+            , @RequestParam(defaultValue = "10") int size)
+    {
+        Pageable pageable = PageRequest.of(page,size,Sort.by(Sort.Direction.DESC, "createdDate"));
+        PageResponse<ApplicationResponse>response=employerService.getRejectedStudents(currentUser.getUser().getId(),  pageable);
+        return ResponseEntity.ok(
+                ApiResponse.<PageResponse<ApplicationResponse>>builder()
+                        .code(HttpStatus.OK.value())
+                        .status(HttpStatus.OK.name())
+                        .message("Danh sach student")
+                        .result(response)
+                        .build()
+        );
+    }
+
 }

@@ -500,8 +500,20 @@ a {
 
 .jobs-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 19px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top:20px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.jobs-grid > * {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .load-more-wrapper {

@@ -1,0 +1,212 @@
+.student-application-card {
+  overflow: hidden;
+  border: 1px solid #e5e9f0;
+  border-radius: 15px;
+  background: #fff;
+  transition: 0.2s;
+}
+
+.student-application-card:hover {
+  border-color: #ced7e5;
+  box-shadow: 0 6px 22px rgba(38, 51, 77, 0.07);
+}
+
+.student-application-header {
+  padding: 20px 23px;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.student-application-profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.student-application-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #edf3ff;
+  color: #2563eb;
+}
+
+.student-application-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.student-application-avatar svg {
+  width: 23px;
+  height: 23px;
+}
+
+.student-application-name {
+  min-width: 0;
+  flex: 1;
+}
+
+.student-application-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.student-application-title-row h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #172033;
+}
+
+.student-application-name p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #7c8699;
+}
+
+.student-application-status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.student-application-status.applied {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.student-application-status.internship {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.student-application-status.rejected {
+  background: #fff1f2;
+  color: #dc2626;
+}
+
+.student-application-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 20px 23px;
+}
+
+.student-application-info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 18px;
+  border-right: 1px solid #eef1f5;
+}
+
+.student-application-info-item:first-child {
+  padding-left: 0;
+}
+
+.student-application-info-item:last-child {
+  border-right: none;
+}
+
+.student-application-info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: #eff5ff;
+  color: #2563eb;
+}
+
+.student-application-info-item > div:last-child {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.student-application-info-item span {
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: #929bab;
+}
+
+.student-application-info-item strong {
+  overflow: hidden;
+  font-size: 13px;
+  color: #364152;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-application-job {
+  padding: 17px 23px;
+  border-top: 1px solid #eef1f5;
+  background: #fafbfe;
+}
+
+.student-application-job-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.student-application-job-heading > svg {
+  width: 22px;
+  height: 22px;
+  color: #2563eb;
+}
+
+.student-application-job-heading > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.student-application-job-heading span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  color: #8b95a7;
+}
+
+.student-application-job-heading a,
+.student-application-job-heading strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.student-application-job-heading a:hover {
+  text-decoration: underline;
+}
+
+.student-application-job-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 12px;
+}
+
+.student-application-job-info div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #697386;
+}
+
+.student-application-job-info svg {
+  color: #7b8799;
+}

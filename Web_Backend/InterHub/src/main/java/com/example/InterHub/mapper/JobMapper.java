@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 uses = UserMapper.class)
 public interface JobMapper {
     JobResponse toResponse(Job job);
-
     @Mapping(target = "employer", ignore = true)
     @Mapping(target = "applications", ignore = true)
     Job toEntity(PostJobRequest request);

@@ -6,6 +6,7 @@ import com.example.InterHub.dto.response.JobResponse;
 import com.example.InterHub.dto.response.PageResponse;
 import com.example.InterHub.entity.Employer;
 import com.example.InterHub.entity.Job;
+import com.example.InterHub.entity.Student;
 import com.example.InterHub.entity.User;
 import com.example.InterHub.enums.Action;
 import com.example.InterHub.enums.EmployerStatus;
@@ -16,7 +17,10 @@ import com.example.InterHub.exception.ResourceNotFoundException;
 import com.example.InterHub.mapper.JobMapper;
 import com.example.InterHub.mapper.PageMapper;
 import com.example.InterHub.repository.EmployerRepository;
+import com.example.InterHub.repository.FollowRepository;
 import com.example.InterHub.repository.JobRepository;
+import com.example.InterHub.repository.UserRepository;
+import com.example.InterHub.services.EmailService.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,6 +38,8 @@ public class JobService {
     private final JobMapper jobMapper;
     private final PageMapper pageMapper;
     private final SystemLogService systemLogService;
+    private final FollowRepository followRepository;
+    private final EmailService emailService;
     @Transactional(readOnly = true)
     public PageResponse<JobResponse> getAllJobs(Pageable pageable)
     {
@@ -52,6 +58,26 @@ public class JobService {
         job.setEmployer(employer);
         job.setStatus(JobStatus.OPEN);
         Job savedJob = jobRepository.save(job);
+        List<Student>students=followRepository.findStudentsByEmployerId(employer.getId());
+        for(Student student:students)
+        {
+            if(student.getEmail()!=null)
+            {
+                emailService.sendEmail(
+                        student.getEmail(),
+                        "Tin thực tập mới từ " + employer.getCompanyName(),
+                        "Xin chào " + student.getFullName() + ",\n\n" +
+                                employer.getCompanyName() +
+                                " vừa đăng một vị trí thực tập mới mà bạn có thể quan tâm.\n\n" +
+                                "Vị trí: " + savedJob.getTitle() + "\n" +
+                                "Địa điểm: " + savedJob.getLocation() + "\n" +
+                                "Mức lương: " + savedJob.getSalary() + "\n" +
+                                "Hạn ứng tuyển: " + savedJob.getDeadline() + "\n\n" +
+                                "Truy cập InterHub để xem chi tiết và ứng tuyển.\n\n" +
+                                "InterHub"
+                );
+            }
+        }
         systemLogService.saveLog(employer, Action.CREATE_JOB.name(),
                 "Doanh nghiệp " + employer.getUsername() + " đã đăng công việc "+ savedJob.getTitle());
         return jobMapper.toResponse(savedJob);
@@ -157,7 +183,7 @@ public class JobService {
                         request.getLatitude(),
                         request.getLongitude(),
                         request.getRadius()
-                )).filter(job->job.getStatus() == JobStatus.CLOSED)
+                )).filter(job->job.getStatus() == JobStatus.OPEN)
                 .map(jobMapper::toResponse)
                 .toList();
         Page<JobResponse> page = new PageImpl<>(filteredJobs, pageable, filteredJobs.size()

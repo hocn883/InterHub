@@ -13,6 +13,8 @@ export const endpoints = {
   employerReview:(employerId)=> `/employer/${employerId}/reviews`,
   employerDetails: (employerId) => `/employer/${employerId}`,
   employerJobs: (employerId)=>`/employer/${employerId}/jobs`,
+  employerStudentApproved:"/employer/student-apply/approved",
+  employerStudentRejected:"/employer/student-apply/reject",
   //EmployerJob
   employerJob:"/employer/jobs",
   employerDeleteJob:(jobId) => `/employer/jobs/${jobId}`,
@@ -26,6 +28,8 @@ export const endpoints = {
   searchJobs: "/jobs/search",
   jobDetail: (jobId) => `/jobs/${jobId}`,
   jobReview:(jobId) => `/jobs/${jobId}/reviews`,
+  deleteJob:(jobId) => `/employer/jobs/${jobId}`,
+  closeJob:(jobId)=>`/employer/jobs/${jobId}/close`,
   // students
   applyJob: (jobId) => `/jobs/${jobId}/apply`,
   myapplications:"/student/applications",
@@ -39,7 +43,6 @@ export const endpoints = {
   followEmployer:(employerId)=>`/student/follows/${employerId}`,
   //employerApplication
   listapply:(jobId)=>`/employer/jobs/${jobId}/applications`,//employer/jobs/
-  closeJob:(jobId)=>`/employer/jobs/${jobId}/close`,
   approveApplication:(applicationId) => `/employer/application/${applicationId}/approve`,
   rejectApplication:(applicationId) => `/employer/application/${applicationId}/reject`,
   //Invitation

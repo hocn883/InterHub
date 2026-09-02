@@ -1,0 +1,366 @@
+.employer-students-page {
+  min-height: 100vh;
+  background: #f7f8fc;
+}
+
+.employer-students-main {
+  padding-top: 32px;
+  padding-bottom: 60px;
+}
+
+.employer-students-content {
+  width: 100%;
+}
+
+.employer-students-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.employer-students-heading .section-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  color: #2563eb;
+}
+
+.employer-students-heading h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #172033;
+}
+
+.employer-students-heading p {
+  margin: 7px 0 0;
+  font-size: 14px;
+  color: #7d8798;
+}
+
+.employer-students-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 6px;
+  border: 1px solid #e4e8ef;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.employer-students-tabs button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 17px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #697386;
+  transition: 0.2s;
+}
+
+.employer-students-tabs button:hover {
+  background: #f4f7fb;
+  color: #2563eb;
+}
+
+.employer-students-tabs button.active {
+  background: #edf4ff;
+  color: #2563eb;
+}
+
+.employer-students-tabs button.active.rejected {
+  background: #fff1f2;
+  color: #dc2626;
+}
+
+.employer-students-tabs button span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 23px;
+  height: 23px;
+  padding: 0 7px;
+  border-radius: 20px;
+  background: #e8edf5;
+  font-size: 11px;
+}
+
+.employer-students-tabs button.active span {
+  background: #2563eb;
+  color: #fff;
+}
+
+.employer-students-tabs button.active.rejected span {
+  background: #dc2626;
+  color: #fff;
+}
+
+.employer-students-toolbar {
+  margin-bottom: 20px;
+}
+
+.employer-students-search {
+  display: flex;
+  align-items: center;
+  width: 420px;
+  max-width: 100%;
+  padding: 0 14px;
+  border: 1px solid #dfe4ec;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.employer-students-search svg {
+  flex-shrink: 0;
+  color: #8b95a7;
+}
+
+.employer-students-search input {
+  width: 100%;
+  height: 44px;
+  padding-left: 10px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+.employer-students-list {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.employer-student-card {
+  overflow: hidden;
+  border: 1px solid #e5e9f0;
+  border-radius: 15px;
+  background: #fff;
+  transition: 0.2s;
+}
+
+.employer-student-card:hover {
+  border-color: #ced7e5;
+  box-shadow: 0 6px 22px rgba(38, 51, 77, 0.07);
+}
+
+.employer-student-header {
+  padding: 20px 23px;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.employer-student-profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.employer-student-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #edf3ff;
+  color: #2563eb;
+}
+
+.employer-student-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.employer-student-avatar svg {
+  width: 23px;
+  height: 23px;
+}
+
+.employer-student-name {
+  min-width: 0;
+  flex: 1;
+}
+
+.employer-student-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.employer-student-title-row h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #172033;
+}
+
+.employer-student-name p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #7c8699;
+}
+
+.employer-student-status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #ecfdf3;
+  font-size: 11px;
+  font-weight: 700;
+  color: #15803d;
+}
+
+.employer-student-status.rejected {
+  background: #fff1f2;
+  color: #dc2626;
+}
+
+.employer-student-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 20px 23px;
+}
+
+.employer-student-info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 18px;
+  border-right: 1px solid #eef1f5;
+}
+
+.employer-student-info-item:first-child {
+  padding-left: 0;
+}
+
+.employer-student-info-item:last-child {
+  border-right: none;
+}
+
+.employer-student-info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: #eff5ff;
+  color: #2563eb;
+}
+
+.employer-student-info-item > div:last-child {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.employer-student-info-item span {
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: #929bab;
+}
+
+.employer-student-info-item strong {
+  overflow: hidden;
+  font-size: 13px;
+  color: #364152;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.employer-student-footer {
+  padding: 15px 23px;
+  border-top: 1px solid #eef1f5;
+  background: #fbfcfe;
+}
+
+.employer-student-lecturer > span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #929bab;
+}
+
+.employer-student-lecturer-info {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.employer-student-lecturer-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #edf1f6;
+  color: #68758a;
+}
+
+.employer-student-lecturer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.employer-student-lecturer-info > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.employer-student-lecturer-info strong {
+  font-size: 13px;
+  color: #344054;
+}
+
+.employer-student-lecturer-info small {
+  margin-top: 2px;
+  font-size: 11px;
+  color: #8a94a5;
+}
+
+.employer-students-empty {
+  display: flex;
+  min-height: 220px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px;
+  border: 1px dashed #dce2eb;
+  border-radius: 14px;
+  background: #fff;
+  text-align: center;
+}
+
+.employer-students-empty svg {
+  width: 34px;
+  height: 34px;
+  margin-bottom: 12px;
+  color: #a1aab9;
+}
+
+.employer-students-empty h3 {
+  margin: 0 0 7px;
+  font-size: 17px;
+  color: #374151;
+}
+
+.employer-students-empty p {
+  margin: 0;
+  font-size: 13px;
+  color: #8a94a5;
+}

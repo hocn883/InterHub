@@ -60,7 +60,7 @@ public class EmployerJobController {
         );
     }
     @DeleteMapping("/{jobId}")
-    public ResponseEntity<Void>deleteCv(@AuthenticationPrincipal CustomUserDetails currentUser,@PathVariable Long jobId)
+    public ResponseEntity<Void>deleteJob(@AuthenticationPrincipal CustomUserDetails currentUser,@PathVariable Long jobId)
     {
         jobService.deleteJob(jobId,currentUser.getUser());
         return ResponseEntity.noContent().build();

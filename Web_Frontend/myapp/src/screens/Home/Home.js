@@ -349,16 +349,12 @@ const handleSearch = async (event) => {
         <div className="hero-container">
           <div className="hero-content">
             <div className="hero-badge">
-              <i className="bi bi-stars"></i>
-
               <span>
                 Nền tảng kết nối thực tập dành cho sinh viên
               </span>
             </div>
-
             <h1>
               Nền tảng thực tập
-
               <span>
                 Khoa Công Nghệ Thông Tin Đại Học Mở TPHCM
               </span>
@@ -374,7 +370,6 @@ const handleSearch = async (event) => {
               <span>
                 Từ khóa phổ biến:
               </span>
-
               <button
                 type="button"
                 onClick={() =>

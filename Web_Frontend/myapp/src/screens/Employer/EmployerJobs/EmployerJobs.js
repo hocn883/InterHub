@@ -101,7 +101,7 @@ function EmployerJobs() {
         localStorage.getItem("access-token");
 
       await authApi(token).delete(
-        endpoints.employerDeleteJob(jobId)
+        endpoints.deleteJob(jobId)
       );
 
       setJobs((currentJobs) =>

@@ -22,6 +22,8 @@ import com.example.InterHub.mapper.ApplicationMapper;
 import com.example.InterHub.mapper.PageMapper;
 import com.example.InterHub.repository.ApplicationRepository;
 import com.example.InterHub.repository.JobRepository;
+import com.example.InterHub.repository.StudentRepository;
+import com.example.InterHub.services.EmailService.EmailService;
 import com.example.InterHub.services.cloudinary.CloudinaryService;
 import com.example.InterHub.services.cloudinary.FileUpload;
 import lombok.RequiredArgsConstructor;
@@ -39,9 +41,11 @@ public class ApplicationService {
     private final ApplicationRepository applicationRepository;
     private final PageMapper pageMapper;
     private final SystemLogService systemLogService;
+    private final EmailService emailService;
+    private final StudentRepository studentRepository;
     @Transactional
     public ApplicationResponse applyJob(Long jobId, User currentUser, ApplicationRequest request) {
-        Student student=(Student)currentUser;
+        Student student=studentRepository.findById(currentUser.getId()).orElseThrow();
         if (student.getStatus() != StudentStatus.TIM_VIEC) {
             throw new ConflictException(
                     "Bạn đã có công việc thực tập rồi."
@@ -175,16 +179,25 @@ public class ApplicationService {
                     "Sinh viên này đã có việc"
             );
         }
-        application.setStatus(ApplicationStatus.APPROVED
-        );
-        student.setStatus(StudentStatus.DA_CO_VIEC
-        );
+        application.setStatus(ApplicationStatus.APPROVED);
+        student.setStatus(StudentStatus.DA_CO_VIEC);
         Application savedApplication=applicationRepository.save(application);
         systemLogService.saveLog(
                 currentUser,
                 Action.UPDATE_APPLICATION_STATUS.name(),
                 "Duyệt đơn ứng tuyển ID: " + applicationId
         );
+        if(student.getEmail()!=null)
+        {
+            emailService.sendEmail(
+                    student.getEmail(),
+                    "Tin thực tập mới từ " + employer.getCompanyName(),
+                    "Xin chào " + student.getFullName() + ",\n\n" +
+                            "Đơn ứng tuyển của bạn đã được "+employer.getCompanyName()+" phê duyệt.\n\n"+
+                            "Truy cập InterHub để xem chi tiết và ứng tuyển.\n\n" +
+                            "InterHub"
+            );
+        }
         return applicationMapper.toResponse(savedApplication);
     }
     @Transactional
