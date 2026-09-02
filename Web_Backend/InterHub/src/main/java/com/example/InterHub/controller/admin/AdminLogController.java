@@ -17,53 +17,52 @@ public class AdminLogController {
 
     private final SystemLogRepository systemLogRepository;
 
-
-    // ==========================================
-    // DANH SÁCH LOG + PHÂN TRANG
-    // ==========================================
     @GetMapping
     public String list(
+            @RequestParam(required = false) Long userId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             Model model
     ) {
-
-        Page<SystemLog> logPage =
-                systemLogRepository.findAll(
-                        PageRequest.of(
-                                page,
-                                size,
-                                Sort.by("createdDate").descending()
-                        )
-                );
-
-
+        PageRequest pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by("createdDate").descending()
+        );
+        Page<SystemLog> logPage;
+        if (userId != null) {
+            logPage = systemLogRepository.findByUserId(
+                    userId,
+                    pageable
+            );
+        } else {
+            logPage = systemLogRepository.findAll(
+                    pageable);
+        }
         model.addAttribute(
                 "logs",
                 logPage.getContent()
         );
-
         model.addAttribute(
                 "currentPage",
                 logPage.getNumber()
         );
-
         model.addAttribute(
                 "totalPages",
                 logPage.getTotalPages()
         );
-
         model.addAttribute(
                 "totalItems",
                 logPage.getTotalElements()
         );
-
         model.addAttribute(
                 "pageSize",
                 logPage.getSize()
         );
-
-
+        model.addAttribute(
+                "userId",
+                userId
+        );
         return "admin/logs/list";
     }
 }

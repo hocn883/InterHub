@@ -1,0 +1,101 @@
+/* =========================================================
+   SYSTEM LOG LIST
+========================================================= */
+
+.system-log-list {
+    width: 100%;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   LOG ROW
+========================================================= */
+
+.system-log-row {
+    min-height: 54px;
+
+    padding: 11px 15px;
+
+    display: grid;
+
+    grid-template-columns:
+            190px
+            170px
+            minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 15px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    font-size: 12px;
+}
+
+
+/* Zebra row */
+
+.system-log-row:nth-child(even) {
+    background: #fafafa;
+}
+
+
+/* Hover */
+
+.system-log-row:hover {
+    background: #f4f8fa;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.system-log-date {
+    color: #777777;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTION
+========================================================= */
+
+.system-log-action {
+    display: inline-block;
+    max-width: 160px;
+    padding: 5px 8px;
+    background: #e5f1f8;
+    border: 1px solid #c8dee8;
+    border-radius: 3px;
+    color: #28627e;
+    font-size: 10px;
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.system-log-description {
+    min-width: 0;
+    color: #444444;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.system-log-empty {
+    padding: 35px 20px;
+    text-align: center;
+    color: #888888;
+    font-size: 13px;
+}

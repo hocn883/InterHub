@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -36,15 +37,9 @@ public class JobController {
     public ResponseEntity<ApiResponse<PageResponse<JobResponse>>> getAllJobs(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-
-        Pageable pageable = PageRequest.of(
-                page,
-                size,
-                Sort.by(Sort.Direction.DESC, "createdDate")
-        );
-
+        Pageable pageable = PageRequest.of(page, size,
+                Sort.by(Sort.Direction.DESC, "createdDate"));
         PageResponse<JobResponse> response = jobService.getAllJobs(pageable);
-
         return ResponseEntity.ok(
                 ApiResponse.<PageResponse<JobResponse>>builder()
                         .code(HttpStatus.OK.value())
@@ -55,11 +50,9 @@ public class JobController {
         );
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<JobResponse>> getJobById(
-            @PathVariable Long id
-    ) {
+    public ResponseEntity<ApiResponse<JobResponse>> getJobById( @PathVariable Long id)
+    {
         JobResponse job=jobService.getJobById(id);
-
         return ResponseEntity.ok(
                 ApiResponse.<JobResponse>builder()
                         .code(HttpStatus.OK.value())
@@ -69,24 +62,24 @@ public class JobController {
                         .build()
         );
     }
+    @PreAuthorize("hasRole('STUDENT')")
     @PostMapping(value = "/{jobId}/apply",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<ApplicationResponse>>applyJob(@Valid @ModelAttribute ApplicationRequest request,
     @AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long jobId)
     {
-
         return ResponseEntity.ok(ApiResponse.<ApplicationResponse>builder().
                 code(HttpStatus.CREATED.value()).status(HttpStatus.CREATED.name())
                 .message("Apply thành công").
                 result(applicationService.applyJob(jobId,currentUser.getUser(),request)).build());
     }
+    @PreAuthorize("hasRole('STUDENT')")
     @PostMapping("/{jobId}/reviews")
     public ResponseEntity<ApiResponse<ReviewResponse>> createReview(
             @Valid @RequestBody ReviewRequest request,
             @AuthenticationPrincipal CustomUserDetails currentUser,
-            @PathVariable Long jobId
-
-    ) {
+            @PathVariable Long jobId)
+    {
         Student student = (Student) currentUser.getUser();
         ReviewResponse response=reviewService.createReview(request,student,jobId);
         return ResponseEntity.ok(

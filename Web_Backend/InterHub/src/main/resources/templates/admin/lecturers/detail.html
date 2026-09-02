@@ -12,8 +12,11 @@
 
     <link
             rel="stylesheet"
-            th:href="@{/css/admin/dashboard.css}">
+            th:href="@{/css/admin/common.css}">
 
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin/lecturers/detail.css}">
 </head>
 
 
@@ -201,7 +204,7 @@
             </div>
 
 
-            <div style="padding:20px">
+            <div class="lecturer-detail-action">
 
                 <a
                         class="action-link"
@@ -218,6 +221,17 @@
 
 
     </section>
+    <div class="detail-actions">
+
+        <a
+                class="action-link"
+                th:href="@{/admin/logs(userId=${lecturer.id})}">
+
+            Xem lịch sử hoạt động
+
+        </a>
+
+    </div>
 
 
 </main>

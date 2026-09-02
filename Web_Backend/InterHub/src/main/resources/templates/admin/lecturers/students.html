@@ -1,42 +1,29 @@
 <!DOCTYPE html>
 <html lang="vi"
       xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
     <meta charset="UTF-8">
-
     <title>
         Sinh viên của giảng viên
     </title>
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin/common.css}">
 
     <link
             rel="stylesheet"
-            th:href="@{/css/admin/dashboard.css}">
-
+            th:href="@{/css/admin/lecturers/students.css}">
 </head>
-
-
 <body>
-
-
 <header class="admin-top-header">
-
     <div class="header-container">
-
         <a
                 th:href="@{/admin}"
                 class="admin-brand">
-
             InterHub Administration
-
         </a>
-
     </div>
-
 </header>
-
-
 <main class="content-container">
 
 
@@ -69,7 +56,7 @@
         <div class="admin-table-wrapper">
 
 
-            <table class="admin-table">
+            <table class="admin-table lecturer-students-table">
 
 
                 <thead>

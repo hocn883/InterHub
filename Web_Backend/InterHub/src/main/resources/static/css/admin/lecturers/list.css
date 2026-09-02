@@ -1,0 +1,9 @@
+.lecturer-list-table td:nth-child(1) {
+    width: 70px;
+}
+
+.lecturer-list-table td:last-child {
+    width: 100px;
+
+    white-space: nowrap;
+}

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết doanh nghiệp</title>
+    <link rel="stylesheet" th:href="@{/css/admin/common.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/employers/detail.css}">
+</head>
+<body>
+<header class="admin-top-header">
+    <div class="header-container">
+        <a th:href="@{/admin}" class="admin-brand">
+            InterHub Administration
+        </a>
+    </div>
+</header>
+<nav class="admin-navbar">
+    <div class="nav-container">
+        <a th:href="@{/admin}" class="nav-item">
+            Dashboard
+        </a>
+        <a th:href="@{/admin/students}" class="nav-item">
+            Sinh viên
+        </a>
+        <a th:href="@{/admin/lecturers}" class="nav-item">
+            Giảng viên
+        </a>
+        <a th:href="@{/admin/employers}" class="nav-item active">
+            Doanh nghiệp
+        </a>
+        <a th:href="@{/admin/jobs}" class="nav-item">
+            Việc làm
+        </a>
+        <a th:href="@{/admin/logs}" class="nav-item">
+            System Logs
+        </a>
+    </div>
+</nav>
+<div class="breadcrumb">
+    <div class="content-container">
+        <a th:href="@{/admin}">
+            Home
+        </a>
+        <span>›</span>
+        <a th:href="@{/admin/employers}">
+            Doanh nghiệp
+        </a>
+        <span>›</span>
+        <span th:text="${employer.companyName}">
+        </span>
+    </div>
+</div>
+<main class="content-container">
+    <div class="page-header">
+        <h1 th:text="${employer.companyName}">
+            Doanh nghiệp
+        </h1>
+        <p>
+            Thông tin và thống kê tuyển dụng của doanh nghiệp.
+        </p>
+    </div>
+    <section class="employer-detail-grid">
+        <div class="module-section">
+            <div class="module-title">
+                Thông tin doanh nghiệp
+            </div>
+            <div class="detail-row">
+                <strong>
+                    Tên doanh nghiệp
+                </strong>
+                <span th:text="${employer.companyName}">
+                </span>
+            </div>
+            <div class="detail-row">
+                <strong>
+                    Người đại diện
+                </strong>
+                <span th:text="${employer.fullName}">
+                </span>
+            </div>
+            <div class="detail-row">
+                <strong>
+                    Email
+                </strong>
+                <span th:text="${employer.email}">
+                </span>
+            </div>
+            <div class="detail-row">
+                <strong>
+                    Số điện thoại
+                </strong>
+                <span th:text="${employer.phone}">
+                </span>
+            </div>
+            <div class="detail-row">
+                <strong>
+                    Mã số thuế
+                </strong>
+                <span th:text="${employer.taxCode}">
+                </span>
+            </div>
+            <div class="detail-row">
+                <strong>
+                    Địa chỉ
+                </strong>
+                <span th:text="${employer.location}">
+                </span>
+            </div>
+            <div class="detail-row">
+                <strong>
+                    Trạng thái
+                </strong>
+                <span class="status-badge"
+                      th:classappend="${employer.status.name() == 'PENDING'} ? ' status-pending' : (${employer.status.name() == 'APPROVED'} ? ' status-approved' : ' status-rejected')"
+                      th:text="${employer.status}">
+                </span>
+            </div>
+        </div>
+        <div class="module-section">
+            <div class="module-title">
+                Thống kê tuyển dụng
+            </div>
+            <a class="stat-detail-row"
+               th:href="@{/admin/employers/{id}/jobs(id=${employer.id})}">
+                <span>
+                    Việc làm đã đăng
+                </span>
+                <div class="stat-value">
+                    <strong th:text="${totalJobs}">
+                        0
+                    </strong>
+                    <span class="view-text">
+                        Xem ›
+                    </span>
+                </div>
+            </a>
+            <a class="stat-detail-row"
+               th:href="@{/admin/employers/{id}/pending-students(id=${employer.id})}">
+                <span>
+                    Đang chờ
+                </span>
+                <div class="stat-value">
+                    <strong th:text="${pendingStudents}">
+                        0
+                    </strong>
+                    <span class="view-text">
+                        Xem ›
+                    </span>
+                </div>
+            </a>
+            <a class="stat-detail-row"
+               th:href="@{/admin/employers/{id}/students(id=${employer.id})}">
+                <span>
+                    Đã chấp nhận
+                </span>
+                <div class="stat-value">
+                    <strong th:text="${approvedStudents}">
+                        0
+                    </strong>
+                    <span class="view-text">
+                        Xem ›
+                    </span>
+                </div>
+            </a>
+            <a class="stat-detail-row"
+               th:href="@{/admin/employers/{id}/rejected-students(id=${employer.id})}">
+                <span>
+                    Đã từ chối
+                </span>
+                <div class="stat-value">
+                    <strong th:text="${rejectedStudents}">
+                        0
+                    </strong>
+                    <span class="view-text">
+                        Xem ›
+                    </span>
+                </div>
+            </a>
+            <a class="stat-detail-row"
+               th:href="@{/admin/employers/{id}/completed-students(id=${employer.id})}">
+                <span>
+                    Hoàn thành thực tập
+                </span>
+                <div class="stat-value">
+                    <strong th:text="${completedStudents}">
+                        0
+                    </strong>
+                    <span class="view-text">
+                        Xem ›
+                    </span>
+                </div>
+            </a>
+            <div class="stat-detail-row no-link">
+                <span>
+                    Tổng lượt ứng tuyển
+                </span>
+                <div class="stat-value">
+                    <strong th:text="${totalApplications}">
+                        0
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="detail-actions">
+        <a class="action-link"
+           th:href="@{/admin/logs(userId=${employer.id})}">
+            Xem lịch sử hoạt động
+        </a>
+    </div>
+</main>
+</body>
+</html>
+```

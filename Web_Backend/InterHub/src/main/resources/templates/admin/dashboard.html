@@ -1,119 +1,78 @@
 <!DOCTYPE html>
-<html lang="vi"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>InterHub Administration</title>
 
-    <link rel="stylesheet"
-          th:href="@{/css/admin/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/dashboard.css}">
 </head>
 
 <body>
 
-<!-- =========================
-     TOP HEADER
-========================= -->
+<!-- Header -->
 <header class="admin-top-header">
-
     <div class="header-container">
 
-        <a th:href="@{/admin}"
-           class="admin-brand">
-
+        <a th:href="@{/admin}" class="admin-brand">
             InterHub Administration
-
         </a>
 
-
         <div class="admin-account">
-
             <span>
                 Welcome,
                 <strong>Administrator</strong>
             </span>
 
-            <a href="#">
-                View site
-            </a>
+            <a href="#">View site</a>
 
-            <a href="#">
-                Change password
-            </a>
+            <a href="#">Change password</a>
 
-            <a href="#">
-                Log out
-            </a>
-
+            <form th:action="@{/admin/logout}" method="post">
+                <button type="submit">
+                    Log out
+                </button>
+            </form>
         </div>
 
     </div>
-
 </header>
 
-
-
-<!-- =========================
-     HORIZONTAL MENU
-========================= -->
+<!-- Navbar -->
 <nav class="admin-navbar">
-
     <div class="nav-container">
 
-        <a th:href="@{/admin}"
-           class="nav-item active">
-
+        <a th:href="@{/admin}" class="nav-item active">
             Dashboard
-
         </a>
 
-        <a th:href="@{/admin/students}"
-           class="nav-item">
-
+        <a th:href="@{/admin/students}" class="nav-item">
             Sinh viên
-
         </a>
 
-        <a th:href="@{/admin/lecturers}"
-           class="nav-item">
-
+        <a th:href="@{/admin/lecturers}" class="nav-item">
             Giảng viên
-
         </a>
 
-        <a th:href="@{/admin/employers}"
-           class="nav-item">
-
+        <a th:href="@{/admin/employers}" class="nav-item">
             Doanh nghiệp
-
         </a>
 
-        <a th:href="@{/admin/jobs}"
-           class="nav-item">
-
+        <a th:href="@{/admin/jobs}" class="nav-item">
             Việc làm
-
         </a>
-        <a th:href="@{/admin/logs}"
-           class="nav-item">
+
+        <a th:href="@{/admin/logs}" class="nav-item">
             System Logs
         </a>
 
     </div>
-
 </nav>
 
-
-
-<!-- =========================
-     BREADCRUMB
-========================= -->
+<!-- Breadcrumb -->
 <div class="breadcrumb">
-
     <div class="content-container">
 
         <a th:href="@{/admin}">
@@ -127,377 +86,189 @@
         </span>
 
     </div>
-
 </div>
 
-
-
-<!-- =========================
-     MAIN
-========================= -->
+<!-- Main -->
 <main class="content-container">
 
+    <!-- Page header -->
     <div class="page-header">
+        <h1>Site administration</h1>
 
-        <div>
+        <p>
+            Quản lý hệ thống InterHub
+        </p>
+    </div>
 
-            <h1>
-                Site administration
-            </h1>
+    <!-- Thống kê hệ thống -->
+    <section class="dashboard-summary">
 
-            <p>
-                Quản lý hệ thống InterHub
-            </p>
+        <div class="summary-title">
+            Thông tin hệ thống
+        </div>
+
+        <div class="summary-content">
+
+            <a th:href="@{/admin/students}" class="summary-item">
+                <span>Sinh viên</span>
+
+                <strong th:text="${totalStudents}">
+                    0
+                </strong>
+            </a>
+
+            <a th:href="@{/admin/employers}" class="summary-item">
+                <span>Doanh nghiệp</span>
+
+                <strong th:text="${totalEmployers}">
+                    0
+                </strong>
+            </a>
+
+            <a th:href="@{/admin/jobs}" class="summary-item">
+                <span>Việc làm</span>
+
+                <strong th:text="${totalJobs}">
+                    0
+                </strong>
+            </a>
+
+            <a th:href="@{/admin/applications}" class="summary-item">
+                <span>Ứng tuyển</span>
+
+                <strong th:text="${totalApplications}">
+                    0
+                </strong>
+            </a>
 
         </div>
 
-    </div>
-
-
-
-    <!-- =========================
-         STATISTICS
-    ========================= -->
-    <section class="statistics-grid">
-
-
-        <a th:href="@{/admin/students}"
-           class="stat-card">
-
-            <div class="stat-header">
-
-                <h3>
-                    Sinh viên
-                </h3>
-
-                <span>
-                    View
-                </span>
-
-            </div>
-
-            <strong th:text="${totalStudents}">
-                0
-            </strong>
-
-            <p>
-                Tổng sinh viên
-            </p>
-
-        </a>
-
-
-
-        <a th:href="@{/admin/employers}"
-           class="stat-card">
-
-            <div class="stat-header">
-
-                <h3>
-                    Doanh nghiệp
-                </h3>
-
-                <span>
-                    View
-                </span>
-
-            </div>
-
-            <strong th:text="${totalEmployers}">
-                0
-            </strong>
-
-            <p>
-                Tổng doanh nghiệp
-            </p>
-
-        </a>
-
-
-
-        <a th:href="@{/admin/jobs}"
-           class="stat-card">
-
-            <div class="stat-header">
-
-                <h3>
-                    Việc làm
-                </h3>
-
-                <span>
-                    View
-                </span>
-
-            </div>
-
-            <strong th:text="${totalJobs}">
-                0
-            </strong>
-
-            <p>
-                Tổng việc làm
-            </p>
-
-        </a>
-
-
-
-        <a th:href="@{/admin/applications}"
-           class="stat-card">
-
-            <div class="stat-header">
-
-                <h3>
-                    Ứng tuyển
-                </h3>
-
-                <span>
-                    View
-                </span>
-
-            </div>
-
-            <strong th:text="${totalApplications}">
-                0
-            </strong>
-
-            <p>
-                Tổng lượt ứng tuyển
-            </p>
-
-        </a>
-
-
     </section>
 
-
-
-    <!-- =========================
-         ADMIN MODULES
-    ========================= -->
+    <!-- Modules -->
     <section class="admin-content-grid">
 
-
+        <!-- Users -->
         <div class="module-section">
 
             <div class="module-title">
                 Authentication and users
             </div>
 
-
             <div class="module-row">
-
                 <div>
-
-                    <strong>
-                        Sinh viên
-                    </strong>
-
-                    <p>
-                        Quản lý tài khoản sinh viên
-                    </p>
-
+                    <strong>Sinh viên</strong>
+                    <p>Quản lý tài khoản sinh viên</p>
                 </div>
 
-
                 <div class="module-actions">
-
                     <a th:href="@{/admin/students}">
                         View
                     </a>
-
                 </div>
-
             </div>
 
-
-
             <div class="module-row">
-
                 <div>
-
-                    <strong>
-                        Giảng viên
-                    </strong>
-
-                    <p>
-                        Quản lý tài khoản giảng viên
-                    </p>
-
+                    <strong>Giảng viên</strong>
+                    <p>Quản lý tài khoản giảng viên</p>
                 </div>
 
-
                 <div class="module-actions">
-
                     <a th:href="@{/admin/lecturers}">
                         View
                     </a>
-
                 </div>
-
             </div>
 
-
-
             <div class="module-row">
-
                 <div>
-
-                    <strong>
-                        Doanh nghiệp
-                    </strong>
-
-                    <p>
-                        Xét duyệt và quản lý doanh nghiệp
-                    </p>
-
+                    <strong>Doanh nghiệp</strong>
+                    <p>Xét duyệt và quản lý doanh nghiệp</p>
                 </div>
 
-
                 <div class="module-actions">
-
                     <a th:href="@{/admin/employers}">
                         View
                     </a>
-
                 </div>
-
             </div>
 
         </div>
 
-
-
+        <!-- Recruitment -->
         <div class="module-section">
 
             <div class="module-title">
                 Recruitment
             </div>
 
-
             <div class="module-row">
-
                 <div>
-
-                    <strong>
-                        Việc làm
-                    </strong>
-
-                    <p>
-                        Xem toàn bộ bài tuyển dụng
-                    </p>
-
+                    <strong>Việc làm</strong>
+                    <p>Xem toàn bộ bài tuyển dụng</p>
                 </div>
 
-
                 <div class="module-actions">
-
                     <a th:href="@{/admin/jobs}">
                         View
                     </a>
-
                 </div>
-
             </div>
 
-
-
             <div class="module-row">
-
                 <div>
-
-                    <strong>
-                        Ứng tuyển
-                    </strong>
-
-                    <p>
-                        Theo dõi hồ sơ ứng tuyển
-                    </p>
-
+                    <strong>Ứng tuyển</strong>
+                    <p>Theo dõi hồ sơ ứng tuyển</p>
                 </div>
 
-
                 <div class="module-actions">
-
                     <a th:href="@{/admin/applications}">
                         View
                     </a>
-
                 </div>
-
             </div>
 
-
-
             <div class="module-row">
-
                 <div>
-
-                    <strong>
-                        CV
-                    </strong>
-
-                    <p>
-                        Quản lý CV sinh viên
-                    </p>
-
+                    <strong>CV</strong>
+                    <p>Quản lý CV sinh viên</p>
                 </div>
 
-
                 <div class="module-actions">
-
                     <a th:href="@{/admin/cvs}">
                         View
                     </a>
-
                 </div>
-
             </div>
 
         </div>
 
-
-
+        <!-- System -->
         <div class="module-section full-width">
 
             <div class="module-title">
                 System
             </div>
 
-
             <div class="module-row">
-
                 <div>
-
-                    <strong>
-                        System logs
-                    </strong>
-
-                    <p>
-                        Xem nhật ký hoạt động của hệ thống
-                    </p>
-
+                    <strong>System Logs</strong>
+                    <p>Xem nhật ký hoạt động của hệ thống</p>
                 </div>
 
-
                 <div class="module-actions">
-
                     <a th:href="@{/admin/logs}">
                         View
                     </a>
-
                 </div>
-
             </div>
 
         </div>
 
-
     </section>
 
-
 </main>
-
 
 </body>
 </html>

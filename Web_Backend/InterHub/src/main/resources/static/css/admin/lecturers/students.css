@@ -1,0 +1,19 @@
+/* =========================
+   LECTURER STUDENTS
+========================= */
+
+.lecturer-students-table td:first-child {
+    width: 120px;
+
+    font-weight: 600;
+}
+
+.lecturer-students-table td:last-child {
+    width: 110px;
+
+    white-space: nowrap;
+}
+
+.lecturer-students-table td:nth-child(6) {
+    white-space: nowrap;
+}

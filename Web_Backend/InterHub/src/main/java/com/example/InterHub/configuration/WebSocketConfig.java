@@ -15,15 +15,11 @@ public class WebSocketConfig
     public void configureMessageBroker(
             MessageBrokerRegistry registry
     ) {
-
         // Message gửi vào backend Controller
         registry.setApplicationDestinationPrefixes("/app");
-
         // Message backend phát ra cho client
         registry.enableSimpleBroker("/topic");
     }
-
-
     @Override
     public void registerStompEndpoints(
             StompEndpointRegistry registry

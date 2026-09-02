@@ -1,0 +1,104 @@
+.admin-content-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+.module-section {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+}
+.module-title {
+    padding: 10px 14px;
+    background: #79aec8;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+}
+.detail-row {
+    min-height: 50px;
+    padding: 12px 15px;
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #eeeeee;
+}
+.detail-row:last-child {
+    border-bottom: none;
+}
+.detail-row strong {
+    color: #666666;
+    font-size: 12px;
+    font-weight: 600;
+}
+.detail-row span {
+    min-width: 0;
+    color: #333333;
+    font-size: 13px;
+    word-break: break-word;
+}
+.internship-status {
+    background: #ffffff;
+}
+.internship-status h2 {
+    margin: 0;
+    padding: 14px 15px 6px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.internship-status > p {
+    padding: 0 15px 16px;
+    color: #777777;
+    font-size: 12px;
+    line-height: 1.6;
+}
+.internship-status.no-job h2 {
+    color: #ba2121;
+}
+.internship-status.has-job h2 {
+    padding-bottom: 14px;
+    color: #287b3e;
+    border-bottom: 1px solid #eeeeee;
+}
+.has-job .detail-row {
+    grid-template-columns: 180px minmax(0, 1fr);
+}
+.has-job .object-link {
+    color: #447e9b;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+.has-job .object-link:hover {
+    color: #205067;
+    text-decoration: underline;
+}
+.detail-actions,
+.student-detail-actions {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 20px;
+}
+.detail-actions {
+    margin-right: 8px;
+}
+.detail-actions .action-link,
+.student-detail-actions .action-link {
+    height: 32px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid #79aec8;
+    color: #447e9b;
+    font-size: 12px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.detail-actions .action-link:hover,
+.student-detail-actions .action-link:hover {
+    background: #edf5f8;
+    border-color: #417690;
+    color: #205067;
+}

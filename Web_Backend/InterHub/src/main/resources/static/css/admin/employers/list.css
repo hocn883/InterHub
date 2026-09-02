@@ -1,0 +1,242 @@
+/* =========================================================
+   EMPLOYER LIST
+========================================================= */
+
+
+/* =========================================================
+   SUMMARY INFORMATION
+========================================================= */
+
+.employer-summary {
+    margin-bottom: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+}
+
+
+/* TITLE */
+
+.employer-summary-title {
+    padding: 9px 14px;
+
+    background: #79aec8;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* CONTENT */
+
+.employer-summary-content {
+    display: flex;
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+
+/* EACH INFO */
+
+.summary-item {
+    min-width: 190px;
+
+    padding: 11px 15px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    border-right: 1px solid #eeeeee;
+}
+
+.summary-item:last-child {
+    border-right: none;
+}
+
+
+/* LABEL */
+
+.summary-item span {
+    color: #666666;
+
+    font-size: 12px;
+}
+
+
+/* NUMBER */
+
+.summary-item strong {
+    color: #417690;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   EMPLOYER TABLE
+========================================================= */
+
+.employer-list-table {
+    min-width: 1000px;
+}
+
+
+/* ID */
+
+.employer-list-table th:first-child,
+.employer-list-table td:first-child {
+    width: 60px;
+}
+
+
+/* COMPANY */
+
+.employer-list-table th:nth-child(2),
+.employer-list-table td:nth-child(2) {
+    min-width: 190px;
+}
+
+
+/* REPRESENTATIVE */
+
+.employer-list-table th:nth-child(3),
+.employer-list-table td:nth-child(3) {
+    min-width: 150px;
+}
+
+
+/* EMAIL */
+
+.employer-list-table th:nth-child(4),
+.employer-list-table td:nth-child(4) {
+    min-width: 190px;
+}
+
+
+/* TAX */
+
+.employer-list-table th:nth-child(5),
+.employer-list-table td:nth-child(5) {
+    min-width: 120px;
+}
+
+
+/* STATUS */
+
+.employer-list-table th:nth-child(6),
+.employer-list-table td:nth-child(6) {
+    width: 120px;
+
+    white-space: nowrap;
+}
+
+
+/* ACTION */
+
+.employer-list-table th:last-child,
+.employer-list-table td:last-child {
+    min-width: 210px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.employer-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+.employer-actions form {
+    margin: 0;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.admin-action-button {
+    padding: 6px 10px;
+
+    border: none;
+    border-radius: 3px;
+
+    font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* APPROVE */
+
+.approve-button {
+    background: #417690;
+
+    color: #ffffff;
+}
+
+.approve-button:hover {
+    background: #205067;
+}
+
+
+/* REJECT */
+
+.reject-button {
+    background: #ba2121;
+
+    color: #ffffff;
+}
+
+.reject-button:hover {
+    background: #8f1919;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .employer-summary-content {
+        display: grid;
+
+        grid-template-columns:
+                repeat(2, 1fr);
+    }
+
+    .summary-item {
+        min-width: 0;
+
+        border-bottom: 1px solid #eeeeee;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .employer-summary-content {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-item {
+        border-right: none;
+    }
+}

@@ -1,5 +1,4 @@
 package com.example.InterHub.controller.admin;
-
 import com.example.InterHub.entity.Employer;
 import com.example.InterHub.entity.Job;
 import com.example.InterHub.entity.Student;
@@ -15,28 +14,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 @Controller
 @RequestMapping("/admin/employers")
 @RequiredArgsConstructor
 public class AdminEmployerController {
-
     private final EmployerRepository employerRepository;
     private final JobRepository jobRepository;
     private final ApplicationRepository applicationRepository;
-
-
-    // =====================================================
-    // DANH SÁCH EMPLOYER
-    // =====================================================
-
     @GetMapping
     public String list(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Model model
     ) {
-
         Page<Employer> employerPage =
                 employerRepository.findAll(
                         PageRequest.of(
@@ -46,41 +36,43 @@ public class AdminEmployerController {
                         )
                 );
 
+
+        long totalEmployers = employerRepository.count();
+        long pendingEmployers = employerRepository.countByStatus(EmployerStatus.PENDING);
+        long approvedEmployers = employerRepository.countByStatus(EmployerStatus.APPROVED);
+        long rejectedEmployers = employerRepository.countByStatus(EmployerStatus.REJECTED);
         model.addAttribute("employers", employerPage.getContent());
         model.addAttribute("currentPage", employerPage.getNumber());
         model.addAttribute("totalPages", employerPage.getTotalPages());
         model.addAttribute("totalItems", employerPage.getTotalElements());
         model.addAttribute("pageSize", employerPage.getSize());
-
+        model.addAttribute("totalEmployers", totalEmployers);
+        model.addAttribute("pendingEmployers", pendingEmployers);
+        model.addAttribute("approvedEmployers", approvedEmployers);
+        model.addAttribute("rejectedEmployers", rejectedEmployers);
+        model.addAttribute("pageUrl", "/admin/employers");
         return "admin/employers/list";
     }
-
-
-    // =====================================================
-    // CHI TIẾT EMPLOYER
-    // =====================================================
-
     @GetMapping("/{id}")
     public String detail(
             @PathVariable Long id,
             Model model
     ) {
-
-        Employer employer =
-                employerRepository
-                        .findById(id)
-                        .orElseThrow();
-
-
-        long totalJobs =
-                jobRepository.countByEmployerId(id);
-
-
-        long interningStudents =
-                applicationRepository
+        Employer employer = employerRepository.findById(id).orElseThrow();
+        long totalJobs = jobRepository.countByEmployerId(id);
+        long pendingStudents = applicationRepository.countByJobEmployerIdAndStatus(id, ApplicationStatus.PENDING);
+        long approvedStudents = applicationRepository
                         .countByJobEmployerIdAndStatus(
                                 id,
                                 ApplicationStatus.APPROVED
+                        );
+
+
+        long rejectedStudents =
+                applicationRepository
+                        .countByJobEmployerIdAndStatus(
+                                id,
+                                ApplicationStatus.REJECTED
                         );
 
 
@@ -92,13 +84,41 @@ public class AdminEmployerController {
                         );
 
 
-        model.addAttribute("employer", employer);
+        long totalApplications =
+                pendingStudents
+                        + approvedStudents
+                        + rejectedStudents
+                        + completedStudents;
 
-        model.addAttribute("totalJobs", totalJobs);
 
         model.addAttribute(
-                "interningStudents",
-                interningStudents
+                "employer",
+                employer
+        );
+
+        model.addAttribute(
+                "totalJobs",
+                totalJobs
+        );
+
+        model.addAttribute(
+                "totalApplications",
+                totalApplications
+        );
+
+        model.addAttribute(
+                "pendingStudents",
+                pendingStudents
+        );
+
+        model.addAttribute(
+                "approvedStudents",
+                approvedStudents
+        );
+
+        model.addAttribute(
+                "rejectedStudents",
+                rejectedStudents
         );
 
         model.addAttribute(
@@ -109,125 +129,6 @@ public class AdminEmployerController {
 
         return "admin/employers/detail";
     }
-
-
-    // =====================================================
-    // DUYỆT EMPLOYER
-    // =====================================================
-
-    @PostMapping("/{id}/approve")
-    public String approve(
-            @PathVariable Long id
-    ) {
-
-        Employer employer =
-                employerRepository
-                        .findById(id)
-                        .orElseThrow();
-
-
-        employer.setStatus(
-                EmployerStatus.APPROVED
-        );
-
-        employerRepository.save(employer);
-
-
-        return "redirect:/admin/employers";
-    }
-
-
-    // =====================================================
-    // TỪ CHỐI EMPLOYER
-    // =====================================================
-
-    @PostMapping("/{id}/reject")
-    public String reject(
-            @PathVariable Long id
-    ) {
-
-        Employer employer =
-                employerRepository
-                        .findById(id)
-                        .orElseThrow();
-
-
-        employer.setStatus(
-                EmployerStatus.REJECTED
-        );
-
-        employerRepository.save(employer);
-
-
-        return "redirect:/admin/employers";
-    }
-
-
-    // =====================================================
-    // JOB CỦA EMPLOYER
-    //
-    // DÙNG LẠI:
-    // admin/jobs/list.html
-    // =====================================================
-
-    @GetMapping("/{id}/jobs")
-    public String employerJobs(
-            @PathVariable Long id,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            Model model
-    ) {
-
-        Employer employer =
-                employerRepository
-                        .findById(id)
-                        .orElseThrow();
-
-
-        Page<Job> jobPage =
-                jobRepository.findByEmployerId(
-                        id,
-                        PageRequest.of(
-                                page,
-                                size,
-                                Sort.by("createdDate").descending()
-                        )
-                );
-
-
-        model.addAttribute(
-                "jobs",
-                jobPage.getContent()
-        );
-
-        model.addAttribute(
-                "currentPage",
-                jobPage.getNumber()
-        );
-
-        model.addAttribute(
-                "totalPages",
-                jobPage.getTotalPages()
-        );
-
-        model.addAttribute(
-                "totalItems",
-                jobPage.getTotalElements()
-        );
-
-        model.addAttribute(
-                "pageSize",
-                jobPage.getSize()
-        );
-
-        model.addAttribute(
-                "pageUrl",
-                "/admin/employers/" + id + "/jobs"
-        );
-        return "admin/jobs/list";
-    }
-
-
     @GetMapping("/{id}/students")
     public String interningStudents(
             @PathVariable Long id,
@@ -276,13 +177,211 @@ public class AdminEmployerController {
                 studentPage.getSize()
         );
 
+        model.addAttribute(
+                "listTitle",
+                "Sinh viên được chấp nhận"
+        );
+
+        model.addAttribute(
+                "listDescription",
+                "Danh sách sinh viên đang thực tập tại "
+                        + employer.getCompanyName()
+        );
 
         model.addAttribute(
                 "pageUrl",
                 "/admin/employers/" + id + "/students"
         );
+
+
         return "admin/students/list";
     }
+    @GetMapping("/{id}/rejected-students")
+    public String rejectedStudents(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model
+    ) {
+
+        Employer employer =
+                employerRepository
+                        .findById(id)
+                        .orElseThrow();
+
+
+        Page<Student> studentPage =
+                applicationRepository
+                        .findStudentsByEmployerIdAndStatus(
+                                id,
+                                ApplicationStatus.REJECTED,
+                                PageRequest.of(page, size)
+                        );
+
+
+        model.addAttribute(
+                "students",
+                studentPage.getContent()
+        );
+
+        model.addAttribute(
+                "currentPage",
+                studentPage.getNumber()
+        );
+
+        model.addAttribute(
+                "totalPages",
+                studentPage.getTotalPages()
+        );
+
+        model.addAttribute(
+                "totalItems",
+                studentPage.getTotalElements()
+        );
+
+        model.addAttribute(
+                "pageSize",
+                studentPage.getSize()
+        );
+
+        model.addAttribute(
+                "listTitle",
+                "Sinh viên bị từ chối"
+        );
+
+        model.addAttribute(
+                "listDescription",
+                "Danh sách sinh viên bị "
+                        + employer.getCompanyName()
+                        + " từ chối"
+        );
+
+        model.addAttribute(
+                "pageUrl",
+                "/admin/employers/"
+                        + id
+                        + "/rejected-students"
+        );
+
+
+        return "admin/students/list";
+    }
+    @GetMapping("/{id}/pending-students")
+    public String pendingStudents(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model
+    ) {
+
+        Employer employer =
+                employerRepository
+                        .findById(id)
+                        .orElseThrow();
+
+
+        Page<Student> studentPage =
+                applicationRepository
+                        .findStudentsByEmployerIdAndStatus(
+                                id,
+                                ApplicationStatus.PENDING,
+                                PageRequest.of(page, size)
+                        );
+
+
+        model.addAttribute(
+                "students",
+                studentPage.getContent()
+        );
+
+        model.addAttribute(
+                "currentPage",
+                studentPage.getNumber()
+        );
+
+        model.addAttribute(
+                "totalPages",
+                studentPage.getTotalPages()
+        );
+
+        model.addAttribute(
+                "totalItems",
+                studentPage.getTotalElements()
+        );
+
+        model.addAttribute(
+                "pageSize",
+                studentPage.getSize()
+        );
+
+        model.addAttribute(
+                "listTitle",
+                "Sinh viên đang chờ xét duyệt"
+        );
+
+        model.addAttribute(
+                "listDescription",
+                "Danh sách sinh viên đang chờ "
+                        + employer.getCompanyName()
+                        + " xét duyệt"
+        );
+
+        model.addAttribute(
+                "pageUrl",
+                "/admin/employers/"
+                        + id
+                        + "/pending-students"
+        );
+
+
+        return "admin/students/list";
+    }
+    @PostMapping("/{id}/approve")
+    public String approve(
+            @PathVariable Long id
+    ) {
+
+        Employer employer = employerRepository.findById(id).orElseThrow();
+        employer.setStatus(EmployerStatus.APPROVED);
+        employerRepository.save(employer);
+        return "redirect:/admin/employers";
+    }
+    @PostMapping("/{id}/reject")
+    public String reject(
+            @PathVariable Long id
+    ) {
+
+        Employer employer = employerRepository.findById(id).orElseThrow();
+        employer.setStatus(EmployerStatus.REJECTED);
+        employerRepository.save(employer);
+        return "redirect:/admin/employers";
+    }
+    @GetMapping("/{id}/jobs")
+    public String employerJobs(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model
+    ) {
+
+        Employer employer = employerRepository.findById(id).orElseThrow();
+        Page<Job> jobPage = jobRepository.findByEmployerId(id,
+                        PageRequest.of(
+                                page,
+                                size,
+                                Sort.by("createdDate").descending()
+                        ));
+        model.addAttribute("jobs", jobPage.getContent());
+        model.addAttribute("currentPage", jobPage.getNumber());
+        model.addAttribute("totalPages", jobPage.getTotalPages());
+        model.addAttribute("totalItems", jobPage.getTotalElements());
+        model.addAttribute("pageSize", jobPage.getSize());
+        model.addAttribute("pageUrl", "/admin/employers/" + id + "/jobs");
+        return "admin/jobs/list";
+    }
+
+
+
 
 
     // =====================================================

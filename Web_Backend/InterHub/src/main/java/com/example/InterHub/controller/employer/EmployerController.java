@@ -27,9 +27,7 @@ public class EmployerController {
     public ResponseEntity<ApiResponse<PageResponse<EmployerResponse>>> getAllEmployer(
             @RequestParam(defaultValue = "0") int page
             , @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(
-                page,
-                size,
+        Pageable pageable = PageRequest.of(page, size,
                 Sort.by(Sort.Direction.DESC, "createdDate"));
         PageResponse<EmployerResponse> pageResponse = employerService.getAll(pageable);
         return ResponseEntity.ok(
@@ -60,9 +58,7 @@ public class EmployerController {
            @PathVariable long id
             , @RequestParam(defaultValue = "0") int page
             , @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(
-                page,
-                size,
+        Pageable pageable = PageRequest.of(page, size,
                 Sort.by(Sort.Direction.DESC, "createdDate"));
         PageResponse<ReviewResponse> pageResponse = reviewService.getReviewByJob(id, pageable);
         return ResponseEntity.ok(
@@ -79,9 +75,7 @@ public class EmployerController {
             @PathVariable long id
             , @RequestParam(defaultValue = "0") int page
             , @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(
-                page,
-                size,
+        Pageable pageable = PageRequest.of(page, size,
                 Sort.by(Sort.Direction.DESC, "createdDate"));
         PageResponse<JobResponse> response = jobService.getJobsByEmployerId(id, pageable);
         return ResponseEntity.ok(
@@ -92,7 +86,6 @@ public class EmployerController {
                         .result(response)
                         .build()
         );
-
     }
     @GetMapping("/student-apply/approved")
     public ResponseEntity<ApiResponse<PageResponse<ApplicationResponse>>> getStudentApplyApproval(
@@ -125,8 +118,7 @@ public class EmployerController {
                         .status(HttpStatus.OK.name())
                         .message("Danh sach student")
                         .result(response)
-                        .build()
-        );
+                        .build());
     }
 
 }

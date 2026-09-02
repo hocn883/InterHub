@@ -10,13 +10,10 @@ import org.springframework.context.annotation.Configuration;
 public class CloudinaryConfig {
     @Value("${cloudinary.cloud-name}")
     private String cloudName;
-
     @Value("${cloudinary.api-key}")
     private String apiKey;
-
     @Value("${cloudinary.api-secret}")
     private String apiSecret;
-
     @Bean
     public Cloudinary cloudinary() {
         return new Cloudinary(
@@ -25,7 +22,6 @@ public class CloudinaryConfig {
                         "api_key", apiKey,
                         "api_secret", apiSecret,
                         "secure", true
-                )
-        );
+                ));
     }
 }

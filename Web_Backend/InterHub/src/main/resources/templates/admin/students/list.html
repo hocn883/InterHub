@@ -1,683 +1,201 @@
 <!DOCTYPE html>
-<html lang="vi"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
-
-    <title>
-        Sinh viên | InterHub Admin
-    </title>
-
-    <link
-            rel="stylesheet"
-            th:href="@{/css/admin/dashboard.css}">
-
+    <title>Sinh viên | InterHub Admin</title>
+    <link rel="stylesheet" th:href="@{/css/admin/common.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/students/list.css}">
 </head>
-
-
 <body>
-
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
 <header class="admin-top-header">
-
     <div class="header-container">
-
-        <a
-                th:href="@{/admin}"
-                class="admin-brand">
-
+        <a th:href="@{/admin}" class="admin-brand">
             InterHub Administration
-
         </a>
-
-
         <div class="admin-account">
-
             <span>
-
                 Welcome,
                 <strong>Administrator</strong>
-
             </span>
-
-
-            <a href="#">
-
+            <a href="/admin/logout">
                 Log out
-
             </a>
-
         </div>
-
     </div>
-
 </header>
-
-
-
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
-
 <nav class="admin-navbar">
-
     <div class="nav-container">
-
-
-        <a
-                th:href="@{/admin}"
-                class="nav-item">
-
+        <a th:href="@{/admin}" class="nav-item">
             Dashboard
-
         </a>
-
-
-        <a
-                th:href="@{/admin/students}"
-                class="nav-item active">
-
+        <a th:href="@{/admin/students}" class="nav-item active">
             Sinh viên
-
         </a>
-
-
-        <a
-                th:href="@{/admin/lecturers}"
-                class="nav-item">
-
+        <a th:href="@{/admin/lecturers}" class="nav-item">
             Giảng viên
-
         </a>
-
-
-        <a
-                th:href="@{/admin/employers}"
-                class="nav-item">
-
+        <a th:href="@{/admin/employers}" class="nav-item">
             Doanh nghiệp
-
         </a>
-
-
-        <a
-                th:href="@{/admin/jobs}"
-                class="nav-item">
-
+        <a th:href="@{/admin/jobs}" class="nav-item">
             Việc làm
-
         </a>
-
-
-        <a
-                th:href="@{/admin/logs}"
-                class="nav-item">
-
+        <a th:href="@{/admin/logs}" class="nav-item">
             System Logs
-
         </a>
-
-
     </div>
-
 </nav>
-
-
-
-<!-- =====================================================
-     BREADCRUMB
-===================================================== -->
-
 <div class="breadcrumb">
-
     <div class="content-container">
-
-
         <a th:href="@{/admin}">
-
             Home
-
         </a>
-
-
         <span>›</span>
-
-
         <span th:text="${listTitle}">
-
             Sinh viên
-
         </span>
-
-
     </div>
-
 </div>
-
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
 <main class="content-container">
-
-
-    <!-- =================================================
-         PAGE HEADER
-    ================================================== -->
-
     <div class="page-header admin-page-header">
-
-
         <div>
-
             <h1 th:text="${listTitle}">
-
                 Quản lý sinh viên
-
             </h1>
-
-
             <p th:text="${listDescription}">
-
                 Xem thông tin và tình trạng thực tập của sinh viên.
-
             </p>
-
         </div>
-
-
-        <!-- =================================================
-             PHÂN CÔNG SINH VIÊN
-        ================================================== -->
-
-        <a
-                th:href="@{/admin/students/assignment}"
-                class="admin-button">
-
+        <a th:href="@{/admin/students/assignment}" class="admin-button">
             + Phân công sinh viên
-
         </a>
-
-
     </div>
-
-
-
-    <!-- =================================================
-         SUCCESS MESSAGE
-    ================================================== -->
-
-    <div
-            th:if="${success}"
-            class="admin-alert success-alert"
-            th:text="${success}">
-
+    <div th:if="${success}" class="admin-alert success-alert" th:text="${success}">
     </div>
-
-
-
-    <!-- =================================================
-         ERROR MESSAGE
-    ================================================== -->
-
-    <div
-            th:if="${error}"
-            class="admin-alert error-alert"
-            th:text="${error}">
-
+    <div th:if="${error}" class="admin-alert error-alert" th:text="${error}">
     </div>
-
-
-
-    <!-- =================================================
-         STUDENT TABLE
-    ================================================== -->
-
     <section class="django-module">
-
-
-        <!-- MODULE HEADER -->
-
         <div class="django-module-title">
-
             <div>
-
                 <h2>
-
                     Sinh viên
-
                 </h2>
-
-
-                <span
-                        th:text="${totalItems + ' sinh viên'}">
-
+                <span th:text="${totalItems + ' sinh viên'}">
                     0 sinh viên
-
                 </span>
-
             </div>
-
         </div>
-
-
-
-        <!-- =================================================
-             TABLE
-        ================================================== -->
-
         <div class="admin-table-wrapper">
-
-
-            <table class="admin-table">
-
-
+            <table class="admin-table student-list-table">
                 <thead>
-
                 <tr>
-
-
-                    <th>
-
-                        ID
-
-                    </th>
-
-
-                    <th>
-
-                        MSSV
-
-                    </th>
-
-
-                    <th>
-
-                        Họ tên
-
-                    </th>
-
-
-                    <th>
-
-                        Email
-
-                    </th>
-
-
-                    <th>
-
-                        Ngành
-
-                    </th>
-
-
-                    <th>
-
-                        Lớp
-
-                    </th>
-
-
-                    <th>
-
-                        Giảng viên phụ trách
-
-                    </th>
-
-
-                    <th>
-
-                        Trạng thái
-
-                    </th>
-
-
-                    <th>
-
-                        Hành động
-
-                    </th>
-
-
+                    <th>ID</th>
+                    <th>MSSV</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Ngành</th>
+                    <th>Lớp</th>
+                    <th>Giảng viên phụ trách</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
                 </tr>
-
                 </thead>
-
-
-
                 <tbody>
-
-
-                <!-- =================================================
-                     STUDENT
-                ================================================== -->
-
-                <tr
-                        th:each="student : ${students}">
-
-
-                    <!-- ID -->
-
-                    <td
-                            th:text="${student.id}">
-
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.id}">
                     </td>
-
-
-
-                    <!-- MSSV -->
-
                     <td>
-
-                        <a
-                                class="object-link"
-                                th:href="@{/admin/students/{id}(id=${student.id})}"
-                                th:text="${student.mssv}">
-
+                        <a class="object-link"
+                           th:href="@{/admin/students/{id}(id=${student.id})}"
+                           th:text="${student.mssv}">
                             SV001
-
                         </a>
-
                     </td>
-
-
-
-                    <!-- HỌ TÊN -->
-
-                    <td
-                            th:text="${student.fullName}">
-
+                    <td th:text="${student.fullName}">
                         Nguyễn Văn A
-
                     </td>
-
-
-
-                    <!-- EMAIL -->
-
-                    <td
-                            th:text="${student.email}">
-
+                    <td th:text="${student.email}">
                         student@gmail.com
-
                     </td>
-
-
-
-                    <!-- NGÀNH -->
-
-                    <td
-                            th:text="${student.major}">
-
+                    <td th:text="${student.major}">
                         Công nghệ thông tin
-
                     </td>
-
-
-
-                    <!-- LỚP -->
-
-                    <td
-                            th:text="${student.className}">
-
+                    <td th:text="${student.className}">
                         CNTT22
-
                     </td>
-
-
-
-                    <!-- =================================================
-                         GIẢNG VIÊN PHỤ TRÁCH
-                    ================================================== -->
-
                     <td>
-
-
-                        <!-- ĐÃ PHÂN CÔNG -->
-
-                        <span
-                                th:if="${student.lecturer != null}"
-                                th:text="${student.lecturer.fullName}">
-
+                        <span th:if="${student.lecturer != null}"
+                              th:text="${student.lecturer.fullName}">
                             Nguyễn Văn B
-
                         </span>
-
-
-                        <!-- CHƯA PHÂN CÔNG -->
-
-                        <span
-                                th:if="${student.lecturer == null}">
-
+                        <span th:if="${student.lecturer == null}">
                             Chưa phân công
-
                         </span>
-
-
                     </td>
-
-
-
-                    <!-- =================================================
-                         STATUS
-                    ================================================== -->
-
                     <td>
-
-                        <span
-                                class="status-badge"
-                                th:text="${student.status}">
-
+                        <span class="status-badge"
+                              th:text="${student.status}">
                             ACTIVE
-
                         </span>
-
                     </td>
-
-
-
-                    <!-- =================================================
-                         ACTION
-                    ================================================== -->
-
                     <td>
-
-
-                        <!-- XEM -->
-
-                        <a
-                                class="action-link"
-                                th:href="@{/admin/students/{id}(id=${student.id})}">
-
-                            Xem
-
-                        </a>
-
-
-
-                        <!-- =================================================
-                             XÓA PHÂN CÔNG
-                        ================================================== -->
-
-                        <form
-                                th:if="${student.lecturer != null}"
-                                th:action="@{/admin/students/{id}/unassign(id=${student.id})}"
-                                method="post"
-                                style="display:inline; margin-left:8px;">
-
-
-                            <button
-                                    type="submit"
-                                    class="action-link-button"
-                                    onclick="return confirm('Bạn có chắc muốn xóa phân công sinh viên này?');">
-
-                                Xóa phân công
-
-                            </button>
-
-
-                        </form>
-
-
+                        <div class="student-actions">
+                            <a class="action-link"
+                               th:href="@{/admin/students/{id}(id=${student.id})}">
+                                Xem
+                            </a>
+                            <form th:if="${student.lecturer != null}"
+                                  th:action="@{/admin/students/{id}/unassign(id=${student.id})}"
+                                  method="post"
+                                  class="student-action-form">
+                                <button type="submit"
+                                        class="action-link action-delete"
+                                        onclick="return confirm('Bạn có chắc muốn xóa phân công sinh viên này?');">
+                                    Xóa phân công
+                                </button>
+                            </form>
+                        </div>
                     </td>
-
-
                 </tr>
-
-
-
-                <!-- =================================================
-                     EMPTY
-                ================================================== -->
-
-                <tr
-                        th:if="${#lists.isEmpty(students)}">
-
-
-                    <td
-                            colspan="9"
-                            class="empty-table">
-
+                <tr th:if="${#lists.isEmpty(students)}">
+                    <td colspan="9" class="empty-table">
                         Không có sinh viên.
-
                     </td>
-
-
                 </tr>
-
-
                 </tbody>
-
-
             </table>
-
-
         </div>
-
-
-
-        <!-- =================================================
-             TABLE FOOTER
-        ================================================== -->
-
         <div class="table-footer">
-
-
-            <!-- RESULT COUNT -->
-
             <div class="result-count">
-
-
                 Hiển thị
-
-
-                <strong
-                        th:text="${students.size()}">
-
+                <strong th:text="${students.size()}">
                     0
-
                 </strong>
-
-
                 trên
-
-
-                <strong
-                        th:text="${totalItems}">
-
+                <strong th:text="${totalItems}">
                     0
-
                 </strong>
-
-
                 sinh viên
-
-
             </div>
-
-
-
-            <!-- =================================================
-                 PAGINATION
-            ================================================== -->
-
-            <div
-                    class="admin-pagination"
-                    th:if="${totalPages > 0}">
-
-
-                <!-- PREVIOUS -->
-
-                <a
-                        th:if="${currentPage > 0}"
-                        th:href="@{${pageUrl}(
-                            page=${currentPage - 1},
-                            size=${pageSize}
-                        )}">
-
+            <div class="admin-pagination"
+                 th:if="${totalPages > 0}">
+                <a th:if="${currentPage > 0}"
+                   th:href="@{${pageUrl}(page=${currentPage - 1},size=${pageSize})}">
                     ‹ Trước
-
                 </a>
-
-
-
-                <!-- PAGE NUMBERS -->
-
-                <a
-                        th:each="i : ${#numbers.sequence(
-                            0,
-                            totalPages - 1
-                        )}"
-                        th:href="@{${pageUrl}(
-                            page=${i},
-                            size=${pageSize}
-                        )}"
-                        th:text="${i + 1}"
-                        th:classappend="${i == currentPage}
-                            ? 'current-page'
-                            : ''">
-
+                <a th:each="i : ${#numbers.sequence(0,totalPages - 1)}"
+                   th:href="@{${pageUrl}(page=${i},size=${pageSize})}"
+                   th:text="${i + 1}"
+                   th:classappend="${i == currentPage} ? 'current-page' : ''">
                     1
-
                 </a>
-
-
-
-                <!-- NEXT -->
-
-                <a
-                        th:if="${currentPage + 1 < totalPages}"
-                        th:href="@{${pageUrl}(
-                            page=${currentPage + 1},
-                            size=${pageSize}
-                        )}">
-
+                <a th:if="${currentPage + 1 < totalPages}"
+                   th:href="@{${pageUrl}(page=${currentPage + 1},size=${pageSize})}">
                     Sau ›
-
                 </a>
-
-
             </div>
-
-
         </div>
-
-
     </section>
-
-
 </main>
-
-
 </body>
-
 </html>

@@ -1,0 +1,110 @@
+.admin-content-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+}
+
+.module-section {
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+}
+
+.module-title {
+    padding: 10px 14px;
+
+    background: #79aec8;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================
+   DETAIL
+========================= */
+
+.detail-row {
+    min-height: 50px;
+
+    padding: 12px 15px;
+
+    display: grid;
+
+    grid-template-columns: 180px 1fr;
+
+    align-items: center;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row strong {
+    color: #666666;
+
+    font-size: 12px;
+}
+
+.detail-row span {
+    color: #333333;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   STUDENT COUNT
+========================= */
+
+.lecturer-student-count {
+    padding: 25px;
+
+    display: flex;
+    align-items: baseline;
+
+    gap: 8px;
+}
+
+.lecturer-student-count strong {
+    color: #417690;
+
+    font-size: 36px;
+    font-weight: 400;
+}
+
+.lecturer-student-count span {
+    color: #777777;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   ACTION
+========================= */
+
+.lecturer-detail-action {
+    padding: 20px;
+}
+
+/* Detail actions */
+
+.detail-actions,
+.student-detail-actions {
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    flex-wrap: wrap;
+}

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +23,6 @@ import java.util.List;
 public class EmployerApplicationController {
 
     private final ApplicationService applicationService;
-
-    /*
-     * GET /api/employer/jobs/1/applications
-     */
     @GetMapping("jobs/{jobId}/applications")
     public ResponseEntity<ApiResponse<PageResponse<ApplicationResponse>>>
     getApplicationsByJob(
@@ -49,9 +46,6 @@ public class EmployerApplicationController {
 
         );
     }
-    /*
-     * PATCH /api/employer/applications/10/approve
-     */
     @PatchMapping("application/{applicationId}/approve")
     public ResponseEntity<ApiResponse<ApplicationResponse>>
     approveApplication(
@@ -69,10 +63,6 @@ public class EmployerApplicationController {
 
         );
     }
-
-    /*
-     * PATCH /api/employer/applications/10/reject
-     */
     @PatchMapping("application/{applicationId}/reject")
     public ResponseEntity<ApiResponse<ApplicationResponse>>
     rejectApplication(

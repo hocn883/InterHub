@@ -1,0 +1,223 @@
+/* =========================================================
+   EMPLOYER DETAIL
+========================================================= */
+
+.employer-detail-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 25px;
+}
+
+
+/* =========================================================
+   MODULE
+========================================================= */
+
+.module-section {
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+}
+
+.module-title {
+    padding: 10px 14px;
+
+    background: #79aec8;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   EMPLOYER DETAIL ROW
+========================================================= */
+
+.detail-row {
+    min-height: 50px;
+
+    padding: 12px 15px;
+
+    display: grid;
+
+    grid-template-columns: 180px 1fr;
+
+    align-items: center;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row strong {
+    color: #666666;
+
+    font-size: 12px;
+}
+
+.detail-row > span {
+    color: #333333;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   STATISTIC ROW
+========================================================= */
+
+.stat-detail-row {
+    min-height: 50px;
+
+    padding: 10px 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    background: #ffffff;
+
+    color: #444444;
+
+    font-size: 13px;
+
+    transition: background 0.15s ease;
+}
+
+.stat-detail-row:last-child {
+    border-bottom: none;
+}
+
+
+/* CLICKABLE */
+
+a.stat-detail-row {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a.stat-detail-row:hover {
+    background: #f4f8fa;
+}
+
+
+/* =========================================================
+   STAT VALUE
+========================================================= */
+
+.stat-value {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+.stat-value strong {
+    min-width: 35px;
+
+    color: #417690;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   VIEW TEXT
+========================================================= */
+
+.view-text {
+    min-width: 45px;
+
+    color: #447e9b;
+
+    font-size: 11px;
+
+    text-align: right;
+}
+
+a.stat-detail-row:hover .view-text {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   NON CLICKABLE
+========================================================= */
+
+.stat-detail-row.no-link {
+    cursor: default;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-badge {
+    display: inline-block;
+
+    width: fit-content;
+    min-width: 90px;
+
+    padding: 5px 9px;
+
+    text-align: center;
+
+    border-radius: 3px;
+
+    font-size: 10px !important;
+    font-weight: 700;
+}
+
+.status-pending {
+    background: #fff4cc;
+
+    color: #8a6d00 !important;
+
+    border: 1px solid #ecd77b;
+}
+
+.status-approved {
+    background: #e3f3e7;
+
+    color: #287b3e !important;
+
+    border: 1px solid #b8dfc2;
+}
+
+.status-rejected {
+    background: #fbe5e5;
+
+    color: #b43a3a !important;
+
+    border: 1px solid #efbcbc;
+}
+
+/* Detail actions */
+
+.detail-actions,
+.student-detail-actions {
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    flex-wrap: wrap;
+}

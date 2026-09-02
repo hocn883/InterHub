@@ -14,13 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/jobs")
 @RequiredArgsConstructor
 public class AdminJobController {
-
     private final JobRepository jobRepository;
-
-
-    // ==========================================
-    // DANH SÁCH JOB + PHÂN TRANG
-    // ==========================================
     @GetMapping
     public String list(
             @RequestParam(defaultValue = "0") int page,
@@ -36,67 +30,24 @@ public class AdminJobController {
                                 Sort.by("createdDate").descending()
                         )
                 );
-
-
-        model.addAttribute(
-                "jobs",
-                jobPage.getContent()
-        );
-
-        model.addAttribute(
-                "currentPage",
-                jobPage.getNumber()
-        );
-
-        model.addAttribute(
-                "totalPages",
-                jobPage.getTotalPages()
-        );
-
-        model.addAttribute(
-                "totalItems",
-                jobPage.getTotalElements()
-        );
-
-        model.addAttribute(
-                "pageSize",
-                jobPage.getSize()
-        );
-        model.addAttribute(
-                "pageUrl",
-                "/admin/jobs"
-        );
-
-
+        model.addAttribute("jobs", jobPage.getContent());
+        model.addAttribute("currentPage", jobPage.getNumber());
+        model.addAttribute("totalPages", jobPage.getTotalPages());
+        model.addAttribute("totalItems", jobPage.getTotalElements());
+        model.addAttribute("pageSize", jobPage.getSize());
+        model.addAttribute("pageUrl", "/admin/jobs");
         return "admin/jobs/list";
     }
-
-
-    // ==========================================
-    // CHI TIẾT JOB
-    // ==========================================
     @GetMapping("/{id}")
     public String detail(
             @PathVariable Long id,
             Model model
     ) {
-
-        Job job =
-                jobRepository
-                        .findById(id)
-                        .orElseThrow(
+        Job job = jobRepository.findById(id).orElseThrow(
                                 () -> new RuntimeException(
                                         "Không tìm thấy công việc"
-                                )
-                        );
-
-
-        model.addAttribute(
-                "job",
-                job
-        );
-
-
+                                ));
+        model.addAttribute("job", job);
         return "admin/jobs/detail";
     }
 }

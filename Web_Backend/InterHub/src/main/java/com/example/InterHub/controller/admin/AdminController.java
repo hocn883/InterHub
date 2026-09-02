@@ -22,38 +22,14 @@ public class AdminController {
     @GetMapping
     public String dashboard(Model model)
     {
-        long totalStudents =
-                studentRepository.count();
-
-        long totalEmployers =
-                employerRepository.count();
-
-        long totalJobs =
-                jobRepository.count();
-
-        long totalApplications =
-                applicationRepository.count();
-
-        model.addAttribute(
-                "totalStudents",
-                totalStudents
-        );
-
-        model.addAttribute(
-                "totalEmployers",
-                totalEmployers
-        );
-
-        model.addAttribute(
-                "totalJobs",
-                totalJobs
-        );
-
-        model.addAttribute(
-                "totalApplications",
-                totalApplications
-        );
-
+        long totalStudents = studentRepository.count();
+        long totalEmployers = employerRepository.count();
+        long totalJobs = jobRepository.count();
+        long totalApplications = applicationRepository.count();
+        model.addAttribute("totalStudents", totalStudents);
+        model.addAttribute("totalEmployers", totalEmployers);
+        model.addAttribute("totalJobs", totalJobs);
+        model.addAttribute("totalApplications", totalApplications);
         return "admin/dashboard";
     }
 }

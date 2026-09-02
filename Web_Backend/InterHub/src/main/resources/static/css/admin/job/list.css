@@ -1,0 +1,138 @@
+/* =========================
+   JOB DETAIL
+========================= */
+
+.job-detail-section {
+    margin-top: 25px;
+}
+
+
+/* =========================
+   JOB TEXT CONTENT
+========================= */
+
+.job-text-content {
+    padding: 20px;
+
+    color: #444444;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+    white-space: pre-line;
+}
+
+
+/* =========================
+   DETAIL GRID
+========================= */
+
+.admin-content-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+}
+
+
+/* =========================
+   MODULE
+========================= */
+
+.module-section {
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+}
+
+.module-title {
+    padding: 10px 14px;
+
+    background: #79aec8;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   DETAIL ROW
+========================= */
+
+.detail-row {
+    min-height: 50px;
+
+    padding: 12px 15px;
+
+    display: grid;
+
+    grid-template-columns: 180px 1fr;
+
+    align-items: center;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row strong {
+    color: #666666;
+
+    font-size: 12px;
+}
+
+.detail-row span,
+.detail-row a {
+    color: #333333;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   EMPLOYER LINK
+========================= */
+
+.detail-row .object-link {
+    color: #447e9b;
+
+    font-weight: 600;
+}
+
+.detail-row .object-link:hover {
+    color: #205067;
+
+    text-decoration: underline;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .admin-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .detail-row {
+        grid-template-columns: 1fr;
+
+        gap: 5px;
+    }
+
+}
