@@ -929,3 +929,21 @@
     transform: rotate(360deg);
   }
 }
+.company-profile-actions{
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.company-chat-button{
+    padding:10px 18px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+}
+.company-chat-button:hover{
+    background:#1d4ed8;
+}

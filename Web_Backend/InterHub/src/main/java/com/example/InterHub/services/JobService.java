@@ -9,6 +9,7 @@ import com.example.InterHub.entity.Job;
 import com.example.InterHub.entity.Student;
 import com.example.InterHub.entity.User;
 import com.example.InterHub.enums.Action;
+import com.example.InterHub.enums.ApplicationStatus;
 import com.example.InterHub.enums.EmployerStatus;
 import com.example.InterHub.enums.JobStatus;
 import com.example.InterHub.exception.ConflictException;
@@ -99,11 +100,25 @@ public class JobService {
     @Transactional
     public void deleteJob(Long id, User currentUser) {
         Employer  employer = (Employer) currentUser;
+
         Job job = jobRepository.findByIdAndEmployerId(id, employer.getId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Không tìm thấy công việc hoặc bạn không có quyền xóa"
                         ));
+        if (job.getApplications() != null) {
+            boolean hasApprovedApplication = job.getApplications()
+                    .stream()
+                    .anyMatch(application ->
+                            application.getStatus() == ApplicationStatus.APPROVED
+                    );
+
+            if (hasApprovedApplication) {
+                throw new ConflictException(
+                        "Không thể xóa công việc vì đã có sinh viên được duyệt"
+                );
+            }
+        }
         jobRepository.delete(job);
         systemLogService.saveLog(employer,
                 Action.DELETE_JOB.name(),

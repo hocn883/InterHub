@@ -13,23 +13,28 @@ import org.springframework.stereotype.Controller;
 public class ChatWebSocketController {
 
     private final ChatService chatService;
+
     private final SimpMessagingTemplate messagingTemplate;
+
     @MessageMapping("/chat/send")
     public void sendMessage(
             ChatMessageRequest request
     ) {
 
         ChatMessageResponse response =
-                chatService.sendMessage(request);
-
+                chatService.sendMessage(
+                        request
+                );
 
         messagingTemplate.convertAndSend(
-                "/topic/user/" + request.getSenderId(),
+                "/topic/room/"
+                        + response.getChatRoomId(),
                 response
         );
 
         messagingTemplate.convertAndSend(
-                "/topic/user/" + request.getReceiverId(),
+                "/topic/user/"
+                        + request.getReceiverId(),
                 response
         );
     }

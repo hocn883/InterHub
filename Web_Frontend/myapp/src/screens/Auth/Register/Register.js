@@ -30,13 +30,10 @@ function Register() {
     confirmPassword: "",
     gender: "",
     role: "STUDENT",
-
     mssv: "",
     major: "",
     className: "",
-
     lecturerCode: "",
-
     companyName: "",
     taxCode: "",
     location: "",
@@ -413,9 +410,6 @@ function Register() {
 
             </div>
           </div>
-
-          {/* BASIC */}
-
           <div className="register-section">
             <div className="register-section-title">
               <FiUser />
@@ -505,31 +499,23 @@ function Register() {
                   />
                 </div>
               </div>
-
             </div>
-
-            {/* AVATAR */}
-
             <div className="register-group">
               <label>Ảnh đại diện</label>
-
               <label className="register-avatar">
                 <span className="register-avatar-icon">
                   <FiImage />
                 </span>
-
                 <div className="register-avatar-content">
                   <strong>
                     {avatar
                       ? avatar.name
                       : "Chọn ảnh đại diện"}
                   </strong>
-
                   <span>
                     JPG, PNG, WEBP - tối đa 5MB
                   </span>
                 </div>
-
                 <span className="register-avatar-button">
                   Chọn ảnh
                 </span>
@@ -542,11 +528,7 @@ function Register() {
                 />
               </label>
             </div>
-
           </div>
-
-          {/* STUDENT */}
-
           {formData.role === "STUDENT" && (
             <div className="register-section">
 
@@ -612,9 +594,6 @@ function Register() {
 
             </div>
           )}
-
-          {/* LECTURER */}
-
           {formData.role === "LECTURER" && (
             <div className="register-section">
 
@@ -622,13 +601,10 @@ function Register() {
                 <FiUsers />
                 <span>Thông tin giảng viên</span>
               </div>
-
               <div className="register-group">
                 <label>Mã giảng viên</label>
-
                 <div className="register-input-box">
                   <FiUser />
-
                   <input
                     type="text"
                     name="lecturerCode"
@@ -639,12 +615,8 @@ function Register() {
                   />
                 </div>
               </div>
-
             </div>
           )}
-
-          {/* EMPLOYER */}
-
           {formData.role === "EMPLOYER" && (
             <div className="register-section">
 
@@ -652,15 +624,11 @@ function Register() {
                 <FiBriefcase />
                 <span>Thông tin doanh nghiệp</span>
               </div>
-
               <div className="register-grid">
-
                 <div className="register-group">
                   <label>Tên doanh nghiệp</label>
-
                   <div className="register-input-box">
                     <FiBriefcase />
-
                     <input
                       type="text"
                       name="companyName"
@@ -671,13 +639,10 @@ function Register() {
                     />
                   </div>
                 </div>
-
                 <div className="register-group">
                   <label>Mã số thuế</label>
-
                   <div className="register-input-box">
                     <FiUser />
-
                     <input
                       type="text"
                       name="taxCode"
@@ -688,15 +653,11 @@ function Register() {
                     />
                   </div>
                 </div>
-
               </div>
-
               <div className="register-group">
                 <label>Địa chỉ</label>
-
                 <div className="register-input-box">
                   <FiMapPin />
-
                   <input
                     type="text"
                     name="location"

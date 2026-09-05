@@ -4,13 +4,9 @@ import { Link } from "react-router-dom";
 
 function Companies({ employer }) {
   const isApproved = employer?.status === "APPROVED";
-
   return (
     <article className="company-card">
-
-      {/* TOP */}
       <div className="company-card-top">
-
         <div className="company-card-logo">
           {employer?.avatarUrl ? (
             <img
@@ -27,55 +23,37 @@ function Companies({ employer }) {
         </div>
 
         <div className="company-card-main">
-
           <div className="company-card-title-row">
-
             <h3>
               {employer?.companyName || "Tên doanh nghiệp"}
             </h3>
-
             {isApproved && (
               <span className="company-verified">
                 <i className="bi bi-patch-check-fill"></i>
                 Đã xác thực
               </span>
             )}
-
           </div>
 
           <p className="company-card-subtitle">
             <i className="bi bi-person"></i>
-
             {employer?.fullName || "Chưa cập nhật"}
           </p>
-
         </div>
-
       </div>
-
-
-      {/* INFORMATION */}
       <div className="company-card-info">
-
         <div className="company-card-info-item">
-
           <div className="company-card-info-icon">
             <i className="bi bi-geo-alt"></i>
           </div>
-
           <div>
             <span>Địa điểm</span>
-
             <strong>
               {employer?.location || "Chưa cập nhật"}
             </strong>
           </div>
-
         </div>
-
-
         <div className="company-card-info-item">
-
           <div className="company-card-info-icon">
             <i className="bi bi-building"></i>
           </div>

@@ -29,8 +29,8 @@ const roleMenus = {
     { label: 'Trang chủ', href: '/' },
     { label: 'Sinh viên', href: '/lecturer/students' },
     { label: 'Duyệt CV', href: '/lecturer/cvs' },
+    { label: 'Ứng viên nổi bật', href: '/cv/suggestedCv' },
   ],
-
   EMPLOYER: [
     { label: 'Trang chủ', href: '/' },
     { label: 'Tin tuyển dụng', href: '/employer/jobs' },

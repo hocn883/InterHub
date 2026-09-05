@@ -101,7 +101,7 @@ function MyApplicationCard({ application, onDelete }) {
                             to={`/jobs/${application.jobId}`}
                             className="job-application-title"
                         >
-                            {application.jobTitle ||
+                            {application.job.title ||
                                 "Chưa có tên công việc"}
                         </Link>
                      <div
@@ -114,29 +114,29 @@ function MyApplicationCard({ application, onDelete }) {
                         </div>
                     </div>
                     <p className="job-company-name">
-                        {application.companyName ||
+                        {application.job.employer.companyName ||
                             "Chưa cập nhật công ty"}
                     </p>
                     <div className="job-application-details">
                         <div className="job-detail-item">
                             <FaLocationDot />
                             <span>
-                                {application.location ||
+                                {application.job.location ||
                                     "Chưa cập nhật"}
                             </span>
                         </div>
                         <div className="job-detail-item">
                             <FaMoneyBillWave />
                             <span>
-                                {application.salary ||
+                                {application.job.salary ||
                                     "Thỏa thuận"}
                             </span>
                         </div>
                         <div className="job-detail-item">
-                            <FaCalendarDays />
+                            <FaCalendarDays/>
                             <span>
                                 Ứng tuyển:{" "}
-                                {application.appliedDate ||
+                                {application.createdDate ||
                                     "Chưa cập nhật"}
                             </span>
                         </div>

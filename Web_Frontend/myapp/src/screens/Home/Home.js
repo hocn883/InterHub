@@ -12,7 +12,7 @@ function Home() {
   const [location, setLocation] = useState("");
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [radius, setRadius] = useState(null);
+  const [radius, setRadius] = useState(5);
   const [searchFilters, setSearchFilters] = useState({
   keyword: "",
   salary: "",
@@ -127,6 +127,10 @@ function Home() {
       );
       setCountEmployer(
         response.data.result.totalElements
+      );
+      console.log(
+        "Load employers response:",
+        response.data
       );
       return true;
     } catch (error) {

@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import './CvScoring.css'
-
-const API_URL = 'http://localhost:8080/api/ai'
+import { useState } from 'react';
+import './CvScoring.css';
+import { authApi, endpoints } from "../../../../utils/api";
 
 function CvScoring() {
   const [file, setFile] = useState(null)
@@ -9,10 +8,6 @@ function CvScoring() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
-
-  // ================================
-  // CHỌN FILE
-  // ================================
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0]
 
@@ -28,137 +23,53 @@ function CvScoring() {
     setResult(null)
     setError('')
   }
-
-  // ================================
-  // CHẤM ĐIỂM CV
-  // ================================
   const handleScore = async () => {
-
-    if (!file) {
-      setError('Vui lòng chọn CV PDF.')
-      return
-    }
-
-    if (!targetPosition.trim()) {
-      setError('Vui lòng nhập vị trí ứng tuyển.')
-      return
-    }
-
-    setLoading(true)
-    setError('')
-    setResult(null)
-
-    try {
-
-      // ================================
-      // TẠO FORMDATA
-      // ================================
-      const formData = new FormData()
-
-      formData.append('file', file)
-      formData.append(
-        'targetPosition',
-        targetPosition.trim()
-      )
-
-      // DEBUG
-      console.log('================================')
-      console.log('SENDING CV TO BACKEND')
-      console.log('File:', file.name)
-      console.log('Size:', file.size)
-      console.log('Target position:', targetPosition)
-      console.log('URL:', `${API_URL}/cv/score`)
-      console.log('================================')
-
-      // ================================
-      // GỌI API
-      // ================================
-      const response = await fetch(
-        `${API_URL}/cv/score`,
-        {
-          method: 'POST',
-          body: formData,
-        }
-      )
-
-      console.log(
-        'Response status:',
-        response.status
-      )
-
-      // ================================
-      // XỬ LÝ RESPONSE
-      // ================================
-      if (!response.ok) {
-
-        let message =
-          `Chấm điểm CV thất bại (${response.status})`
-
-        try {
-          const errorData =
-            await response.json()
-
-          if (errorData.message) {
-            message = errorData.message
-          }
-        } catch {
-          // Backend không trả JSON
-        }
-
-        throw new Error(message)
-      }
-
-      const data =
-        await response.json()
-
-      console.log(
-        'AI CV SCORE:',
-        data
-      )
-
-      setResult(data)
-
-    } catch (error) {
-
-      console.error(
-        'CV SCORING ERROR:',
-        error
-      )
-
-      setError(
-        error.message ||
-        'Không thể chấm điểm CV. Vui lòng kiểm tra Backend.'
-      )
-
-    } finally {
-
-      setLoading(false)
-
-    }
+  if (!file) {
+    setError("Vui lòng chọn CV PDF.");
+    return;
   }
 
-  // ================================
-  // XÓA FILE
-  // ================================
+  if (!targetPosition.trim()) {
+    setError("Vui lòng nhập vị trí ứng tuyển.");
+    return;
+  }
+
+  setLoading(true);
+  setError("");
+  setResult(null);
+
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("targetPosition", targetPosition.trim());
+    const token = localStorage.getItem("access-token");
+    const response = await authApi(token).post(
+      endpoints.cvScore,
+      formData
+    );
+    setResult(response.data);
+  } catch (error) {
+    console.error("CV SCORING ERROR:", error);
+    setError(
+      error.response?.data?.message ||
+      error.response?.data ||
+      "Không thể chấm điểm CV. Vui lòng kiểm tra Backend."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
   const handleRemoveFile = () => {
     setFile(null)
     setResult(null)
     setError('')
   }
-
-  // ================================
-  // CHẤM CV KHÁC
-  // ================================
   const handleRetry = () => {
     setFile(null)
     setTargetPosition('')
     setResult(null)
     setError('')
   }
-
-  // ================================
-  // TRẠNG THÁI ĐIỂM
-  // ================================
   const getScoreStatus = (score) => {
 
     if (score >= 80) {

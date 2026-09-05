@@ -1,4 +1,5 @@
 package com.example.InterHub.security;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,37 +27,50 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
+    ) throws ServletException,IOException {
 
-        String authorizationHeader =
+        String authorizationHeader=
                 request.getHeader("Authorization");
 
-        if (authorizationHeader == null
-                || !authorizationHeader.startsWith("Bearer ")) {
-
-            filterChain.doFilter(request, response);
+        if(
+                authorizationHeader==null||
+                        !authorizationHeader.startsWith("Bearer ")
+        ){
+            filterChain.doFilter(request,response);
             return;
         }
 
-        String token = authorizationHeader.substring(7);
+        String token=
+                authorizationHeader.substring(7);
 
         String username;
 
-        try {
-            username = jwtService.extractUsername(token);
-        } catch (Exception exception) {
-            filterChain.doFilter(request, response);
+        try{
+            username=jwtService.extractUsername(token);
+        }catch(Exception exception){
+            response.setStatus(
+                    HttpServletResponse.SC_UNAUTHORIZED
+            );
             return;
         }
 
-        if (username != null){
+        if(
+                username!=null&&
+                        SecurityContextHolder
+                                .getContext()
+                                .getAuthentication()==null
+        ){
+            UserDetails userDetails=
+                    userDetailsService
+                            .loadUserByUsername(username);
 
-            UserDetails userDetails =
-                    userDetailsService.loadUserByUsername(username);
-
-            if (jwtService.isTokenValid(token, userDetails)) {
-
-                UsernamePasswordAuthenticationToken authentication =
+            if(
+                    jwtService.isTokenValid(
+                            token,
+                            userDetails
+                    )
+            ){
+                UsernamePasswordAuthenticationToken authentication=
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,
                                 null,
@@ -68,11 +82,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                 .buildDetails(request)
                 );
 
-                SecurityContextHolder.getContext()
+                SecurityContextHolder
+                        .getContext()
                         .setAuthentication(authentication);
+            }else{
+                response.setStatus(
+                        HttpServletResponse.SC_UNAUTHORIZED
+                );
+                return;
             }
         }
 
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(request,response);
     }
 }

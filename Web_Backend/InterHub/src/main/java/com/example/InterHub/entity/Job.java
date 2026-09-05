@@ -45,8 +45,12 @@ public class Job extends BaseEntity {
     @Column(nullable=false,length=20)
     @Builder.Default
     private JobStatus status = JobStatus.OPEN;
-    @OneToMany(mappedBy="job")
     @Builder.Default
+    @OneToMany(
+            mappedBy = "job",
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
+    )
     private List<Application>applications=new ArrayList<>();
     @OneToMany(mappedBy="job")
     @Builder.Default

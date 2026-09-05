@@ -1,19 +1,9 @@
-import {
-  FiCalendar,
-  FiCheckCircle,
-  FiEye,
-  FiFileText,
-  FiUser,
-  FiUserCheck,
-} from "react-icons/fi";
-
+import {FiCalendar,FiCheckCircle,FiEye, FiFileText,FiUser,FiUserCheck,} from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-
 import "./SuggestedCvCard.css";
-
-const SuggestedCvCard = ({
-  application,
-  rank,
+import { useContext } from "react";
+import { UserContext } from "../../../../contexts/UserContext";
+const SuggestedCvCard = ({ application, rank,
 }) => {
   const navigate = useNavigate();
 
@@ -37,6 +27,7 @@ const SuggestedCvCard = ({
       }
     );
   };
+  const currentUser=useContext(UserContext).currentUser;
 
   return (
     <article className="suggested-card">
@@ -160,14 +151,15 @@ const SuggestedCvCard = ({
             Xem CV
           </a>
 
-          <button
-            type="button"
-            className="suggested-select-button"
-            onClick={handleSelectCandidate}
-          >
-            <FiUserCheck />
-            Chọn ứng viên
-          </button>
+          {currentUser?.role === 'EMPLOYER' && (
+            <button
+              type="button"
+              className="suggested-select-button"
+              onClick={handleSelectCandidate}
+            >
+              <FiUserCheck />
+            Tuyển dụng
+          </button>)}
 
         </div>
 

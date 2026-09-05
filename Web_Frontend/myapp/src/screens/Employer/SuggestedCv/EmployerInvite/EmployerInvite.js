@@ -1,60 +1,19 @@
-import {
-  FiArrowLeft,
-  FiBriefcase,
-  FiFileText,
-  FiSend,
-  FiUser,
-} from "react-icons/fi";
-import {
-  useEffect,
-  useState,
-} from "react";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-import {
-  authApi,
-  endpoints,
-} from "../../../../utils/api";
+import { FiArrowLeft,FiBriefcase,FiFileText,FiSend,FiUser,} from "react-icons/fi";
+import {useEffect, useState,} from "react";
+import { useLocation,useNavigate,useParams,} from "react-router-dom";
+import {authApi,endpoints,} from "../../../../utils/api";
 import PageHeroEmployer from "../../../../components/PageHeroEmployer/PageHeroEmployer";
 import "./EmployerInvite.css";
-
 const EmployerInviteCv = () => {
   const { cvId } = useParams();
-
-  const location =
-    useLocation();
-
-  const navigate =
-    useNavigate();
-
-  const selectedCv =
-    location.state?.cv;
-
-  const [jobs, setJobs] =
-    useState([]);
-
-  const [
-    selectedJobId,
-    setSelectedJobId,
-  ] = useState("");
-
-  const [
-    title,
-    setTitle,
-  ] = useState("");
-
-  const [
-    message,
-    setMessage,
-  ] = useState("");
-
-  const [
-    loadingJobs,
-    setLoadingJobs,
-  ] = useState(true);
+  const location = useLocation();
+  const navigate =useNavigate();
+  const selectedCv =location.state?.cv;
+  const [jobs, setJobs] = useState([]);
+  const [selectedJobId,setSelectedJobId,] = useState("");
+  const [title, setTitle,] = useState("");
+  const [message,setMessage,] = useState("");
+  const [loadingJobs, setLoadingJobs,] = useState(true);
 
   const [
     submitting,

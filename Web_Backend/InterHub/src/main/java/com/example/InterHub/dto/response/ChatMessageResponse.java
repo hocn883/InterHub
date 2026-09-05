@@ -1,15 +1,10 @@
 package com.example.InterHub.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +18,11 @@ public class ChatMessageResponse {
 
     private String senderName;
 
+    private String senderAvatarUrl;
+
     private String content;
+
+    private Boolean isRead;
 
     private LocalDateTime createdDate;
 }

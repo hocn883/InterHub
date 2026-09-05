@@ -1,95 +1,201 @@
 import "./MyCv.css";
-import {useContext, useEffect, useState,} from "react";
+import {
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContext";
-import {authApi,endpoints} from "../../../utils/api";
+import {
+  authApi,
+  endpoints,
+} from "../../../utils/api";
 import PageHero from "../../../components/PageHero/PageHero";
 import CvCard from "./CvCard/CvCard";
+
 function MyCv() {
   const { currentUser } =
     useContext(UserContext);
+
   const lecturer =
     currentUser?.lecturer;
-  const [cvList, setCvList] =
+
+  const [cvList,setCvList] =
     useState([]);
-  const [loading, setLoading] =
+
+  const [loading,setLoading] =
     useState(true);
-  const [error, setError] =
+
+  const [error,setError] =
     useState("");
-  const [deletingId, setDeletingId] =
+
+  const [deletingId,setDeletingId] =
     useState(null);
-  const loadCvs = async () => {
-    try {
+
+  const [openingChat,setOpeningChat] =
+    useState(false);
+
+  const loadCvs=async()=>{
+    try{
       setLoading(true);
       setError("");
-      const token =
+
+      const token=
         localStorage.getItem(
           "access-token"
         );
-      const response =
+
+      const response=
         await authApi(token).get(
           endpoints.myCvs
         );
+
       setCvList(
-        response.data.result?.content ||
-          []
+        response.data.result?.content||
+        []
       );
-    } catch (err) {
+    }catch(err){
       console.error(err);
+
       setError(
-        err.response?.data?.message ||
-          "Không thể tải danh sách CV"
+        err.response?.data?.message||
+        "Không thể tải danh sách CV"
       );
-    } finally {
+    }finally{
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadCvs();
-  }, []);
 
-  const handleDeleteCv = async (
-    cv
-  ) => {
-    if (cv.status !== "PENDING") {
-      alert(
-        "Chỉ có thể xóa CV đang chờ duyệt");
+  useEffect(()=>{
+    loadCvs();
+  },[]);
+
+  const handleOpenChat=async()=>{
+    if(
+      !currentUser?.id||
+      !lecturer?.id
+    ){
       return;
     }
 
-    const confirmDelete =
+    const token=
+      localStorage.getItem(
+        "access-token"
+      );
+
+    if(!token){
+      return;
+    }
+
+    try{
+      setOpeningChat(true);
+
+      const response=
+        await authApi(token).post(
+          `http://localhost:8080/chat/rooms/open/${currentUser.id}/${lecturer.id}`
+        );
+
+      console.log(
+        "OPEN LECTURER ROOM:",
+        response.data
+      );
+
+      const data=
+        response.data;
+
+      const roomId=
+        typeof data==="object"
+          ?data?.roomId??data?.id
+          :data;
+
+      if(!roomId){
+        console.error(
+          "Backend không trả roomId"
+        );
+        return;
+      }
+
+      window.dispatchEvent(
+        new CustomEvent(
+          "open-chat-room",
+          {
+            detail:{
+              roomId:Number(roomId)
+            }
+          }
+        )
+      );
+    }catch(error){
+      console.error(
+        "OPEN CHAT ERROR:",
+        error.response?.data||
+        error
+      );
+
+      alert(
+        error.response?.data?.message||
+        "Không thể mở cuộc trò chuyện."
+      );
+    }finally{
+      setOpeningChat(false);
+    }
+  };
+
+  const handleDeleteCv=async(cv)=>{
+    if(cv.status!=="PENDING"){
+      alert(
+        "Chỉ có thể xóa CV đang chờ duyệt"
+      );
+      return;
+    }
+
+    const confirmDelete=
       window.confirm(
         "Bạn có chắc muốn xóa CV này không?"
       );
-    if (!confirmDelete) {
+
+    if(!confirmDelete){
       return;
     }
-    try {
+
+    try{
       setDeletingId(cv.id);
-      const token =
+
+      const token=
         localStorage.getItem(
           "access-token"
         );
+
       await authApi(token).delete(
         endpoints.myCv(cv.id)
       );
-      setCvList((prev) => prev.filter((item) =>
-            item.id !== cv.id
-        ));
-      alert("Xóa CV thành công");
-    } catch (err) {
-      console.error(err);
-      alert(
-        err.response?.data?.message ||
-          "Không thể xóa CV"
+
+      setCvList(
+        (prev)=>
+          prev.filter(
+            (item)=>
+              item.id!==cv.id
+          )
       );
-    } finally {
+
+      alert(
+        "Xóa CV thành công"
+      );
+    }catch(err){
+      console.error(err);
+
+      alert(
+        err.response?.data?.message||
+        "Không thể xóa CV"
+      );
+    }finally{
       setDeletingId(null);
     }
   };
 
-  return (
+  return(
     <div className="mycv-page">
+
       <PageHero
         badge="HỒ SƠ THỰC TẬP"
         title="CV"
@@ -98,10 +204,13 @@ function MyCv() {
       />
 
       <main className="mycv-container mycv-main-content">
-        {lecturer && (
+
+        {lecturer&&(
           <section className="mycv-lecturer">
+
             <div className="mycv-lecturer-avatar">
-              {lecturer.avatarUrl ? (
+
+              {lecturer.avatarUrl?(
                 <img
                   src={
                     lecturer.avatarUrl
@@ -110,12 +219,14 @@ function MyCv() {
                     lecturer.fullName
                   }
                 />
-              ) : (
+              ):(
                 "GV"
               )}
+
             </div>
 
             <div className="mycv-lecturer-info">
+
               <span>
                 GIẢNG VIÊN HƯỚNG DẪN
               </span>
@@ -127,13 +238,37 @@ function MyCv() {
               <p>
                 @{lecturer.username}
               </p>
+
             </div>
+
+            <div className="mycv-lecturer-actions">
+
+              <button
+                type="button"
+                className="mycv-lecturer-chat-button"
+                onClick={
+                  handleOpenChat
+                }
+                disabled={
+                  openingChat
+                }
+              >
+                {openingChat
+                  ?"Đang mở..."
+                  :"Nhắn tin"}
+              </button>
+
+            </div>
+
           </section>
         )}
 
         <section className="mycv-list-section">
+
           <div className="mycv-section-heading">
+
             <div>
+
               <span className="mycv-label">
                 CV ĐÃ GỬI
               </span>
@@ -141,9 +276,11 @@ function MyCv() {
               <h2>
                 Lịch sử gửi CV
               </h2>
+
             </div>
 
             <div className="mycv-heading-actions">
+
               <span className="mycv-total">
                 {cvList.length} CV
               </span>
@@ -168,34 +305,38 @@ function MyCv() {
               >
                 + Gửi CV mới
               </Link>
+
             </div>
+
           </div>
 
-          {loading && (
+          {loading&&(
             <div className="mycv-loading">
-              <span className="mycv-spinner" />
+
+              <span className="mycv-spinner"/>
 
               Đang tải danh sách CV...
+
             </div>
           )}
 
-          {!loading && error && (
+          {!loading&&error&&(
             <div className="mycv-error">
               {error}
             </div>
           )}
 
-          {!loading &&
-            !error &&
-            cvList.length === 0 && (
+          {!loading&&
+            !error&&
+            cvList.length===0&&(
               <div className="mycv-empty">
+
                 <h3>
                   Chưa có CV nào
                 </h3>
 
                 <p>
-                  Bạn chưa gửi CV cho
-                  giảng viên hướng dẫn.
+                  Bạn chưa gửi CV cho giảng viên hướng dẫn.
                 </p>
 
                 <Link
@@ -204,19 +345,21 @@ function MyCv() {
                 >
                   Gửi CV đầu tiên
                 </Link>
+
               </div>
             )}
 
-          {!loading &&
-            !error &&
-            cvList.length > 0 && (
+          {!loading&&
+            !error&&
+            cvList.length>0&&(
               <div className="mycv-cards">
+
                 {cvList.map(
-                  (cv, index) => (
+                  (cv,index)=>(
                     <CvCard
                       key={
-                        cv.id ||
-                        cv.fileUrl ||
+                        cv.id||
+                        cv.fileUrl||
                         index
                       }
                       cv={cv}
@@ -230,16 +373,20 @@ function MyCv() {
                         handleDeleteCv
                       }
                       deleting={
-                        deletingId ===
+                        deletingId===
                         cv.id
                       }
                     />
                   )
                 )}
+
               </div>
             )}
+
         </section>
+
       </main>
+
     </div>
   );
 }

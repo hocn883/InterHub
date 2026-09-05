@@ -20,6 +20,7 @@ import com.example.InterHub.repository.EmployerRepository;
 import com.example.InterHub.repository.LecturerRepository;
 import com.example.InterHub.repository.StudentRepository;
 import com.example.InterHub.repository.UserRepository;
+import com.example.InterHub.security.CustomUserDetailsService;
 import com.example.InterHub.security.JwtService;
 import com.example.InterHub.services.cloudinary.CloudinaryService;
 import com.example.InterHub.services.cloudinary.FileUpload;
@@ -27,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +46,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final CloudinaryService cloudinaryService;
     private final SystemLogService systemLogService;
+    private final CustomUserDetailsService  customUserDetailsService;
     @Transactional
     public AuthResponse register(RegisterRequest request) {
         checkRequest(request);
@@ -64,6 +67,46 @@ public class AuthService {
         );
         String token = jwtService.generateToken(savedUser);
         return authResponse(savedUser, token);
+    }
+    public AuthResponse refreshToken(String refreshToken) {
+        String username=jwtService.extractUsername(refreshToken);
+
+        System.out.println("USERNAME REFRESH: "+username);
+
+        UserDetails userDetails=
+                customUserDetailsService.loadUserByUsername(username);
+
+        boolean valid=
+                jwtService.isRefreshTokenValid(
+                        refreshToken,
+                        userDetails
+                );
+
+        System.out.println("REFRESH VALID: "+valid);
+
+        if(!valid){
+            throw new RuntimeException(
+                    "Refresh token không hợp lệ"
+            );
+        }
+
+        User user=userRepository
+                .findByUsername(username)
+                .orElseThrow(
+                        ()->new RuntimeException(
+                                "Không tìm thấy người dùng"
+                        )
+                );
+
+        String newAccessToken=
+                jwtService.generateToken(user);
+
+        System.out.println("ĐÃ TẠO ACCESS TOKEN MỚI");
+
+        return authResponse(
+                user,
+                newAccessToken
+        );
     }
     public AuthResponse login(LoginRequest request) {
         try {
@@ -90,7 +133,7 @@ public class AuthService {
                 Action.LOGIN.name(),
                 "Đăng nhập hệ thống"
         );
-        String token = jwtService.generateToken(user);
+        String token=jwtService.generateToken(user);
         return authResponse(user, token);
     }
     private void checkRequest(RegisterRequest request) {

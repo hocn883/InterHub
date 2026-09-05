@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import SuggestedCvCard from "./SuggestedCvCard/SuggestedCvCard";
 import PageHeroEmployer from "../../../components/PageHeroEmployer/PageHeroEmployer";
 import "./SuggestedCv.css";
-import api, { endpoints } from "../../../utils/api";
+import api, {authApi, endpoints } from "../../../utils/api";
 
 const SuggestedCv = () => {
   const [applications, setApplications] = useState([]);
@@ -13,8 +13,9 @@ const SuggestedCv = () => {
     try {
       setLoading(true);
       setError("");
+      const token = localStorage.getItem("access-token");
 
-      const response = await api.get(
+      const response = await authApi(token).get(
         endpoints.suggestedCv
       );
 

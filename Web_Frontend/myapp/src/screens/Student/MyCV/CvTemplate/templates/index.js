@@ -3,7 +3,6 @@ const templateContext = require.context(
   true,
   /Template\.(js|jsx)$/
 );
-
 const templates = templateContext
   .keys()
   .map((path, index) => {
@@ -14,10 +13,6 @@ const templates = templateContext
     if (!Component) {
       return null;
     }
-
-    // Ví dụ:
-    // ./ModernTemplate/ModernTemplate.jsx
-    // => ModernTemplate
     const folderName =
       path.split("/")[1] || `Template${index + 1}`;
 

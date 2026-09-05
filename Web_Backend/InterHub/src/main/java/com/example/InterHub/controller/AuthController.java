@@ -5,14 +5,16 @@ import com.example.InterHub.dto.request.RegisterRequest;
 import com.example.InterHub.dto.response.ApiResponse;
 import com.example.InterHub.dto.response.AuthResponse;
 import com.example.InterHub.dto.response.UserResponse;
+import com.example.InterHub.entity.User;
+import com.example.InterHub.exception.ResourceNotFoundException;
+import com.example.InterHub.repository.UserRepository;
 import com.example.InterHub.security.CustomUserDetails;
+import com.example.InterHub.security.JwtService;
 import com.example.InterHub.services.AuthService;
 import com.example.InterHub.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,8 @@ public class AuthController {
 
     private final AuthService authService;
     private final UserService userService;
+    private final JwtService jwtService;
+    private  final UserRepository userRepository;
 
     @PostMapping(
             value = "/register",
@@ -32,7 +36,6 @@ public class AuthController {
             @Valid @ModelAttribute RegisterRequest request
     ) {
         AuthResponse response = authService.register(request);
-
         return ResponseEntity.ok(ApiResponse.<AuthResponse>builder()
                 .code(HttpStatus.CREATED.value())
                 .status(HttpStatus.CREATED.name())
@@ -44,13 +47,70 @@ public class AuthController {
     public ResponseEntity<ApiResponse<AuthResponse>> login(
             @Valid @RequestBody LoginRequest request
     ) {
+        AuthResponse authResponse=authService.login(request);
+        User user = userRepository
+                .findByUsername(request.getUsername())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Không tìm thấy tài khoản"
+                        )
+                );
+
+        String refreshToken=jwtService.generateRefreshToken(user);
+        ResponseCookie refreshCookie=ResponseCookie
+                .from("refreshToken",refreshToken)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(7*24*60*60)
+                .sameSite("Lax")
+                .build();
+
+        ApiResponse<AuthResponse> response=
+                ApiResponse.<AuthResponse>builder()
+                        .code(HttpStatus.OK.value())
+                        .status(HttpStatus.OK.name())
+                        .message("Đăng nhập thành công")
+                        .result(authResponse)
+                        .build();
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.SET_COOKIE,
+                        refreshCookie.toString()
+                )
+                .body(response);
+    }
+    @PostMapping("/refresh")
+    public ResponseEntity<ApiResponse<AuthResponse>> refresh(
+            @CookieValue(
+                    name="refreshToken",
+                    required=false
+            )
+            String refreshToken
+    ) {
+        if(refreshToken==null){
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(
+                            ApiResponse.<AuthResponse>builder()
+                                    .code(HttpStatus.UNAUTHORIZED.value())
+                                    .status(HttpStatus.UNAUTHORIZED.name())
+                                    .message("Không có refresh token")
+                                    .build()
+                    );
+        }
+
+        AuthResponse authResponse=
+                authService.refreshToken(refreshToken);
+
         return ResponseEntity.ok(
                 ApiResponse.<AuthResponse>builder()
-                                .code(HttpStatus.OK.value())
-                                        .status(HttpStatus.OK.name())
-                                                .message("Đăng nhập thành công")
-                                                        .result(authService.login(request))
-                                                                .build()
+                        .code(HttpStatus.OK.value())
+                        .status(HttpStatus.OK.name())
+                        .message("Làm mới token thành công")
+                        .result(authResponse)
+                        .build()
         );
     }
     @GetMapping("/me")

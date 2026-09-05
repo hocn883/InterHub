@@ -1,52 +1,53 @@
-import React, {
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import React,{createContext,useEffect,useState} from "react";
+import {authApi,endpoints} from "../utils/api";
 
-import api, {
-  authApi,
-  endpoints,
-} from "../utils/api";
+export const UserContext=createContext();
 
-export const UserContext = createContext();
+export const UserProvider=({children})=>{
+  const [currentUser,setCurrentUser]=useState(null);
+  const [loading,setLoading]=useState(true);
 
-export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const loadUser=async()=>{
+    const token=localStorage.getItem("access-token");
 
-  const loadUser = async () => {
-    try {
-      const token = localStorage.getItem("access-token");
+    if(!token){
+      setCurrentUser(null);
+      setLoading(false);
+      return;
+    }
 
-      if (!token) {
-        setCurrentUser(null);
-        return;
-      }
-      const response = await authApi(token).get(
+    try{
+      setLoading(true);
+
+      const response=await authApi(token).get(
         endpoints.currentUser
       );
 
       setCurrentUser(response.data.result);
-    } catch (error) {
-      console.error("Load user error:", error);
-
-      // Token không hợp lệ
-      localStorage.removeItem("access-token");
+    }catch(error){
+      console.error("Load user error:",error);
 
       setCurrentUser(null);
+
+      if(error.response?.status===401){
+        localStorage.removeItem("access-token");
+      }
+    }finally{
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
+  useEffect(()=>{
     loadUser();
-  }, []);
+  },[]);
 
-  return (
+  return(
     <UserContext.Provider
       value={{
         currentUser,
         setCurrentUser,
         loadUser,
+        loading,
       }}
     >
       {children}

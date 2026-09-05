@@ -504,3 +504,49 @@
   color: #5037d4;
   transform: translateY(-1px);
 }
+.mycv-lecturer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mycv-lecturer-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.mycv-lecturer-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.mycv-lecturer-chat-button {
+  min-width: 105px;
+  height: 40px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 9px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.mycv-lecturer-chat-button:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.mycv-lecturer-chat-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.mycv-lecturer-chat-button:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}

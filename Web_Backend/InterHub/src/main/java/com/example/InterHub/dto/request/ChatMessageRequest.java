@@ -1,11 +1,11 @@
 package com.example.InterHub.dto.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ChatMessageRequest {
+
+    private Long chatRoomId;
 
     private Long senderId;
 

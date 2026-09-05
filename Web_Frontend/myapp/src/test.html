@@ -1,0 +1,196 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>InterHub Chat Test</title>
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6f9}
+.container{width:900px;max-width:95%;margin:30px auto;background:white;padding:24px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+h2{margin-top:0}
+.status{margin-bottom:15px;font-weight:bold}
+.online{color:green}
+.offline{color:red}
+.form{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin-bottom:15px}
+input,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px}
+button{padding:10px 15px;border:0;border-radius:6px;background:#2563eb;color:white;cursor:pointer}
+button:hover{opacity:.9}
+.danger{background:#dc2626}
+.secondary{background:#64748b}
+.room{display:grid;grid-template-columns:1fr auto auto;gap:10px;margin-bottom:15px}
+.chat-box{height:420px;overflow-y:auto;border:1px solid #ddd;background:#f8fafc;padding:15px;border-radius:8px}
+.message-row{display:flex;margin-bottom:10px}
+.mine{justify-content:flex-end}
+.other{justify-content:flex-start}
+.message{max-width:65%;padding:10px 14px;border-radius:12px;background:#e2e8f0}
+.mine .message{background:#2563eb;color:white}
+.name{font-size:12px;font-weight:bold;margin-bottom:4px}
+.time{font-size:10px;opacity:.7;margin-top:5px}
+.send-box{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:15px}
+textarea{height:55px;resize:none}
+.info{margin-top:15px;padding:12px;background:#f1f5f9;border-radius:8px;font-size:13px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>InterHub Chat Test</h2>
+<div id="status" class="status offline">Chưa kết nối WebSocket</div>
+<div class="form">
+<input id="senderId" type="number" placeholder="Sender ID">
+<input id="receiverId" type="number" placeholder="Receiver ID">
+<button id="connectButton" onclick="connectWebSocket()">Kết nối</button>
+</div>
+<div class="room">
+<input id="roomId" type="number" placeholder="Chat Room ID">
+<button onclick="loadMessages()">Tải lịch sử</button>
+<button class="secondary" onclick="clearMessages()">Xóa màn hình</button>
+</div>
+<div id="chatBox" class="chat-box"></div>
+<div class="send-box">
+<textarea id="content" placeholder="Nhập tin nhắn..."></textarea>
+<button onclick="sendMessage()">Gửi</button>
+</div>
+<div class="info">
+<div>WebSocket: <b>ws://localhost:8080/ws</b></div>
+<div>Send: <b>/app/chat/send</b></div>
+<div>Subscribe: <b>/topic/user/{senderId}</b></div>
+<div>History: <b>GET /rooms/{roomId}/messages</b></div>
+</div>
+</div>
+<script>
+const API_URL="http://localhost:8080";
+const WS_URL="ws://localhost:8080/ws";
+let client=null;
+let connected=false;
+// Kết nối WebSocket
+function connectWebSocket(){
+const senderId=document.getElementById("senderId").value;
+if(!senderId){
+alert("Nhập Sender ID");
+return;
+}
+if(client&&client.active){
+client.deactivate();
+}
+client=new StompJs.Client({
+brokerURL:WS_URL,
+reconnectDelay:3000,
+onConnect:function(){
+connected=true;
+updateStatus();
+client.subscribe("/topic/user/"+senderId,function(message){
+const data=JSON.parse(message.body);
+addMessage(data);
+if(data.chatRoomId){
+document.getElementById("roomId").value=data.chatRoomId;
+}
+});
+},
+onDisconnect:function(){
+connected=false;
+updateStatus();
+},
+onStompError:function(frame){
+console.error("STOMP ERROR",frame);
+},
+onWebSocketError:function(error){
+console.error("WEBSOCKET ERROR",error);
+}
+});
+client.activate();
+}
+// Cập nhật trạng thái
+function updateStatus(){
+const status=document.getElementById("status");
+if(connected){
+status.className="status online";
+status.innerText="Đã kết nối User "+document.getElementById("senderId").value;
+}else{
+status.className="status offline";
+status.innerText="Chưa kết nối WebSocket";
+}
+}
+// Gửi tin nhắn
+function sendMessage(){
+const senderId=document.getElementById("senderId").value;
+const receiverId=document.getElementById("receiverId").value;
+const content=document.getElementById("content").value;
+if(!connected){
+alert("Chưa kết nối WebSocket");
+return;
+}
+if(!senderId||!receiverId||!content.trim()){
+alert("Nhập đầy đủ Sender ID, Receiver ID và nội dung");
+return;
+}
+client.publish({
+destination:"/app/chat/send",
+body:JSON.stringify({
+senderId:Number(senderId),
+receiverId:Number(receiverId),
+content:content
+})
+});
+document.getElementById("content").value="";
+}
+// Lấy lịch sử tin nhắn
+async function loadMessages(){
+const roomId=document.getElementById("roomId").value;
+if(!roomId){
+alert("Nhập Room ID");
+return;
+}
+try{
+const response=await fetch(API_URL+"/rooms/"+roomId+"/messages");
+if(!response.ok){
+throw new Error("Không thể tải lịch sử chat");
+}
+const messages=await response.json();
+document.getElementById("chatBox").innerHTML="";
+messages.forEach(addMessage);
+}catch(error){
+console.error(error);
+alert("Lỗi tải lịch sử chat");
+}
+}
+// Hiển thị tin nhắn
+function addMessage(message){
+const senderId=document.getElementById("senderId").value;
+const chatBox=document.getElementById("chatBox");
+const row=document.createElement("div");
+const mine=Number(message.senderId)===Number(senderId);
+row.className="message-row "+(mine?"mine":"other");
+const box=document.createElement("div");
+box.className="message";
+const name=document.createElement("div");
+name.className="name";
+name.innerText=mine?"Bạn":message.senderName;
+const content=document.createElement("div");
+content.innerText=message.content;
+const time=document.createElement("div");
+time.className="time";
+time.innerText=message.createdDate?new Date(message.createdDate).toLocaleString("vi-VN"):"";
+box.appendChild(name);
+box.appendChild(content);
+box.appendChild(time);
+row.appendChild(box);
+chatBox.appendChild(row);
+chatBox.scrollTop=chatBox.scrollHeight;
+}
+// Xóa màn hình
+function clearMessages(){
+document.getElementById("chatBox").innerHTML="";
+}
+// Enter để gửi
+document.getElementById("content").addEventListener("keydown",function(event){
+if(event.key==="Enter"&&!event.shiftKey){
+event.preventDefault();
+sendMessage();
+}
+});
+</script>
+</body>
+</html>
+

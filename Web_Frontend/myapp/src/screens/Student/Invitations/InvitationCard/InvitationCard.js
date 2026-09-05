@@ -75,7 +75,7 @@ function InvitationCard({ invitation, onAccept, onReject, loading }) {
         <button
           className="invitation-detail"
           onClick={() =>
-            navigate(`/student/job-invitations/${invitation.id}`, {
+            navigate(`/employer/invitations/${invitation.id}`, {
               state: { invitation },
             })
           }

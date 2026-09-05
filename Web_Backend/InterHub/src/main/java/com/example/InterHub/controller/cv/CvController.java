@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CvController {
     private final CvService cvService;
-    @PreAuthorize("hasRole('EMPLOYER')")
     @GetMapping
     public ResponseEntity<ApiResponse<PageResponse<CvUploadResponse>>>getCvSuggested(
              @RequestParam(defaultValue = "0") int page

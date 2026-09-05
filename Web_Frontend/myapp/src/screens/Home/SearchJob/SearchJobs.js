@@ -95,7 +95,7 @@ function SearchJobs({
             onChange={(event) => setRadius(Number(event.target.value))}
             disabled={!location}
           >
-            <option value={5}>5 km</option>
+            <option value={5} >5 km</option>
             <option value={10}>10 km</option>
             <option value={20}>20 km</option>
             <option value={30}>30 km</option>

@@ -1,4 +1,4 @@
-package com.example.InterHub.configuration;
+package com.example.InterHub.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -15,18 +15,22 @@ public class WebSocketConfig
     public void configureMessageBroker(
             MessageBrokerRegistry registry
     ) {
-        // Message gửi vào backend Controller
-        registry.setApplicationDestinationPrefixes("/app");
-        // Message backend phát ra cho client
         registry.enableSimpleBroker("/topic");
+
+        registry.setApplicationDestinationPrefixes(
+                "/app"
+        );
     }
+
     @Override
     public void registerStompEndpoints(
             StompEndpointRegistry registry
     ) {
-
         registry
                 .addEndpoint("/ws")
-                .setAllowedOriginPatterns("*");
+                .setAllowedOriginPatterns(
+                        "*"
+                )
+                .withSockJS();
     }
 }

@@ -40,7 +40,7 @@ public class EmployerController {
         );
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<EmployerResponse>> me(
+    public ResponseEntity<ApiResponse<EmployerResponse>> details(
             @PathVariable long id
     ) {
         EmployerResponse response = employerService.getEmployerById(id);
