@@ -92,7 +92,7 @@ function MyCv() {
 
       const response=
         await authApi(token).post(
-          `https://interhub1611.onrender.com/api/chat/rooms/open/${currentUser.id}/${lecturer.id}`
+          `https://interhub1611.onrender.com/chat/rooms/open/${currentUser.id}/${lecturer.id}`
         );
 
       console.log(
