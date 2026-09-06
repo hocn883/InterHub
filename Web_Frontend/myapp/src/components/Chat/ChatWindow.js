@@ -1,356 +1,646 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FiMessageCircle, FiX } from "react-icons/fi";
-import { Client } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  FiArrowLeft,
+  FiMessageCircle,
+  FiSend,
+  FiX,
+} from "react-icons/fi";
+import { UserContext } from "../../contexts/UserContext";
 import { authApi } from "../../utils/api";
-import ChatWindow from "./ChatWindow";
-import "./ChatBubble.css";
+import "./ChatWindow.css";
 
 const CHAT_API = "http://localhost:8080/chat";
-const WS_URL = "http://localhost:8080/ws";
 
-function ChatBubble({ currentUser }) {
-  const [opened, setOpened] = useState(false);
-  const [rooms, setRooms] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState(null);
-  const [connected, setConnected] = useState(false);
+const getSenderId = (message) => {
+  if (!message) {
+    return null;
+  }
+
+  if (typeof message.senderId === "object") {
+    return message.senderId?.id;
+  }
+
+  return message.senderId;
+};
+
+function ChatWindow({
+  room,
+  stompClient,
+  connected,
+  onBack,
+  onClose,
+  onRoomRead,
+}) {
+  const { currentUser } = useContext(UserContext);
+
+  const [messages, setMessages] = useState([]);
+  const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const clientRef = useRef(null);
-  const selectedRoomRef = useRef(null);
+  const messagesEndRef = useRef(null);
+  const onRoomReadRef = useRef(onRoomRead);
 
   useEffect(() => {
-    selectedRoomRef.current = selectedRoom;
-  }, [selectedRoom]);
+    onRoomReadRef.current = onRoomRead;
+  }, [onRoomRead]);
 
-  const loadRooms = useCallback(async () => {
-    if (!currentUser?.id) return [];
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 50);
+  };
 
-    const token = localStorage.getItem("access-token");
+  useEffect(() => {
+    if (!room?.roomId || !currentUser?.id) {
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadMessages = async () => {
+      const token = localStorage.getItem("access-token");
+
+      if (!token) {
+        setError("Không tìm thấy token đăng nhập.");
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await authApi(token).get(
+          `${CHAT_API}/rooms/${room.roomId}/messages`
+        );
+
+        if (cancelled) {
+          return;
+        }
+
+        console.log("CHAT MESSAGES:", response.data);
+
+        const data = Array.isArray(response.data)
+          ? response.data
+          : [];
+
+        setMessages(data);
+
+        try {
+          await authApi(token).put(
+            `${CHAT_API}/rooms/${room.roomId}/read/${currentUser.id}`
+          );
+
+          if (cancelled) {
+            return;
+          }
+
+          setMessages((previousMessages) =>
+            previousMessages.map((message) => {
+              const senderId = getSenderId(message);
+
+              if (senderId !== currentUser.id) {
+                return {
+                  ...message,
+                  isRead: true,
+                };
+              }
+
+              return message;
+            })
+          );
+
+          onRoomReadRef.current?.(room.roomId);
+        } catch (readError) {
+          console.error(
+            "MARK READ ERROR:",
+            readError.response?.data || readError
+          );
+        }
+      } catch (loadError) {
+        if (cancelled) {
+          return;
+        }
+
+        console.error(
+          "LOAD MESSAGES ERROR:",
+          loadError.response?.data || loadError
+        );
+
+        setMessages([]);
+
+        setError(
+          loadError.response?.data?.message ||
+            "Không thể tải tin nhắn."
+        );
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadMessages();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [room?.roomId, currentUser?.id]);
+
+  useEffect(() => {
+    if (!room?.roomId) {
+      return;
+    }
+
+    if (!currentUser?.id) {
+      return;
+    }
+
+    if (!connected) {
+      return;
+    }
+
+    if (!stompClient) {
+      return;
+    }
+
+    if (!stompClient.connected) {
+      return;
+    }
+
+    console.log(
+      "SUBSCRIBE:",
+      `/topic/room/${room.roomId}`
+    );
+
+    const subscription = stompClient.subscribe(
+      `/topic/room/${room.roomId}`,
+      (frame) => {
+        try {
+          const newMessage = JSON.parse(frame.body);
+
+          console.log(
+            "RECEIVE MESSAGE:",
+            newMessage
+          );
+
+          setMessages((previousMessages) => {
+            if (
+              newMessage.id !== undefined &&
+              newMessage.id !== null
+            ) {
+              const exists = previousMessages.some(
+                (message) =>
+                  message.id === newMessage.id
+              );
+
+              if (exists) {
+                return previousMessages;
+              }
+            }
+
+            return [
+              ...previousMessages,
+              newMessage,
+            ];
+          });
+
+          const senderId =
+            getSenderId(newMessage);
+
+          if (senderId !== currentUser.id) {
+            const token =
+              localStorage.getItem(
+                "access-token"
+              );
+
+            if (token) {
+              authApi(token)
+                .put(
+                  `${CHAT_API}/rooms/${room.roomId}/read/${currentUser.id}`
+                )
+                .then(() => {
+                  setMessages(
+                    (previousMessages) =>
+                      previousMessages.map(
+                        (message) => {
+                          const id =
+                            getSenderId(
+                              message
+                            );
+
+                          if (
+                            id !==
+                            currentUser.id
+                          ) {
+                            return {
+                              ...message,
+                              isRead: true,
+                            };
+                          }
+
+                          return message;
+                        }
+                      )
+                  );
+
+                  onRoomReadRef.current?.(
+                    room.roomId
+                  );
+                })
+                .catch(
+                  (readError) => {
+                    console.error(
+                      "REALTIME READ ERROR:",
+                      readError
+                        .response?.data ||
+                        readError
+                    );
+                  }
+                );
+            }
+          }
+        } catch (socketError) {
+          console.error(
+            "WEBSOCKET MESSAGE ERROR:",
+            socketError
+          );
+        }
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [
+    connected,
+    stompClient,
+    room?.roomId,
+    currentUser?.id,
+  ]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSendMessage = () => {
+    const value = content.trim();
+
+    if (!value) {
+      return;
+    }
+
+    if (!currentUser?.id) {
+      setError(
+        "Không tìm thấy người dùng."
+      );
+      return;
+    }
+
+    if (!room?.roomId) {
+      setError(
+        "Không tìm thấy phòng chat."
+      );
+      return;
+    }
+
+    if (!room?.userId) {
+      console.error(
+        "ROOM KHÔNG CÓ userId:",
+        room
+      );
+
+      setError(
+        "Không tìm thấy người nhận."
+      );
+      return;
+    }
+
+    if (
+      !stompClient ||
+      !connected ||
+      !stompClient.connected
+    ) {
+      setError(
+        "WebSocket chưa kết nối."
+      );
+      return;
+    }
+
+    const request = {
+      chatRoomId: room.roomId,
+      senderId: currentUser.id,
+      receiverId: room.userId,
+      content: value,
+    };
+
+    console.log(
+      "SEND MESSAGE:",
+      request
+    );
 
     try {
-      setLoading(true);
-
-      const response = await authApi(token).get(
-        `${CHAT_API}/rooms/user/${currentUser.id}`
-      );
-
-      const data = Array.isArray(response.data) ? response.data : [];
-
-      setRooms(data);
-      return data;
-    } catch (error) {
-      console.error("LOAD CHAT ROOMS ERROR:", error.response?.data || error);
-      return [];
-    } finally {
-      setLoading(false);
-    }
-  }, [currentUser?.id]);
-
-  useEffect(() => {
-    if (!currentUser?.id) return;
-
-    loadRooms();
-  }, [currentUser?.id, loadRooms]);
-
-  useEffect(() => {
-    if (!currentUser?.id) return;
-
-    const client = new Client({
-      webSocketFactory: () => new SockJS(WS_URL),
-      reconnectDelay: 5000,
-      debug: () => {},
-    });
-
-    client.onConnect = () => {
-      setConnected(true);
-
-      client.subscribe(`/topic/user/${currentUser.id}`, (frame) => {
-        try {
-          const message = JSON.parse(frame.body);
-
-          console.log("USER MESSAGE:", message);
-
-          const roomId = Number(message.chatRoomId);
-          const currentRoom = selectedRoomRef.current;
-
-          setRooms((previousRooms) => {
-            const exists = previousRooms.some(
-              (room) => Number(room.roomId) === roomId
-            );
-
-            if (!exists) {
-              setTimeout(() => {
-                loadRooms();
-              }, 0);
-
-              return previousRooms;
-            }
-
-            return previousRooms
-              .map((room) => {
-                if (Number(room.roomId) !== roomId) return room;
-
-                const isCurrentRoom =
-                  Number(currentRoom?.roomId) === roomId;
-
-                return {
-                  ...room,
-                  lastMessage: message.content,
-                  lastMessageTime: message.createdDate,
-                  unreadCount: isCurrentRoom
-                    ? 0
-                    : Number(room.unreadCount || 0) + 1,
-                };
-              })
-              .sort((first, second) => {
-                const firstTime = first.lastMessageTime
-                  ? new Date(first.lastMessageTime).getTime()
-                  : 0;
-
-                const secondTime = second.lastMessageTime
-                  ? new Date(second.lastMessageTime).getTime()
-                  : 0;
-
-                return secondTime - firstTime;
-              });
-          });
-        } catch (error) {
-          console.error("USER SOCKET ERROR:", error);
-        }
+      stompClient.publish({
+        destination: "/app/chat/send",
+        body: JSON.stringify(request),
       });
-    };
 
-    client.onDisconnect = () => {
-      setConnected(false);
-    };
-
-    client.onWebSocketClose = () => {
-      setConnected(false);
-    };
-
-    client.onStompError = (frame) => {
+      setContent("");
+      setError("");
+    } catch (sendError) {
       console.error(
-        "STOMP ERROR:",
-        frame.headers["message"],
-        frame.body
-      );
-    };
-
-    client.activate();
-    clientRef.current = client;
-
-    return () => {
-      setConnected(false);
-      client.deactivate();
-      clientRef.current = null;
-    };
-  }, [currentUser?.id, loadRooms]);
-
-  useEffect(() => {
-    const handleExternalOpenRoom = async (event) => {
-      const roomId = Number(event.detail?.roomId);
-
-      if (!roomId) {
-        console.error("Không có roomId để mở");
-        return;
-      }
-
-      console.log("OPEN ROOM FROM PAGE:", roomId);
-
-      const latestRooms = await loadRooms();
-
-      const targetRoom = latestRooms.find(
-        (room) => Number(room.roomId) === roomId
+        "SEND MESSAGE ERROR:",
+        sendError
       );
 
-      if (!targetRoom) {
-        console.error("Không tìm thấy room:", roomId);
-        return;
-      }
-
-      setOpened(true);
-      setSelectedRoom(targetRoom);
-
-      setRooms(
-        latestRooms.map((room) =>
-          Number(room.roomId) === roomId
-            ? {
-                ...room,
-                unreadCount: 0,
-              }
-            : room
-        )
+      setError(
+        "Không thể gửi tin nhắn."
       );
-    };
-
-    window.addEventListener("open-chat-room", handleExternalOpenRoom);
-
-    return () => {
-      window.removeEventListener("open-chat-room", handleExternalOpenRoom);
-    };
-  }, [loadRooms]);
-
-  const totalUnread = useMemo(() => {
-    return rooms.reduce(
-      (total, room) => total + Number(room.unreadCount || 0),
-      0
-    );
-  }, [rooms]);
-
-  const handleOpenBubble = () => {
-    setOpened((previous) => !previous);
-
-    if (opened) {
-      setSelectedRoom(null);
     }
   };
 
-  const handleOpenRoom = (room) => {
-    setSelectedRoom(room);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleSendMessage();
+  };
 
-    setRooms((previousRooms) =>
-      previousRooms.map((item) =>
-        Number(item.roomId) === Number(room.roomId)
-          ? {
-              ...item,
-              unreadCount: 0,
-            }
-          : item
+  const handleKeyDown = (event) => {
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+      event.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  const formatTime = (value) => {
+    if (!value) {
+      return "";
+    }
+
+    const date = new Date(value);
+
+    if (
+      Number.isNaN(
+        date.getTime()
       )
+    ) {
+      return "";
+    }
+
+    return date.toLocaleTimeString(
+      "vi-VN",
+      {
+        hour: "2-digit",
+        minute: "2-digit",
+      }
     );
   };
 
-  const handleBack = () => {
-    setSelectedRoom(null);
-    loadRooms();
+  const avatarLetter =
+    room?.name
+      ?.charAt(0)
+      ?.toUpperCase() ||
+    "U";
+
+  const getRoleName = () => {
+    switch (room?.role) {
+      case "STUDENT":
+        return "Sinh viên";
+
+      case "EMPLOYER":
+        return "Nhà tuyển dụng";
+
+      case "LECTURER":
+        return "Giảng viên";
+
+      default:
+        return "Người dùng";
+    }
   };
-
-  const handleClose = () => {
-    setSelectedRoom(null);
-    setOpened(false);
-  };
-
-  const handleRoomRead = (roomId) => {
-    setRooms((previousRooms) =>
-      previousRooms.map((room) =>
-        Number(room.roomId) === Number(roomId)
-          ? {
-              ...room,
-              unreadCount: 0,
-            }
-          : room
-      )
-    );
-  };
-
-  const formatTime = (date) => {
-    if (!date) return "";
-
-    const value = new Date(date);
-
-    if (Number.isNaN(value.getTime())) return "";
-
-    return value.toLocaleTimeString("vi-VN", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
-  if (!currentUser) return null;
 
   return (
-    <div className="chat-bubble-wrapper">
-      {opened && (
-        <div className="chat-popup">
-          {selectedRoom ? (
-            <ChatWindow
-              room={selectedRoom}
-              currentUser={currentUser}
-              stompClient={clientRef.current}
-              connected={connected}
-              onBack={handleBack}
-              onClose={handleClose}
-              onRoomRead={handleRoomRead}
-            />
-          ) : (
-            <>
-              <div className="chat-popup-header">
-                <h2>Tin nhắn</h2>
+    <div className="chat-window">
+      <div className="chat-window-header">
+        <button
+          type="button"
+          className="chat-window-back"
+          onClick={onBack}
+        >
+          <FiArrowLeft />
+        </button>
 
-                <button type="button" onClick={handleClose}>
-                  <FiX />
-                </button>
-              </div>
+        <div className="chat-window-user">
+          <div className="chat-window-user-avatar">
+            {room?.avatarUrl ? (
+              <img
+                src={room.avatarUrl}
+                alt={
+                  room.name ||
+                  "Avatar"
+                }
+              />
+            ) : (
+              <span>
+                {avatarLetter}
+              </span>
+            )}
+          </div>
 
-              <div className="chat-room-list">
-                {loading ? (
-                  <div className="chat-room-state">Đang tải...</div>
-                ) : rooms.length === 0 ? (
-                  <div className="chat-room-state">
-                    Chưa có cuộc trò chuyện
-                  </div>
-                ) : (
-                  rooms.map((room) => (
-                    <button
-                      key={room.roomId}
-                      type="button"
-                      className="chat-room-item"
-                      onClick={() => handleOpenRoom(room)}
-                    >
-                      <div className="chat-room-avatar">
-                        {room.avatarUrl ? (
-                          <img
-                            src={room.avatarUrl}
-                            alt={room.name || ""}
-                          />
-                        ) : (
-                          <span>
-                            {room.name?.charAt(0)?.toUpperCase() || "U"}
-                          </span>
-                        )}
-                      </div>
+          <div className="chat-window-user-info">
+            <strong>
+              {room?.name ||
+                "Người dùng"}
+            </strong>
 
-                      <div className="chat-room-content">
-                        <div className="chat-room-top">
-                          <strong>{room.name || "Người dùng"}</strong>
-                          <span>{formatTime(room.lastMessageTime)}</span>
-                        </div>
+            <div className="chat-window-status">
+              <span
+                className={
+                  connected
+                    ? "chat-status-dot online"
+                    : "chat-status-dot"
+                }
+              />
 
-                        <div className="chat-room-bottom">
-                          <span>
-                            {room.lastMessage || "Bắt đầu trò chuyện"}
-                          </span>
-
-                          {Number(room.unreadCount) > 0 && (
-                            <b>{room.unreadCount}</b>
-                          )}
-                        </div>
-                      </div>
-                    </button>
-                  ))
-                )}
-              </div>
-            </>
-          )}
+              <span>
+                {connected
+                  ? getRoleName()
+                  : "Đang kết nối..."}
+              </span>
+            </div>
+          </div>
         </div>
-      )}
 
-      <button
-        type="button"
-        className="chat-main-bubble"
-        onClick={handleOpenBubble}
-      >
-        {opened ? <FiX /> : <FiMessageCircle />}
+        <button
+          type="button"
+          className="chat-window-close"
+          onClick={onClose}
+        >
+          <FiX />
+        </button>
+      </div>
 
-        {!opened && totalUnread > 0 && (
-          <span className="chat-main-badge">
-            {totalUnread > 99 ? "99+" : totalUnread}
-          </span>
+      <div className="chat-window-body">
+        {loading ? (
+          <div className="chat-window-state">
+            <div className="chat-window-spinner" />
+            <span>
+              Đang tải tin nhắn...
+            </span>
+          </div>
+        ) : error &&
+          messages.length === 0 ? (
+          <div className="chat-window-state chat-window-error">
+            <span>
+              {error}
+            </span>
+          </div>
+        ) : messages.length === 0 ? (
+          <div className="chat-window-empty">
+            <div className="chat-window-empty-icon">
+              <FiMessageCircle />
+            </div>
+
+            <strong>
+              Chưa có tin nhắn
+            </strong>
+
+            <span>
+              Bắt đầu trò chuyện với{" "}
+              {room?.name ||
+                "người dùng này"}
+            </span>
+          </div>
+        ) : (
+          messages.map(
+            (message, index) => {
+              const senderId =
+                getSenderId(
+                  message
+                );
+
+              const isMine =
+                senderId ===
+                currentUser?.id;
+
+              return (
+                <div
+                  key={
+                    message.id ??
+                    `${senderId}-${index}`
+                  }
+                  className={
+                    isMine
+                      ? "chat-message-row mine"
+                      : "chat-message-row other"
+                  }
+                >
+                  {!isMine && (
+                    <div className="chat-message-avatar">
+                      {room?.avatarUrl ? (
+                        <img
+                          src={
+                            room.avatarUrl
+                          }
+                          alt={
+                            room.name ||
+                            ""
+                          }
+                        />
+                      ) : (
+                        <span>
+                          {
+                            avatarLetter
+                          }
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="chat-message-content">
+                    <div className="chat-message-bubble">
+                      {
+                        message.content
+                      }
+                    </div>
+
+                    <div className="chat-message-meta">
+                      <span>
+                        {formatTime(
+                          message.createdDate
+                        )}
+                      </span>
+
+                      {isMine && (
+                        <span>
+                          {message.isRead
+                            ? "Đã xem"
+                            : "Đã gửi"}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+          )
         )}
-      </button>
+
+        <div ref={messagesEndRef} />
+      </div>
+
+      {error &&
+        messages.length > 0 && (
+          <div className="chat-window-small-error">
+            {error}
+          </div>
+        )}
+
+      <form
+        className="chat-window-footer"
+        onSubmit={handleSubmit}
+      >
+        <div className="chat-window-input-wrapper">
+          <textarea
+            rows={1}
+            value={content}
+            placeholder={
+              connected
+                ? "Nhập tin nhắn..."
+                : "Đang kết nối..."
+            }
+            onChange={(event) => {
+              setContent(
+                event.target.value
+              );
+            }}
+            onKeyDown={
+              handleKeyDown
+            }
+          />
+
+          <button
+            type="submit"
+            className="chat-send-button"
+            disabled={
+              !content.trim() ||
+              !connected
+            }
+          >
+            <FiSend />
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
 
-export default ChatBubble;
+export default ChatWindow;

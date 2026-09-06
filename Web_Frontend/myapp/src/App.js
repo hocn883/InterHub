@@ -30,7 +30,6 @@ import EmployerInvitations from "./screens/Employer/EmployerInvitations/Employer
 import EmployerInvitationDetails from "./screens/Employer/EmployerInvitations/EmployerInvitationDetails/EmployerInvitationDetails";
 import EditProfile from "./screens/profiles/editprofile/EditProfile";
 import EmployerStudents from "./screens/Employer/EmployerStudents/EmployerStudents";
-import ChatBubble from "./components/Chat/ChatBubble";
 function App() {
   const { currentUser , setCurrentUser} = useContext(UserContext);
 
@@ -69,11 +68,7 @@ function App() {
         </Route>
       </Routes>
 
-      {currentUser && (
-        <ChatBubble
-          currentUser={currentUser}
-        />
-      )}
+    
     </div>
   );
 }
