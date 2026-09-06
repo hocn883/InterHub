@@ -3,24 +3,19 @@ import "./FollowedCompanies.css";
 import FollowedCompanyCard from "./FollowedCompanyCard/FollowedCompanyCard";
 import { authApi, endpoints } from "../../../utils/api";
 import PageHero from "../../../components/PageHero/PageHero";
-
 const FollowedCompanies = () => {
   const [followedCompanies, setFollowedCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [, setFollowLoading] = useState(false);
-
   useEffect(() => {
     loadFollowedCompanies();
   }, []);
-
   const loadFollowedCompanies = async () => {
     try {
       const token = localStorage.getItem("access-token");
-
       const response = await authApi(token).get(
         endpoints.followed
       );
-
       const companies = response.data.result.content.map(
         (follow) => ({
           ...follow.employer,

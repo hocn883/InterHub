@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import SearchJobs from "./SearchJob/SearchJobs";
 import JobCard from "./JobCard/JobCard";
 import Companies from "./Companies/Companies";
-import api, { endpoints } from "../../utils/api";
+import api, { authApi, endpoints } from "../../utils/api";
 import "./Home.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -146,7 +146,8 @@ function Home() {
   };
   const loadStudents = async () => {
     try {
-      const response = await api.get(
+      const token = localStorage.getItem("access-token");
+      const response = await authApi(token).get(
         endpoints.student
       );
 

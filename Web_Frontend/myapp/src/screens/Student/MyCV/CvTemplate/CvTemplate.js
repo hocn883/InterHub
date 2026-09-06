@@ -26,39 +26,29 @@ function CvTemplate() {
     projects: "",
     experience: "",
   });
-
   const currentTemplate = useMemo(() => {
     return (
       templates.find((template) => template.id === selectedTemplate) ||
       templates[0]
     );
   }, [selectedTemplate]);
-
   const SelectedTemplate = currentTemplate?.component;
-
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setForm((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
-
   const handleAvatarChange = (event) => {
     const file = event.target.files?.[0];
-
     if (!file) return;
-
     if (!file.type.startsWith("image/")) {
       setError("Vui lòng chọn file hình ảnh.");
       return;
     }
-
     if (avatar) URL.revokeObjectURL(avatar);
-
     const imageUrl = URL.createObjectURL(file);
-
     setAvatar(imageUrl);
     setError("");
   };
@@ -79,18 +69,13 @@ function CvTemplate() {
         projects: form.projects,
         experience: form.experience,
       };
-
       const token = localStorage.getItem("access-token");
-
       const response = await authApi(token).post(
         endpoints.generateCv,
         request
       );
-
       const data = response.data;
-
       console.log("AI CV RESPONSE:", data);
-
       setForm((prev) => ({
         ...prev,
         fullName: data.fullName ?? prev.fullName,
