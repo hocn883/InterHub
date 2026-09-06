@@ -240,7 +240,7 @@ function CompanyDetails() {
     }
     try{
       const response=await authApi(token).post(
-        `http://localhost:8080/chat/rooms/open/${currentUser.id}/${employerId}`
+        `https://interhub1611.onrender.com/api/chat/rooms/open/${currentUser.id}/${employerId}`
       );
       console.log(
         "OPEN ROOM RESPONSE:",

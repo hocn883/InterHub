@@ -92,29 +92,25 @@ function MyCv() {
 
       const response=
         await authApi(token).post(
-          `http://localhost:8080/chat/rooms/open/${currentUser.id}/${lecturer.id}`
+          `https://interhub1611.onrender.com/api/chat/rooms/open/${currentUser.id}/${lecturer.id}`
         );
 
       console.log(
         "OPEN LECTURER ROOM:",
         response.data
       );
-
       const data=
         response.data;
-
       const roomId=
         typeof data==="object"
           ?data?.roomId??data?.id
           :data;
-
       if(!roomId){
         console.error(
           "Backend không trả roomId"
         );
         return;
       }
-
       window.dispatchEvent(
         new CustomEvent(
           "open-chat-room",

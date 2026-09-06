@@ -34,7 +34,6 @@ function Companies({ employer }) {
               </span>
             )}
           </div>
-
           <p className="company-card-subtitle">
             <i className="bi bi-person"></i>
             {employer?.fullName || "Chưa cập nhật"}
@@ -57,38 +56,25 @@ function Companies({ employer }) {
           <div className="company-card-info-icon">
             <i className="bi bi-building"></i>
           </div>
-
           <div>
             <span>Mã số thuế</span>
-
             <strong>
               {employer?.taxCode || "Chưa cập nhật"}
             </strong>
           </div>
-
         </div>
-
-
         <div className="company-card-info-item">
-
           <div className="company-card-info-icon">
             <i className="bi bi-briefcase"></i>
           </div>
-
           <div>
             <span>Loại tài khoản</span>
-
             <strong>
               Nhà tuyển dụng
             </strong>
           </div>
-
         </div>
-
       </div>
-
-
-      {/* FOOTER */}
       <div className="company-card-footer">
 
         <div

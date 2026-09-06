@@ -78,20 +78,14 @@ const FollowedCompanyCard = ({ company, onUnfollow }) => {
             </div>
 
             <div className="company-card-footer">
-
-                <button
+                <Link
                     type="button"
                     className="view-company-btn"
-                    onClick={() => {
-                        console.log(
-                            'Xem doanh nghiệp:',
-                            company.id
-                        )
-                    }}
+                    to={`/companies/${employer?.id}`}
                 >
-                    Xem doanh nghiệp
-                </button>
-
+                    Xem chi tiết
+                    <i className="bi bi-arrow-right"></i>
+                </Link>
                 <button
                     type="button"
                     className="unfollow-btn"
