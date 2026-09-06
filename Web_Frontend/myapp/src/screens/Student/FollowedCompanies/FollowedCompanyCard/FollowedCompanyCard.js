@@ -1,5 +1,6 @@
 import React from 'react'
 import './FollowedCompanyCard.css'
+import { Link } from 'react-router-dom'
 
 const FollowedCompanyCard = ({ company, onUnfollow }) => {
 
@@ -81,7 +82,7 @@ const FollowedCompanyCard = ({ company, onUnfollow }) => {
                 <Link
                     type="button"
                     className="view-company-btn"
-                    to={`/companies/${employer?.id}`}
+                    to={`/companies/${company?.id}`}
                 >
                     Xem chi tiết
                     <i className="bi bi-arrow-right"></i>
