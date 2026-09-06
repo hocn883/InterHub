@@ -1,5 +1,4 @@
 package com.example.InterHub.services;
-
 import com.example.InterHub.dto.request.LoginRequest;
 import com.example.InterHub.dto.request.RegisterRequest;
 import com.example.InterHub.dto.response.AuthResponse;
@@ -10,7 +9,6 @@ import com.example.InterHub.entity.Student;
 import com.example.InterHub.entity.User;
 import com.example.InterHub.enums.Action;
 import com.example.InterHub.enums.StudentStatus;
-import com.example.InterHub.exception.BadRequestException;
 import com.example.InterHub.exception.DuplicateResourceException;
 import com.example.InterHub.exception.ForbiddenException;
 import com.example.InterHub.exception.ResourceNotFoundException;
@@ -35,7 +33,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -74,16 +71,10 @@ public class AuthService {
     public AuthResponse refreshToken(String refreshToken) {
         try {
             String username = jwtService.extractUsername(refreshToken);
-
-            UserDetails userDetails =
-                    customUserDetailsService.loadUserByUsername(username);
-
-            boolean valid =
-                    jwtService.isRefreshTokenValid(
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+            boolean valid = jwtService.isRefreshTokenValid(
                             refreshToken,
-                            userDetails
-                    );
-
+                            userDetails);
             if (!valid) {
                 throw new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED

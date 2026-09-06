@@ -19,7 +19,7 @@ public interface UserMapper {
     @Mapping(source = "taxCode", target = "taxCode")
     @Mapping(source = "status", target = "status")
     @Mapping(source = "avatarUrl", target = "avatarUrl")
-    @Mapping(source="phone ",target ="phone")
+    @Mapping(source="phone",target ="phone")
     @Mapping(source="email",target="email")
     @Mapping(source = "gender", target="gender")
     EmployerResponse toEmployerResponse(Employer employer);
