@@ -5,8 +5,8 @@ import SockJS from "sockjs-client";
 import { authApi } from "../../utils/api";
 import ChatWindow from "./ChatWindow";
 import "./ChatBubble.css";
-const CHAT_API = "http://localhost:8080/chat";
-const WS_URL = "http://localhost:8080/ws";
+const CHAT_API = "https://interhub1611.onrender.com/chat";
+const WS_URL = "https://interhub1611.onrender.com/ws";
 const CHAT_BUBBLE_OWNER_KEY = "__INTERHUB_CHAT_BUBBLE_OWNER__";
 function ChatBubble({ currentUser }) {
   const [opened, setOpened] = useState(false);

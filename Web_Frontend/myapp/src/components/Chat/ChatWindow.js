@@ -14,7 +14,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { authApi } from "../../utils/api";
 import "./ChatWindow.css";
 
-const CHAT_API = "http://localhost:8080/chat";
+const CHAT_API = "https://interhub1611.onrender.com/chat";
 
 const getSenderId = (message) => {
   if (!message) {
