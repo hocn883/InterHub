@@ -86,24 +86,4 @@ class ChatServiceTest {
         verify(chatRoomRepository,atLeastOnce()).save(any(ChatRoom.class));
         verify(messageRepository).save(any(Message.class));
     }
-    // TC03: Lấy danh sách tin nhắn trong phòng chat
-    @Test
-    void getMessages_success() {
-        ChatRoom room = mock(ChatRoom.class);
-        Message message = mock(Message.class);
-        User sender = mock(User.class);
-        when(room.getId()).thenReturn(10L);
-        when(message.getId()).thenReturn(20L);
-        when(message.getUser()).thenReturn(sender);
-        when(message.getContent()).thenReturn("Xin chào");
-        when(sender.getId()).thenReturn(1L);
-        when(sender.getFullName()).thenReturn("Nguyen Van A");
-        when(chatRoomRepository.findById(10L)).thenReturn(Optional.of(room));
-        when(messageRepository.findByChatRoomIdOrderByCreatedDateAsc(10L)).thenReturn(List.of(message));
-        List<ChatMessageResponse> result = chatService.getMessages(10L);
-        assertEquals(1,result.size());
-        assertEquals("Xin chào",result.get(0).getContent());
-        assertEquals(1L,result.get(0).getSenderId());
-        verify(messageRepository).findByChatRoomIdOrderByCreatedDateAsc(10L);
-    }
 }

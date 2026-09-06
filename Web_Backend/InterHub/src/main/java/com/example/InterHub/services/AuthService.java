@@ -24,7 +24,9 @@ import com.example.InterHub.security.CustomUserDetailsService;
 import com.example.InterHub.security.JwtService;
 import com.example.InterHub.services.cloudinary.CloudinaryService;
 import com.example.InterHub.services.cloudinary.FileUpload;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -32,6 +34,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -69,44 +72,46 @@ public class AuthService {
         return authResponse(savedUser, token);
     }
     public AuthResponse refreshToken(String refreshToken) {
-        String username=jwtService.extractUsername(refreshToken);
+        try {
+            String username = jwtService.extractUsername(refreshToken);
 
-        System.out.println("USERNAME REFRESH: "+username);
+            UserDetails userDetails =
+                    customUserDetailsService.loadUserByUsername(username);
 
-        UserDetails userDetails=
-                customUserDetailsService.loadUserByUsername(username);
+            boolean valid =
+                    jwtService.isRefreshTokenValid(
+                            refreshToken,
+                            userDetails
+                    );
 
-        boolean valid=
-                jwtService.isRefreshTokenValid(
-                        refreshToken,
-                        userDetails
+            if (!valid) {
+                throw new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED
                 );
+            }
 
-        System.out.println("REFRESH VALID: "+valid);
+            User user = userRepository
+                    .findByUsername(username)
+                    .orElseThrow(
+                            () -> new RuntimeException(
+                                    "Không tìm thấy người dùng"
+                            )
+                    );
 
-        if(!valid){
-            throw new RuntimeException(
-                    "Refresh token không hợp lệ"
+            String newAccessToken =
+                    jwtService.generateToken(user);
+
+            return authResponse(
+                    user,
+                    newAccessToken
+            );
+
+        } catch (ExpiredJwtException e) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED
             );
         }
-
-        User user=userRepository
-                .findByUsername(username)
-                .orElseThrow(
-                        ()->new RuntimeException(
-                                "Không tìm thấy người dùng"
-                        )
-                );
-
-        String newAccessToken=
-                jwtService.generateToken(user);
-
-        System.out.println("ĐÃ TẠO ACCESS TOKEN MỚI");
-
-        return authResponse(
-                user,
-                newAccessToken
-        );
     }
     public AuthResponse login(LoginRequest request) {
         try {
