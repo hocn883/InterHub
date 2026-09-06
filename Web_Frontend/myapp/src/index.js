@@ -7,7 +7,6 @@ import './Style/Style.css'
 import "leaflet/dist/leaflet.css";
 import { UserProvider } from './contexts/UserContext';
 import { BrowserRouter } from 'react-router-dom';
-import ChatBubble from './components/Chat/ChatBubble';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

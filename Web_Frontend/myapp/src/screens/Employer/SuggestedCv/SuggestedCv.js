@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import SuggestedCvCard from "./SuggestedCvCard/SuggestedCvCard";
 import PageHeroEmployer from "../../../components/PageHeroEmployer/PageHeroEmployer";
 import "./SuggestedCv.css";
-import api, {authApi, endpoints } from "../../../utils/api";
+import {authApi, endpoints } from "../../../utils/api";
 
 const SuggestedCv = () => {
   const [applications, setApplications] = useState([]);
