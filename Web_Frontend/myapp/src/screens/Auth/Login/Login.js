@@ -272,16 +272,6 @@ function Login() {
                   </button>
                 </div>
               </div>
-              <div className="auth-login-options">
-                <label className="auth-checkbox">
-                  <input
-                    type="checkbox"
-                  />
-                  <span>
-                    Ghi nhớ đăng nhập
-                  </span>
-                </label>
-              </div>
               <button
                 type="submit"
                 className="auth-submit"
@@ -297,14 +287,6 @@ function Login() {
                   </span>
                 )}
               </button>
-              <div className="auth-forgot-wrapper">
-                <Link
-                  to="/forgot-password"
-                  className="auth-forgot"
-                >
-                  Quên mật khẩu?
-                </Link>
-              </div>
             </form>
             <div className="auth-switch">
               Chưa có tài khoản?
