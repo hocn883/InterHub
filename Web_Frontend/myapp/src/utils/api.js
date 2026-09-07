@@ -130,14 +130,14 @@ export const authApi=(token)=>{
         if(!newToken){
           throw new Error("Không nhận được access token mới");
         }
-        localStorage.setItem("access-token",newToken);
+        localStorage.setItem("accessToken",newToken);
         originalRequest.headers=
           originalRequest.headers||{};
         originalRequest.headers.Authorization=
           `Bearer ${newToken}`;
         return instance(originalRequest);
       }catch(refreshError){
-        localStorage.removeItem("access-token");
+        localStorage.removeItem("accessToken");
         window.location.href="/login";
         return Promise.reject(refreshError);
       }finally{
