@@ -48,26 +48,16 @@ function Header() {
 
   return (
     <header className="header">
-
       <div className="header-container">
-
-        {/* LOGO */}
-
         <Link to="/" className="brand">
 
           <div className="brand-icon">
             I
           </div>
-
           <div className="brand-name">
             Intern<span>Hub</span>
           </div>
-
         </Link>
-
-
-        {/* NAVIGATION */}
-
         <nav
           className="navigation"
           aria-label="Điều hướng chính"
@@ -87,25 +77,7 @@ function Header() {
 
           ))}
         </nav>
-
-
-        {/* HEADER ACTIONS */}
-
         <div className="header-actions">
-
-          {/* THÔNG BÁO */}
-          <button
-            className="notification-button"
-            type="button"
-            aria-label="Thông báo"
-          >
-            <i className="bi bi-bell"></i>
-
-            <span className="notification-count">
-              0
-            </span>
-          </button>
-          {/* USER */}
           <Link
             to="/profile"
             className="user-menu"

@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import {authApi} from "../../../utils/api";
 import "./JobDetailScreen.css";
 
 function JobDetailScreen() {
@@ -15,11 +15,10 @@ function JobDetailScreen() {
       try {
         setLoading(true);
         setError("");
-
-        const response = await axios.get(
-          `http://localhost:8080/api/jobs/${jobId}`
+        const tokken=localStorage.getItem("access-token");
+        const response = await authApi(tokken).get(
+          `/job/${jobId}`
         );
-
         setJob(response.data.result);
       } catch (error) {
         console.error("Không thể lấy chi tiết công việc:", error);

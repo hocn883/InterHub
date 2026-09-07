@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import SearchJobs from "./SearchJob/SearchJobs";
 import JobCard from "./JobCard/JobCard";
 import Companies from "./Companies/Companies";
-import api, { authApi, endpoints } from "../../utils/api";
+import { authApi, endpoints } from "../../utils/api";
 import "./Home.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -40,7 +40,8 @@ function Home() {
     try {
       setJobLoading(true);
       setError("");
-      const response = await api.get(endpoints.jobs, {
+      const tokken = localStorage.getItem("access-token");
+      const response = await authApi(tokken).get(endpoints.jobs, {
         params: {
           page: pageNumber,
           size: 6,
@@ -93,8 +94,8 @@ function Home() {
   ) => {
     try {
       setEmployerLoading(true);
-
-      const response = await api.get(
+      const tokken = localStorage.getItem("access-token");
+      const response = await authApi(tokken).get(
         endpoints.employer,
         {
           params: {
@@ -234,7 +235,8 @@ const handleSearch = async (event) => {
       params.longitude = Number(longitude);
       params.radius = Number(radius);
     }
-    const response = await api.get(
+    const tokken=localStorage.getItem("access-token");
+    const response = await authApi(tokken).get(
       endpoints.searchJobs,
       {
         params,

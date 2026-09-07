@@ -59,8 +59,6 @@ function JobCard({ job }) {
 
   return (
     <article className="job-card">
-
-      {/* HEADER */}
       <div className="job-card-header">
 
         <div className="job-company-logo">
@@ -98,9 +96,6 @@ function JobCard({ job }) {
         </div>
 
       </div>
-
-
-      {/* DESCRIPTION */}
       {job.description && (
         <p className="job-description">
           {job.description}
