@@ -124,17 +124,15 @@ const MyApplyJobCard = ({
   return (
     <article className="application-card">
       <div className="student-avatar">
-        {application.student.studentName
+        {application.student.fullName
           ?.charAt(0)
           ?.toUpperCase() || "S"}
       </div>
-
       <div className="application-main">
-
         <div className="application-top">
           <div className="student-heading">
             <h3>
-              {application.student.studentName ||
+              {application.student.fullName ||
                 "Chưa cập nhật"}
             </h3>
 
@@ -233,13 +231,6 @@ const MyApplyJobCard = ({
                 Xem CV
               </a>
             )}
-            <button
-              type="button"
-              className="view-button"
-            >
-              <i className="bi bi-eye-fill"></i>
-              Xem chi tiết
-            </button>
           </div>
           {application.status === "PENDING" && (
             <div className="application-decision-actions"> 

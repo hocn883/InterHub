@@ -178,7 +178,6 @@ function EmployerJobs() {
               <span className="employer-add-job-icon">
                 <FiPlus />
               </span>
-
               Đăng tin mới
             </Link>
           </div>
@@ -205,6 +204,7 @@ function EmployerJobs() {
 
           {loading ? (
             <div className="employer-job-empty">
+              <i className="bi bi-hourglass-split"></i>
               <p>
                 Đang tải danh sách tuyển dụng...
               </p>

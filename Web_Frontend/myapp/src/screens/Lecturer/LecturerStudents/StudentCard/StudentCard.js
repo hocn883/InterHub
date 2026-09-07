@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useContext,useState } from "react";
+import { useContext } from "react";
 import {
   FiBookOpen,
   FiHash,
@@ -14,7 +14,6 @@ import "./StudentCard.css";
 
 function StudentCard({ student }) {
   const { currentUser }=useContext(UserContext);
-  const [openingChat,setOpeningChat]=useState(false);
 
   const getInitial=()=>{
     if(!student.fullName)return "S";
@@ -48,68 +47,51 @@ function StudentCard({ student }) {
   };
 
   const handleOpenChat=async()=>{
-    if(
-      !currentUser?.id||
-      !student?.id
-    ){
+    if(!currentUser?.id||!student?.id){
       return;
     }
-
-    const token=
-      localStorage.getItem(
-        "access-token"
-      );
-
+    const token=localStorage.getItem("access-token");
     if(!token){
       return;
     }
-
     try{
-      setOpeningChat(true);
-
-      const response=
-        await authApi(token).post(
-          `http://localhost:8080/chat/rooms/open/${currentUser.id}/${student.id}`
-        );
-
+      const response=await authApi(token).post(
+        `https://interhub1611.onrender.com/chat/rooms/open/${currentUser.id}/${student.id}`
+      );
+      console.log(
+        "OPEN ROOM RESPONSE:",
+        response.data
+      );
       const data=response.data;
-
       const roomId=
         typeof data==="object"
           ?data?.roomId??data?.id
           :data;
-
       if(!roomId){
         console.error(
           "Backend không trả roomId"
         );
-
         return;
       }
-
       window.dispatchEvent(
         new CustomEvent(
           "open-chat-room",
           {
             detail:{
-              roomId:Number(roomId),
-            },
+              roomId:Number(roomId)
+            }
           }
         )
       );
     }catch(error){
       console.error(
-        "OPEN STUDENT CHAT ERROR:",
-        error.response?.data||
-        error
+        "OPEN CHAT ERROR:",
+        error.response?.data||error
       );
-
       alert(
         error.response?.data?.message||
         "Không thể mở cuộc trò chuyện."
       );
-    }finally{
-      setOpeningChat(false);
     }
   };
 
@@ -224,18 +206,15 @@ function StudentCard({ student }) {
           type="button"
           className="student-horizontal-chat"
           onClick={handleOpenChat}
-          disabled={openingChat}
         >
           <FiMessageCircle/>
-
-          {openingChat
-            ?"Đang mở..."
-            :"Nhắn tin"}
+          Nhắn Tin
         </button>
 
         <Link
-          to={`/lecturer/students/${student.id}`}
+          to={`/students/${student.id}`}
           className="student-horizontal-detail"
+          state={{student}}
         >
           Xem chi tiết
           <FiArrowRight/>

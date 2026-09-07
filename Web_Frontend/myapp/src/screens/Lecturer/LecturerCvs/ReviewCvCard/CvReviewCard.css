@@ -2,54 +2,31 @@
   display: flex;
   align-items: flex-start;
   gap: 18px;
-
   padding: 21px;
-
   background: #ffffff;
-
   border: 1px solid #e8eaed;
   border-radius: 14px;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .cv-review-card:hover {
   border-color: #dcdfe3;
-
-  box-shadow: 0 7px 20px
-    rgba(15, 23, 42, 0.055);
-
+  box-shadow: 0 7px 20px rgba(15, 23, 42, 0.055);
   transform: translateY(-1px);
 }
-
-/* =====================================================
-   FILE ICON
-===================================================== */
 
 .cv-file-icon {
   width: 50px;
   height: 50px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   flex-shrink: 0;
-
   background: #fff1ea;
   color: #f26b38;
-
   border-radius: 11px;
-
   font-size: 23px;
 }
-
-/* =====================================================
-   CONTENT
-===================================================== */
 
 .cv-review-content {
   flex: 1;
@@ -60,7 +37,6 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-
   gap: 16px;
 }
 
@@ -70,27 +46,18 @@
 
 .cv-review-info h3 {
   margin: 0 0 7px;
-
   color: #25272a;
-
   font-size: 16px;
   font-weight: 700;
   line-height: 1.4;
-
   overflow-wrap: anywhere;
 }
-
-/* =====================================================
-   STUDENT INFO
-===================================================== */
 
 .cv-student-info {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-
   color: #7b8190;
-
   font-size: 13px;
 }
 
@@ -101,27 +68,17 @@
 
 .cv-student-info span:not(:last-child)::after {
   content: "•";
-
   margin: 0 8px;
-
   color: #c3c6ca;
 }
-
-/* =====================================================
-   STATUS
-===================================================== */
 
 .cv-status {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-
   flex-shrink: 0;
-
   padding: 7px 10px;
-
   border-radius: 8px;
-
   font-size: 12px;
   font-weight: 650;
 }
@@ -145,19 +102,12 @@
   color: #c9463c;
 }
 
-/* =====================================================
-   DATE
-===================================================== */
-
 .cv-created-date {
   display: flex;
   align-items: center;
   gap: 6px;
-
   margin-top: 11px;
-
   color: #979ca5;
-
   font-size: 12px;
 }
 
@@ -165,21 +115,14 @@
   font-size: 13px;
 }
 
-/* =====================================================
-   FEEDBACK FORM
-===================================================== */
-
 .cv-feedback-form {
   margin-top: 18px;
 }
 
 .cv-feedback-form label {
   display: block;
-
   margin-bottom: 8px;
-
   color: #454b55;
-
   font-size: 13px;
   font-weight: 650;
 }
@@ -187,28 +130,18 @@
 .cv-feedback-form textarea {
   width: 100%;
   min-height: 100px;
-
   box-sizing: border-box;
-
   padding: 12px 14px;
-
   resize: vertical;
-
   background: #ffffff;
   color: #30343b;
-
   border: 1px solid #dfe2e6;
   border-radius: 10px;
-
   outline: none;
-
   font-family: inherit;
   font-size: 13px;
   line-height: 1.6;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cv-feedback-form textarea::placeholder {
@@ -217,27 +150,18 @@
 
 .cv-feedback-form textarea:focus {
   border-color: #f26b38;
-
-  box-shadow: 0 0 0 3px
-    rgba(242, 107, 56, 0.1);
+  box-shadow: 0 0 0 3px rgba(242, 107, 56, 0.1);
 }
 
 .cv-feedback-form textarea:disabled {
   background: #f7f7f8;
-
   cursor: not-allowed;
 }
-
-/* =====================================================
-   OLD FEEDBACK
-===================================================== */
 
 .cv-old-feedback {
   margin-top: 17px;
   padding: 14px 16px;
-
   background: #f8f9fa;
-
   border-radius: 10px;
 }
 
@@ -245,11 +169,8 @@
   display: flex;
   align-items: center;
   gap: 7px;
-
   margin-bottom: 7px;
-
   color: #555c66;
-
   font-size: 12px;
   font-weight: 700;
 }
@@ -260,54 +181,35 @@
 
 .cv-old-feedback p {
   margin: 0;
-
   color: #6b7280;
-
   font-size: 13px;
   line-height: 1.6;
 }
-
-/* =====================================================
-   ACTIONS
-===================================================== */
 
 .cv-review-actions,
 .cv-reviewed-actions {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
-
   gap: 9px;
-
   margin-top: 14px;
 }
 
 .cv-btn {
   min-height: 38px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-
   padding: 8px 13px;
-
   border: 1px solid transparent;
   border-radius: 8px;
-
   font-family: inherit;
   font-size: 12px;
   font-weight: 650;
-
   text-decoration: none;
-
   cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .cv-btn svg {
@@ -320,47 +222,30 @@
 
 .cv-btn:disabled {
   opacity: 0.55;
-
   cursor: not-allowed;
 }
-
-/* =====================================================
-   VIEW BUTTON
-===================================================== */
 
 .cv-btn-outline {
   background: #ffffff;
   color: #525866;
-
   border-color: #dfe2e6;
 }
 
 .cv-btn-outline:hover {
   background: #f8f9fa;
-
   border-color: #c8ccd2;
 }
-
-/* =====================================================
-   REJECT BUTTON
-===================================================== */
 
 .cv-btn-reject {
   background: #fff7f5;
   color: #c9483e;
-
   border-color: #f1cbc6;
 }
 
 .cv-btn-reject:hover:not(:disabled) {
   background: #fff0ed;
-
   border-color: #dc6a60;
 }
-
-/* =====================================================
-   APPROVE BUTTON
-===================================================== */
 
 .cv-btn-approve {
   background: #f26b38;

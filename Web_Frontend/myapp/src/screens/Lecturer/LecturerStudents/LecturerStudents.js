@@ -58,6 +58,7 @@ function LecturerStudents() {
       <main className="lecturer-students-container lecturer-students-main">
         {loading ? (
           <div className="lecturer-students-state">
+            <i className="bi bi-hourglass-split"></i>
             Đang tải danh sách sinh viên...
           </div>
         ) : error ? (

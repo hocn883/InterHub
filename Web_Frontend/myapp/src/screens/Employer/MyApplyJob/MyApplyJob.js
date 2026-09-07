@@ -258,9 +258,11 @@ const MyApplyJob = () => {
           ))}
         </div>
         {loading && (
+          
           <div className="application-loading">
-            Đang tải danh sách
-            ứng viên...
+            <i className="bi bi-hourglass-split"></i>
+            <p>Đang tải danh sách
+            ứng viên...</p>
           </div>
         )}
         {!loading &&

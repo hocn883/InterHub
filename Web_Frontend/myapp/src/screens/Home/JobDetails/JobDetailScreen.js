@@ -1,11 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {authApi,endpoints} from "../../../utils/api";
+import { authApi, endpoints } from "../../../utils/api";
 import "./JobDetailScreen.css";
-
+import { useContext } from "react";
+import { UserContext } from "../../../contexts/UserContext";
 function JobDetailScreen() {
   const { jobId } = useParams();
-
+  const { currentUser } = useContext(UserContext);
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -15,7 +16,7 @@ function JobDetailScreen() {
       try {
         setLoading(true);
         setError("");
-        const tokken=localStorage.getItem("access-token");
+        const tokken = localStorage.getItem("access-token");
         const response = await authApi(tokken).get(
           endpoints.jobDetail(jobId)
         );
@@ -40,6 +41,7 @@ function JobDetailScreen() {
   if (loading) {
     return (
       <div className="job-detail-loading">
+        <i className="bi bi-hourglass-split"></i>
         Đang tải thông tin công việc...
       </div>
     );
@@ -64,40 +66,27 @@ function JobDetailScreen() {
       </div>
     );
   }
-
   const companyName =
     job.employer?.companyName ||
     job.employer?.fullName ||
     "Chưa cập nhật";
-
   const salary = job.salary
     ? `${Number(job.salary).toLocaleString("vi-VN")} VNĐ`
     : "Thỏa thuận";
-
   return (
     <main className="job-detail-page">
       <div className="job-detail-container">
-
-        {/* BREADCRUMB */}
         <nav className="job-breadcrumb">
           <Link to="/">
             Trang chủ
           </Link>
-
           <span>/</span>
-
           <span>
             {job.title}
           </span>
         </nav>
-
-
-        {/* JOB HEADER */}
         <section className="job-detail-hero">
-
           <div className="job-detail-heading">
-
-            {/* COMPANY AVATAR */}
             <div className="job-detail-company-logo">
               {job.employer?.avatarUrl ? (
                 <img
@@ -108,210 +97,140 @@ function JobDetailScreen() {
                 companyName.charAt(0).toUpperCase()
               )}
             </div>
-
-
-            {/* JOB TITLE */}
             <div className="job-detail-title-group">
 
               <h1>
                 {job.title}
               </h1>
-
               <p className="job-detail-company-name">
                 {companyName}
               </p>
-
               <div className="job-detail-tags">
-
                 <span>
                   {job.location || "Chưa cập nhật địa điểm"}
                 </span>
-
                 <span>
                   {job.status || "OPEN"}
                 </span>
-
               </div>
-
             </div>
-
           </div>
-
-
-          {/* JOB SUMMARY */}
           <div className="job-detail-summary">
-
             <div className="summary-item">
               <div>
                 <small>Mức lương</small>
-
                 <strong>
                   {salary}
                 </strong>
               </div>
             </div>
-
-
             <div className="summary-item">
               <div>
                 <small>Hạn ứng tuyển</small>
-
                 <strong>
                   {job.deadline || "Chưa cập nhật"}
                 </strong>
               </div>
             </div>
-
-
             <div className="summary-item">
               <div>
                 <small>Số lượng tuyển</small>
-
                 <strong>
                   {job.quantity || 1} vị trí
                 </strong>
               </div>
             </div>
-
-
             <div className="summary-item">
               <div>
                 <small>Trạng thái</small>
-
                 <strong>
                   {job.status || "Chưa cập nhật"}
                 </strong>
               </div>
             </div>
-
           </div>
-
         </section>
-
-
         <div className="job-detail-layout">
-
-          {/* MAIN CONTENT */}
           <section className="job-detail-main">
-
-
-            {/* DESCRIPTION */}
             <article className="job-detail-section">
 
               <h2>
                 Mô tả công việc
               </h2>
-
               <div className="job-detail-text">
                 <p>
                   {job.description ||
                     "Chưa cập nhật mô tả công việc."}
                 </p>
               </div>
-
             </article>
-
-
-            {/* REQUIREMENTS */}
             <article className="job-detail-section">
-
               <h2>
                 Yêu cầu ứng viên
               </h2>
-
               <div className="job-detail-text">
                 <p>
                   {job.requirements ||
                     "Chưa cập nhật yêu cầu ứng viên."}
                 </p>
               </div>
-
             </article>
-
-
-            {/* JOB PERIOD */}
             <article className="job-detail-section">
-
               <h2>
                 Thời gian thực tập
               </h2>
-
               <div className="job-detail-text">
-
                 <p>
                   <strong>Ngày bắt đầu: </strong>
                   {job.startDate || "Chưa cập nhật"}
                 </p>
-
                 <p>
                   <strong>Ngày kết thúc: </strong>
                   {job.endDate || "Chưa cập nhật"}
                 </p>
-
               </div>
-
             </article>
-
-
-            {/* LOCATION */}
             <article className="job-detail-section">
-
               <h2>
                 Địa điểm làm việc
               </h2>
-
               <div className="job-location-box">
-
                 <div>
                   <strong>
                     {job.location || "Chưa cập nhật"}
                   </strong>
-
                   <p>
                     Địa chỉ cụ thể sẽ được doanh nghiệp cung cấp
                     trong quá trình tuyển dụng.
                   </p>
                 </div>
-
               </div>
-
             </article>
-
           </section>
-
-
-          {/* SIDEBAR */}
           <aside className="job-detail-sidebar">
-
-
-            {/* APPLY CARD */}
             <div className="apply-card">
-
               <div className="apply-card-header">
-
                 <span>
                   Hạn nộp hồ sơ
                 </span>
-
                 <strong>
                   {job.deadline || "Chưa cập nhật"}
                 </strong>
-
               </div>
+              {currentUser.userRole === "STUDENT" && (
+                <>
+                  <Link
+                    to={`/applications/${jobId}`}
+                    className="apply-now-button"
+                  >
+                    Ứng tuyển ngay
+                  </Link>
 
-
-              <Link
-                to={`/applications/${jobId}`}
-                className="apply-now-button"
-              >
-                Ứng tuyển ngay
-              </Link>
-
-
-              <p className="application-note">
-                Hãy kiểm tra kỹ CV và thông tin cá nhân trước khi
-                ứng tuyển.
-              </p>
+                  <p className="application-note">
+                    Hãy kiểm tra kỹ CV và thông tin cá nhân trước khi ứng tuyển.
+                  </p>
+                </>
+              )}
 
             </div>
 

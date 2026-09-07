@@ -344,7 +344,7 @@ function CvTemplate() {
                 onClick={handleGenerate}
                 disabled={loading}
               >
-                {loading ? "AI đang tạo..." : "✨ AI tạo nội dung"}
+                {loading ? "AI đang tạo..." : "AI tạo nội dung"}
               </button>
             </div>
           </div>

@@ -510,3 +510,50 @@
   font-weight: 600;
   text-decoration: none;
 }
+.job-detail-loading {
+  min-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.job-loading-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f3f4f6;
+  margin-bottom: 8px;
+}
+
+.job-loading-icon i {
+  font-size: 30px;
+  animation: jobLoadingRotate 1.5s linear infinite;
+}
+
+.job-detail-loading h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.job-detail-loading p {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+@keyframes jobLoadingRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -142,9 +142,8 @@ function LecturerCvs() {
 
           {loading && (
             <div className="cv-state-message">
-              <span className="cv-loading-spinner" />
-
               <p>
+                <i className="bi bi-hourglass-split"></i>
                 Đang tải danh sách CV...
               </p>
             </div>

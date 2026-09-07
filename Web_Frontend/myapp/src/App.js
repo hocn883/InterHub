@@ -30,6 +30,7 @@ import EmployerInvitations from "./screens/Employer/EmployerInvitations/Employer
 import EmployerInvitationDetails from "./screens/Employer/EmployerInvitations/EmployerInvitationDetails/EmployerInvitationDetails";
 import EditProfile from "./screens/profiles/editprofile/EditProfile";
 import EmployerStudents from "./screens/Employer/EmployerStudents/EmployerStudents";
+import StudentDetails from "./components/StudentDetails/StudentDetails";
 function App() {
   const { currentUser , setCurrentUser} = useContext(UserContext);
 
@@ -63,6 +64,7 @@ function App() {
             <Route path="/employer/invitations" element={<EmployerInvitations/>} />
             <Route path="/employer/list-students" element={<EmployerStudents/>} />
             <Route path="/employer/invitations/:invitationId" element={<EmployerInvitationDetails/>} />
+            <Route path="/students/:studentId" element={<StudentDetails/>} />
             <Route path="/profile/edit" element={<EditProfile currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
           </Route>
         </Route>

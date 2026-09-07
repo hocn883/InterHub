@@ -620,3 +620,11 @@ a {
   font-size: 10px;
   font-weight: 750;
 }
+.no-more-jobs {
+  display: block;
+  margin-top: 18px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 500;
+}

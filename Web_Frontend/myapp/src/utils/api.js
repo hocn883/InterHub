@@ -23,6 +23,7 @@ export const endpoints = {
   employerDeleteJob: (jobId) => `/employer/jobs/${jobId}`,
 
   student: "/students",
+  studentDetails: (studentId) => `/students/${studentId}`,
 
   currentUser: "/auth/me",
   updateUser: "/update-profile",

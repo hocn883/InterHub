@@ -62,7 +62,7 @@ const SuggestedCv = () => {
       <main className="suggested-cv-container suggested-cv-main">
         {loading && (
           <div className="suggested-loading">
-            <i className="bi bi-stars"></i>
+           <i className="bi bi-hourglass-split"></i>
             <span>Đang tải danh sách CV...</span>
           </div>
         )}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { FiSearch, FiUsers, FiXCircle } from "react-icons/fi";
+import {  FiUsers, FiXCircle } from "react-icons/fi";
 import { authApi, endpoints } from "../../../utils/api";
 import PageHeroEmployer from "../../../components/PageHeroEmployer/PageHeroEmployer";
 import StudentApplyCard from "./StudentApplyCard/StudentApplyCard";
@@ -15,14 +15,11 @@ function EmployerStudents() {
   const loadStudents = async () => {
     try {
       setLoading(true);
-
       const token = localStorage.getItem("access-token");
-
       const [approvedResponse, rejectedResponse] = await Promise.all([
         authApi(token).get(endpoints.employerStudentApproved),
         authApi(token).get(endpoints.employerStudentRejected),
       ]);
-
       setInternStudents(approvedResponse.data.result?.content || []);
       setRejectedStudents(rejectedResponse.data.result?.content || []);
     } catch (error) {
@@ -78,7 +75,6 @@ function EmployerStudents() {
             <div>
               <span className="section-label">QUẢN LÝ SINH VIÊN</span>
               <h2>Danh sách sinh viên</h2>
-              <p>{filteredStudents.length} sinh viên đang được hiển thị</p>
             </div>
           </div>
 
@@ -103,21 +99,9 @@ function EmployerStudents() {
               <span>{rejectedStudents.length}</span>
             </button>
           </div>
-
-          <div className="employer-students-toolbar">
-            <div className="employer-students-search">
-              <FiSearch />
-              <input
-                type="text"
-                placeholder="Tìm sinh viên hoặc công việc..."
-                value={keyword}
-                onChange={(event) => setKeyword(event.target.value)}
-              />
-            </div>
-          </div>
-
           {loading ? (
             <div className="employer-students-empty">
+              <i className="bi bi-hourglass-split"></i>
               <p>Đang tải danh sách sinh viên...</p>
             </div>
           ) : (

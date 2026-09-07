@@ -139,6 +139,7 @@ function EmployerInvitations() {
 
           {loading ? (
             <div className="employer-invitations-empty">
+              <i className="bi bi-hourglass-split"></i>
               <p>Đang tải danh sách thư mời...</p>
             </div>
           ) : (
