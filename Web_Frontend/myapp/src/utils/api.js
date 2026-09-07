@@ -84,64 +84,61 @@ export const endpoints={
   generateCv:"/ai/generate-cv",
   cvScore:"/ai/cv/score",
 };
-
-let refreshPromise=null;
-
-export const authApi=(token)=>{
-  const instance=axios.create({
-    baseURL:BASE_URL,
-    withCredentials:true,
-    headers:{
-      Authorization:`Bearer ${token}`,
+let refreshPromise = null;
+export const authApi = (token) => {
+  const instance = axios.create({
+    baseURL: BASE_URL,
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   });
-
   instance.interceptors.request.use(
-    (config)=>{
-      const currentToken=localStorage.getItem("access-token");
-
-      if(currentToken){
-        config.headers.Authorization=`Bearer ${currentToken}`;
+    (config) => {
+      const currentToken = localStorage.getItem("access-token");
+      if (currentToken) {
+        config.headers.Authorization = `Bearer ${currentToken}`;
       }
-
       return config;
     },
-    (error)=>Promise.reject(error)
+    (error) => Promise.reject(error)
   );
-
   instance.interceptors.response.use(
-    (response)=>response,
-    async(error)=>{
-      const originalRequest=error.config;
-      if(
-        error.response?.status!==401||
+    (response) => response,
+    async (error) => {
+      const originalRequest = error.config;
+      if (
+        error.response?.status !== 401 ||
         originalRequest?._retry
-      ){
+      ) {
         return Promise.reject(error);
       }
-      originalRequest._retry=true;
-      try{
-        if(!refreshPromise){
-          refreshPromise=api.post(endpoints.refresh);
+      originalRequest._retry = true;
+      try {
+        if (!refreshPromise) {
+          refreshPromise = api.post(endpoints.refresh);
         }
-        const refreshResponse=await refreshPromise;
-        const newToken=
-          refreshResponse.data?.result?.accessToken;
-        if(!newToken){
+        const refreshResponse = await refreshPromise;
+        const newToken =
+          refreshResponse.data?.result?.acesToken;
+        if (!newToken) {
           throw new Error("Không nhận được access token mới");
         }
-        localStorage.setItem("accessToken",newToken);
-        originalRequest.headers=
-          originalRequest.headers||{};
-        originalRequest.headers.Authorization=
+        localStorage.setItem("access-token", newToken);
+        originalRequest.headers =
+          originalRequest.headers || {};
+        originalRequest.headers.Authorization =
           `Bearer ${newToken}`;
         return instance(originalRequest);
-      }catch(refreshError){
-        localStorage.removeItem("accessToken");
-        window.location.href="/login";
+      } catch (refreshError) {
+        localStorage.removeItem("access-token");
+        alert(
+          "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
+        );
+        window.location.href = "/login";
         return Promise.reject(refreshError);
-      }finally{
-        refreshPromise=null;
+      } finally {
+        refreshPromise = null;
       }
     }
   );
