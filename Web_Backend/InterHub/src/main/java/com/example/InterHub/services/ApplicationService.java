@@ -126,11 +126,6 @@ public class ApplicationService {
             );
         }
         applicationRepository.delete(application);
-        systemLogService.saveLog(
-                currentUser,
-                Action.CANCEL_APPLICATION.name(),
-                "Hủy đơn ứng tuyển ID: " + id
-        );
     }
     @Transactional(readOnly = true)
     public PageResponse<ApplicationResponse>
@@ -185,7 +180,7 @@ public class ApplicationService {
         systemLogService.saveLog(
                 currentUser,
                 Action.UPDATE_APPLICATION_STATUS.name(),
-                "Duyệt đơn ứng tuyển ID: " + applicationId
+                "Duyệt đơn ứng tuyển của: " + application.getStudent().getFullName()
         );
         if(student.getEmail()!=null)
         {

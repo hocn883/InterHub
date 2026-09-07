@@ -65,7 +65,7 @@ public class CvService {
         systemLogService.saveLog(
                 currentUser,
                 Action.UPLOAD_CV.name(),
-                "Tải lên CV ID: " + savedCv.getId()
+                "Tải lên CV . "
         );
         return cvMapper.toResponse(savedCv);
     }
@@ -128,7 +128,7 @@ public class CvService {
         systemLogService.saveLog(
                 currentUser,
                 Action.APPROVE_CV.name(),
-                "Duyệt CV ID: " + savedCv.getId()
+                "Duyệt CV của : " + savedCv.getStudent().getFullName()
         );
         return cvMapper.toResponse(savedCv);
     }
@@ -154,7 +154,7 @@ public class CvService {
         systemLogService.saveLog(
                 currentUser,
                 Action.REJECT_CV.name(),
-                "Từ chối CV ID: " + savedCv.getId()
+                "Từ chối CV của : "+ savedCv.getStudent().getFullName()
         );
         return cvMapper.toResponse(savedCv);
     }

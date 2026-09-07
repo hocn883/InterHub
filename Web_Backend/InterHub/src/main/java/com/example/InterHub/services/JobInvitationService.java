@@ -60,8 +60,8 @@ public class JobInvitationService {
         systemLogService.saveLog(
                 employer,
                 Action.SEND_JOB_INVITATION.name(),
-                "Gửi lời mời công việc ID: " + jobInvitation.getId() +
-                        " cho sinh viên ID: " + student.getId()
+                "Gửi lời mời công việc ID: " + jobInvitation.getJob().getTitle() +
+                        " cho sinh viên : " + student.getFullName()
         );
         return jobInvitationMapper.toResponse(jobInvitation);
     }
@@ -87,7 +87,7 @@ public class JobInvitationService {
         systemLogService.saveLog(
                 student,
                 Action.ACCEPT_JOB_INVITATION.name(),
-                "Chấp nhận lời mời công việc ID: " + jobInvitationId
+                "Chấp nhận lời mời công việc : " + jobInvitation.getJob().getTitle()
         );
         return jobInvitationMapper.toResponse(jobInvitation);
     }
@@ -119,7 +119,7 @@ public class JobInvitationService {
         systemLogService.saveLog(
                 student,
                 Action.REJECT_JOB_INVITATION.name(),
-                "Từ chối lời mời công việc ID: " + jobInvitationId
+                "Từ chối lời mời công việc : " + jobInvitation.getJob().getTitle()
         );
         return jobInvitationMapper.toResponse(jobInvitation);
     }
@@ -134,11 +134,6 @@ public class JobInvitationService {
             throw new ConflictException("Chỉ có thể hủy lời mời đang chờ");
         }
         jobInvitation.setStatus(JobInvitationStatus.CANCELLED);
-        systemLogService.saveLog(
-                employer,
-                Action.CANCEL_JOB_INVITATION.name(),
-                "Hủy lời mời công việc ID: " + jobInvitationId
-        );
         return jobInvitationMapper.toResponse(jobInvitation);
     }
 }
