@@ -20,6 +20,7 @@ public class JobResponse {
     private BigDecimal salary;
     private LocalDate startDate;
     private LocalDate endDate;
+    private LocalDate createdDate;
     private Integer quantity;
     private String location;
     private JobStatus status;
