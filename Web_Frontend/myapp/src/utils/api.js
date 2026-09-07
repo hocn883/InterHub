@@ -126,7 +126,7 @@ export const authApi=(token)=>{
         }
         const refreshResponse=await refreshPromise;
         const newToken=
-          refreshResponse.data?.result?.acesToken;
+          refreshResponse.data?.result?.accessToken;
         if(!newToken){
           throw new Error("Không nhận được access token mới");
         }
