@@ -77,7 +77,7 @@ public class ApplicationService {
         systemLogService.saveLog(
                 currentUser,
                 Action.APPLY_JOB.name(),
-                "Ứng tuyển công việc ID: " + job.getId()
+                "Ứng tuyển công việc ID: " + job.getTitle()
         );
         return applicationMapper.toResponse(application);
     }
