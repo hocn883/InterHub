@@ -84,12 +84,17 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<ApiResponse<AuthResponse>> refresh(
             @CookieValue(
-                    name="refreshToken",
-                    required=false
+                    name = "refreshToken",
+                    required = false
             )
             String refreshToken
     ) {
-        if(refreshToken==null){
+        System.out.println("========== REFRESH CONTROLLER ==========");
+        System.out.println("refreshToken = " + refreshToken);
+
+        if (refreshToken == null) {
+            System.out.println("========== REFRESH TOKEN NULL ==========");
+
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .body(
@@ -101,8 +106,12 @@ public class AuthController {
                     );
         }
 
-        AuthResponse authResponse=
+        System.out.println("========== CALL REFRESH SERVICE ==========");
+
+        AuthResponse authResponse =
                 authService.refreshToken(refreshToken);
+
+        System.out.println("========== REFRESH SERVICE SUCCESS ==========");
 
         return ResponseEntity.ok(
                 ApiResponse.<AuthResponse>builder()
