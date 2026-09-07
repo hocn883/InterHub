@@ -124,7 +124,7 @@ const MyApplyJobCard = ({
   return (
     <article className="application-card">
       <div className="student-avatar">
-        {application.studentName
+        {application.student.studentName
           ?.charAt(0)
           ?.toUpperCase() || "S"}
       </div>
@@ -134,7 +134,7 @@ const MyApplyJobCard = ({
         <div className="application-top">
           <div className="student-heading">
             <h3>
-              {application.studentName ||
+              {application.student.studentName ||
                 "Chưa cập nhật"}
             </h3>
 
@@ -143,7 +143,7 @@ const MyApplyJobCard = ({
 
               MSSV:
               <strong>
-                {application.studentId ||
+                {application.student.mssv ||
                   "Chưa cập nhật"}
               </strong>
             </p>
@@ -165,50 +165,40 @@ const MyApplyJobCard = ({
                   : "bi bi-info-circle"
               }
             ></i>
-
             {getStatusText(application.status)}
           </span>
         </div>
-
         <div className="application-info">
           <div className="info-item">
             <div className="info-icon">
               <i className="bi bi-briefcase-fill"></i>
             </div>
-
             <div className="info-content">
               <span>Vị trí ứng tuyển</span>
-
               <strong>
-                {application.jobTitle ||
+                {application.job.title ||
                   "Chưa cập nhật"}
               </strong>
             </div>
           </div>
-
           <div className="info-item">
             <div className="info-icon">
               <i className="bi bi-building-fill"></i>
             </div>
-
             <div className="info-content">
               <span>Doanh nghiệp</span>
-
               <strong>
-                {application.employerName ||
+                {application.job.employer.companyName ||
                   "Chưa cập nhật"}
               </strong>
             </div>
           </div>
-
           <div className="info-item">
             <div className="info-icon">
               <i className="bi bi-calendar-check-fill"></i>
             </div>
-
             <div className="info-content">
               <span>Ngày ứng tuyển</span>
-
               <strong>
                 {application.createdDate
                   ? new Date(
@@ -221,22 +211,17 @@ const MyApplyJobCard = ({
             </div>
           </div>
         </div>
-
         {application.coverLetter && (
           <div className="cover-letter">
             <div className="cover-letter-title">
               <i className="bi bi-chat-left-text-fill"></i>
-
               <span>Thư giới thiệu</span>
             </div>
-
             <p>{application.coverLetter}</p>
           </div>
         )}
-
         <div className="application-actions">
           <div className="application-actions-left">
-
             {application.fileCv && (
               <a
                 href={application.fileCv}
@@ -248,7 +233,6 @@ const MyApplyJobCard = ({
                 Xem CV
               </a>
             )}
-
             <button
               type="button"
               className="view-button"
@@ -256,12 +240,9 @@ const MyApplyJobCard = ({
               <i className="bi bi-eye-fill"></i>
               Xem chi tiết
             </button>
-
           </div>
-
           {application.status === "PENDING" && (
-            <div className="application-decision-actions">
-
+            <div className="application-decision-actions"> 
               <button
                 type="button"
                 className="reject-button"
@@ -269,12 +250,10 @@ const MyApplyJobCard = ({
                 disabled={processing}
               >
                 <i className="bi bi-x-lg"></i>
-
                 {processing
                   ? "Đang xử lý..."
                   : "Từ chối"}
               </button>
-
               <button
                 type="button"
                 className="approve-button"
@@ -282,12 +261,10 @@ const MyApplyJobCard = ({
                 disabled={processing}
               >
                 <i className="bi bi-check-lg"></i>
-
                 {processing
                   ? "Đang xử lý..."
                   : "Duyệt CV"}
               </button>
-
             </div>
           )}
         </div>
@@ -295,5 +272,4 @@ const MyApplyJobCard = ({
     </article>
   );
 };
-
 export default MyApplyJobCard;

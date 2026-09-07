@@ -67,11 +67,7 @@ const MyJobCard = ({ job, onDelete, onStatusChange }) => {
           to={`/employer/jobs/${job.id}/applications`}
           className="myjob-applicant-box"
         >
-          <FiUsers />
-          <div>
-            <strong>{job.applicationCount ?? 0}</strong>
-            <span>Ứng viên</span>
-          </div>
+          <FiUsers/>
         </Link>
       </div>
 
