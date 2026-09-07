@@ -57,13 +57,13 @@ public class AuthController {
                 );
 
         String refreshToken=jwtService.generateRefreshToken(user);
-        ResponseCookie refreshCookie=ResponseCookie
-                .from("refreshToken",refreshToken)
+        ResponseCookie refreshCookie = ResponseCookie
+                .from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .secure(false)
+                .secure(true)
                 .path("/")
-                .maxAge(7*24*60*60)
-                .sameSite("Lax")
+                .maxAge(7 * 24 * 60 * 60)
+                .sameSite("None")
                 .build();
 
         ApiResponse<AuthResponse> response=
