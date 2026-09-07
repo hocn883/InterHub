@@ -15,4 +15,5 @@ public interface EmployerRepository extends JpaRepository<Employer,Long> {
     Optional<Employer>findByUsername(String username);
     Page<Employer>findByStatus(String status, Pageable page);
     long countByStatus(EmployerStatus status);
+    boolean existsByCompanyName(String companyName);
 }

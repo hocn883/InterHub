@@ -1,4 +1,5 @@
 package com.example.InterHub.services;
+
 import com.example.InterHub.dto.request.LoginRequest;
 import com.example.InterHub.dto.request.RegisterRequest;
 import com.example.InterHub.dto.response.AuthResponse;
@@ -33,6 +34,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -46,7 +48,8 @@ public class AuthService {
     private final JwtService jwtService;
     private final CloudinaryService cloudinaryService;
     private final SystemLogService systemLogService;
-    private final CustomUserDetailsService  customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
+
     @Transactional
     public AuthResponse register(RegisterRequest request) {
         checkRequest(request);
@@ -68,13 +71,15 @@ public class AuthService {
         String token = jwtService.generateToken(savedUser);
         return authResponse(savedUser, token);
     }
+
     public AuthResponse refreshToken(String refreshToken) {
         try {
             String username = jwtService.extractUsername(refreshToken);
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
             boolean valid = jwtService.isRefreshTokenValid(
-                            refreshToken,
-                            userDetails);
+                    refreshToken,
+                    userDetails
+            );
             if (!valid) {
                 throw new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED
@@ -98,12 +103,12 @@ public class AuthService {
             );
 
         } catch (ExpiredJwtException e) {
-
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED
             );
         }
     }
+
     public AuthResponse login(LoginRequest request) {
         try {
             authenticationManager.authenticate(
@@ -117,6 +122,7 @@ public class AuthService {
                     "Tên đăng nhập hoặc mật khẩu không chính xác"
             );
         }
+
         User user = userRepository
                 .findByUsername(request.getUsername())
                 .orElseThrow(() ->
@@ -124,14 +130,17 @@ public class AuthService {
                                 "Không tìm thấy tài khoản"
                         )
                 );
+
         systemLogService.saveLog(
                 user,
                 Action.LOGIN.name(),
                 "Đăng nhập hệ thống"
         );
-        String token=jwtService.generateToken(user);
+
+        String token = jwtService.generateToken(user);
         return authResponse(user, token);
     }
+
     private void checkRequest(RegisterRequest request) {
         if (userRepository.existsByUsername(
                 request.getUsername()
@@ -140,6 +149,7 @@ public class AuthService {
                     "Tên đăng nhập đã được sử dụng"
             );
         }
+
         if (userRepository.existsByEmail(
                 request.getEmail()
         )) {
@@ -147,6 +157,7 @@ public class AuthService {
                     "Email đã được sử dụng"
             );
         }
+
         if (userRepository.existsByPhone(
                 request.getPhone()
         )) {
@@ -155,6 +166,7 @@ public class AuthService {
             );
         }
     }
+
     private Student createStudent(
             RegisterRequest request
     ) {
@@ -165,6 +177,7 @@ public class AuthService {
                     "Mã số sinh viên đã được sử dụng"
             );
         }
+
         Student student = new Student();
         student.setMssv(request.getMssv());
         student.setMajor(request.getMajor());
@@ -172,6 +185,7 @@ public class AuthService {
         student.setStatus(StudentStatus.TIM_VIEC);
         return student;
     }
+
     private Lecturer createLecturer(
             RegisterRequest request
     ) {
@@ -182,28 +196,43 @@ public class AuthService {
                     "Mã giảng viên đã được sử dụng"
             );
         }
+
         Lecturer lecturer = new Lecturer();
         lecturer.setLecturerCode(
                 request.getLecturerCode()
         );
         return lecturer;
     }
+
     private Employer createEmployer(
             RegisterRequest request
     ) {
-        if (employerRepository.existsByTaxCode(request.getTaxCode()
+        if (employerRepository.existsByTaxCode(
+                request.getTaxCode()
         )) {
             throw new DuplicateResourceException(
                     "Mã số thuế đã được sử dụng"
             );
         }
+
+        if (employerRepository.existsByCompanyName(
+                request.getCompanyName()
+        )) {
+            throw new DuplicateResourceException(
+                    "Tên công ty đã được đăng ký"
+            );
+        }
+
         Employer employer = new Employer();
         employer.setCompanyName(request.getCompanyName());
         employer.setLocation(request.getLocation());
         employer.setTaxCode(request.getTaxCode());
         return employer;
     }
-    private void setUser(User user, RegisterRequest request
+
+    private void setUser(
+            User user,
+            RegisterRequest request
     ) {
         user.setFullName(request.getFullName());
         user.setUsername(request.getUsername());
@@ -212,23 +241,29 @@ public class AuthService {
         user.setPhone(request.getPhone());
         user.setGender(request.getGender());
         user.setRole(request.getRole());
+
         if (request.getAvatar() != null && !request.getAvatar().isEmpty()) {
             FileUpload file = cloudinaryService.uploadAvatar(request.getAvatar());
             user.setAvatarUrl(file.getUrl());
         }
     }
+
     public UserResponse getUser(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() ->
                 new ResourceNotFoundException(
                         "Không tìm thấy người dùng"
                 ));
+
         return userMapper.toResponse(user);
     }
+
     private AuthResponse authResponse(
             User user,
             String token
     ) {
-        return new AuthResponse(token, "Bearer",
+        return new AuthResponse(
+                token,
+                "Bearer",
                 userMapper.toResponse(user)
         );
     }
