@@ -85,87 +85,115 @@ function Register() {
     setAvatar(file);
   };
 
-  const validateForm = () => {
-    if (!formData.fullName.trim()) {
-      return "Vui lòng nhập họ và tên.";
+ const validateForm = () => {
+  if (!formData.fullName.trim()) {
+    return "Vui lòng nhập họ và tên.";
+  }
+
+  if (!formData.gender) {
+    return "Vui lòng chọn giới tính.";
+  }
+
+  if (!formData.role) {
+    return "Vui lòng chọn vai trò.";
+  }
+
+  if (!formData.email.trim()) {
+    return "Vui lòng nhập email.";
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(formData.email.trim())) {
+    return "Email không đúng định dạng.";
+  }
+
+  if (!formData.phone.trim()) {
+    return "Vui lòng nhập số điện thoại.";
+  }
+
+  if (
+    formData.phone.trim().length < 8 ||
+    formData.phone.trim().length > 10
+  ) {
+    return "Số điện thoại phải từ 8 đến 10 ký tự.";
+  }
+
+  if (!/^\d+$/.test(formData.phone.trim())) {
+    return "Số điện thoại chỉ được chứa chữ số.";
+  }
+
+  if (!avatar) {
+    return "Vui lòng chọn ảnh đại diện.";
+  }
+
+  if (formData.role === "STUDENT") {
+    if (!formData.mssv.trim()) {
+      return "Vui lòng nhập mã số sinh viên.";
     }
 
-    if (!formData.gender) {
-      return "Vui lòng chọn giới tính.";
+    if (!formData.major.trim()) {
+      return "Vui lòng nhập chuyên ngành.";
     }
 
-    if (!formData.email.trim()) {
-      return "Vui lòng nhập email.";
+    if (!formData.className.trim()) {
+      return "Vui lòng nhập lớp.";
+    }
+  }
+
+  if (formData.role === "LECTURER") {
+    if (!formData.lecturerCode.trim()) {
+      return "Vui lòng nhập mã giảng viên.";
+    }
+  }
+
+  if (formData.role === "EMPLOYER") {
+    if (!formData.companyName.trim()) {
+      return "Vui lòng nhập tên doanh nghiệp.";
     }
 
-    if (!formData.phone.trim()) {
-      return "Vui lòng nhập số điện thoại.";
+    if (!formData.taxCode.trim()) {
+      return "Vui lòng nhập mã số thuế.";
     }
 
-    if (!avatar) {
-      return "Vui lòng chọn ảnh đại diện.";
+    if (!formData.location.trim()) {
+      return "Vui lòng nhập địa chỉ.";
     }
+  }
 
-    if (formData.role === "STUDENT") {
-      if (!formData.mssv.trim()) {
-        return "Vui lòng nhập mã số sinh viên.";
-      }
+  if (!formData.username.trim()) {
+    return "Vui lòng nhập tên đăng nhập.";
+  }
 
-      if (!formData.className.trim()) {
-        return "Vui lòng nhập lớp.";
-      }
+  if (
+    formData.username.trim().length < 4 ||
+    formData.username.trim().length > 50
+  ) {
+    return "Tên đăng nhập phải từ 4 đến 50 ký tự.";
+  }
 
-      if (!formData.major.trim()) {
-        return "Vui lòng nhập chuyên ngành.";
-      }
-    }
+  if (/\s/.test(formData.username.trim())) {
+    return "Tên đăng nhập không được chứa khoảng trắng.";
+  }
 
-    if (formData.role === "LECTURER") {
-      if (!formData.lecturerCode.trim()) {
-        return "Vui lòng nhập mã giảng viên.";
-      }
-    }
+  if (!formData.password) {
+    return "Vui lòng nhập mật khẩu.";
+  }
 
-    if (formData.role === "EMPLOYER") {
-      if (!formData.companyName.trim()) {
-        return "Vui lòng nhập tên doanh nghiệp.";
-      }
+  if (formData.password.length < 6) {
+    return "Mật khẩu phải có ít nhất 6 ký tự.";
+  }
 
-      if (!formData.taxCode.trim()) {
-        return "Vui lòng nhập mã số thuế.";
-      }
+  if (!formData.confirmPassword) {
+    return "Vui lòng nhập lại mật khẩu.";
+  }
 
-      if (!formData.location.trim()) {
-        return "Vui lòng nhập địa chỉ.";
-      }
-    }
+  if (formData.password !== formData.confirmPassword) {
+    return "Mật khẩu nhập lại không khớp.";
+  }
 
-    if (!formData.username.trim()) {
-      return "Vui lòng nhập tên đăng nhập.";
-    }
-
-    if (formData.username.trim().length < 4) {
-      return "Tên đăng nhập phải có ít nhất 4 ký tự.";
-    }
-
-    if (formData.username.includes(" ")) {
-      return "Tên đăng nhập không được chứa khoảng trắng.";
-    }
-
-    if (formData.password.length < 6) {
-      return "Mật khẩu phải có ít nhất 6 ký tự.";
-    }
-
-    if (
-      formData.password !==
-      formData.confirmPassword
-    ) {
-      return "Mật khẩu nhập lại không khớp.";
-    }
-
-    return "";
-  };
-
+  return "";
+};
   const handleSubmit = async (e) => {
     e.preventDefault();
 
