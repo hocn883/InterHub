@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {authApi} from "../../../utils/api";
+import {authApi,endpoints} from "../../../utils/api";
 import "./JobDetailScreen.css";
 
 function JobDetailScreen() {
@@ -17,7 +17,7 @@ function JobDetailScreen() {
         setError("");
         const tokken=localStorage.getItem("access-token");
         const response = await authApi(tokken).get(
-          `/job/${jobId}`
+          endpoints.jobDetail(jobId)
         );
         setJob(response.data.result);
       } catch (error) {
