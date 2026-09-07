@@ -70,12 +70,28 @@ public class AuthService {
     }
     public AuthResponse refreshToken(String refreshToken) {
         try {
+            System.out.println("=== 1. BẮT ĐẦU REFRESH TOKEN ===");
+
             String username = jwtService.extractUsername(refreshToken);
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+            System.out.println("=== 2. EXTRACT USERNAME OK ===");
+            System.out.println("username = " + username);
+
+            UserDetails userDetails =
+                    customUserDetailsService.loadUserByUsername(username);
+
+            System.out.println("=== 3. LOAD USER DETAILS OK ===");
+
             boolean valid = jwtService.isRefreshTokenValid(
-                            refreshToken,
-                            userDetails);
+                    refreshToken,
+                    userDetails
+            );
+
+            System.out.println("=== 4. CHECK REFRESH TOKEN ===");
+            System.out.println("valid = " + valid);
+
             if (!valid) {
+                System.out.println("=== 5. REFRESH TOKEN INVALID ===");
+
                 throw new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED
                 );
@@ -89,19 +105,37 @@ public class AuthService {
                             )
                     );
 
+            System.out.println("=== 6. FIND USER OK ===");
+            System.out.println("userId = " + user.getId());
+
             String newAccessToken =
                     jwtService.generateToken(user);
 
-            return authResponse(
+            System.out.println("=== 7. GENERATE ACCESS TOKEN OK ===");
+
+            AuthResponse response = authResponse(
                     user,
                     newAccessToken
             );
 
+            System.out.println("=== 8. REFRESH TOKEN SUCCESS ===");
+
+            return response;
+
         } catch (ExpiredJwtException e) {
+            System.out.println("=== ERROR: REFRESH TOKEN EXPIRED ===");
+            e.printStackTrace();
 
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED
             );
+        } catch (Exception e) {
+            System.out.println("=== ERROR REFRESH TOKEN ===");
+            System.out.println(e.getClass().getName());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+
+            throw e;
         }
     }
     public AuthResponse login(LoginRequest request) {
