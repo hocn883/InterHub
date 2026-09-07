@@ -89,12 +89,7 @@ public class AuthController {
             )
             String refreshToken
     ) {
-        System.out.println("========== REFRESH CONTROLLER ==========");
-        System.out.println("refreshToken = " + refreshToken);
-
         if (refreshToken == null) {
-            System.out.println("========== REFRESH TOKEN NULL ==========");
-
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .body(
@@ -105,13 +100,8 @@ public class AuthController {
                                     .build()
                     );
         }
-
-        System.out.println("========== CALL REFRESH SERVICE ==========");
-
         AuthResponse authResponse =
                 authService.refreshToken(refreshToken);
-
-        System.out.println("========== REFRESH SERVICE SUCCESS ==========");
 
         return ResponseEntity.ok(
                 ApiResponse.<AuthResponse>builder()
