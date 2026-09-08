@@ -146,7 +146,7 @@ function MyApplicationCard({ application, onDelete }) {
             {/* RIGHT */}
             <div className="job-application-actions">
                 <Link
-                    to={`/jobs/${application.jobId}`}
+                    to={`/jobs/${application.job.id}`}
                     className="application-action-button view-button"
                 >
                     <FaArrowUpRightFromSquare />
@@ -154,7 +154,6 @@ function MyApplicationCard({ application, onDelete }) {
                         Xem công việc
                     </span>
                 </Link>
-                {/* CHỈ HIỆN KHI ĐÃ HOÀN THÀNH */}
                 {status === "COMPLETED" && (
                     <Link
                         to={`/jobs/${application.jobId}/review`}

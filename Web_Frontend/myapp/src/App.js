@@ -1,7 +1,8 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { UserContext } from "./contexts/UserContext";
-import { useContext } from "react";
+import { useContext, useLayoutEffect } from "react";
+
 import MainLayout from "./Layout/MainLayout";
 import Home from "./screens/Home/Home";
 import Login from "./screens/Auth/Login/Login";
@@ -25,20 +26,27 @@ import SuggestedCv from "./screens/Employer/SuggestedCv/SuggestedCv";
 import EmployerInvite from "./screens/Employer/SuggestedCv/EmployerInvite/EmployerInvite";
 import ReviewJob from "./screens/Student/MyApplications/ReviewJob/ReviewJob";
 import MyInvitations from "./screens/Student/Invitations/MyInvitations";
-import Applications   from "./screens/Student/Applications/Applications";
+import Applications from "./screens/Student/Applications/Applications";
 import EmployerInvitations from "./screens/Employer/EmployerInvitations/EmployerInvitations";
 import EmployerInvitationDetails from "./screens/Employer/EmployerInvitations/EmployerInvitationDetails/EmployerInvitationDetails";
 import EditProfile from "./screens/profiles/editprofile/EditProfile";
 import EmployerStudents from "./screens/Employer/EmployerStudents/EmployerStudents";
 import StudentDetails from "./components/StudentDetails/StudentDetails";
+
 function App() {
-  const { currentUser , setCurrentUser} = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { pathname } = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <div className="App">
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
         <Route element={<ProtectedRoute currentUser={currentUser} />}>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
@@ -49,29 +57,60 @@ function App() {
             <Route path="/myCv" element={<MyCv />} />
             <Route path="/lecturer/students" element={<LecturerStudents />} />
             <Route path="/lecturer/cvs" element={<LecturerCvs />} />
-            <Route path="/employer/invite-cv/:cvId" element={<EmployerInvite />} />
-            <Route path="/employer/jobs/:jobId/applications" element={<MyApplyJob />} />
+            <Route
+              path="/employer/invite-cv/:cvId"
+              element={<EmployerInvite />}
+            />
+            <Route
+              path="/employer/jobs/:jobId/applications"
+              element={<MyApplyJob />}
+            />
             <Route path="/employer/jobs" element={<EmployerJobs />} />
             <Route path="/jobs/create" element={<CreateJob />} />
             <Route path="/cv/templates" element={<CvTemplate />} />
             <Route path="/cv/scoring" element={<CvScoring />} />
             <Route path="/jobs/:jobId/review" element={<ReviewJob />} />
-            <Route path="/companies/:employerId" element={<CompanyDetails />} />
+            <Route
+              path="/companies/:employerId"
+              element={<CompanyDetails />}
+            />
             <Route path="/cv/suggestedCv" element={<SuggestedCv />} />
-            <Route path="/profile" element={<Profile currentUser={currentUser} />} />
+            <Route
+              path="/profile"
+              element={<Profile currentUser={currentUser} />}
+            />
             <Route path="/mycv/send" element={<SendCv />} />
             <Route path="/jobs/:jobId/apply" element={<Applications />} />
-            <Route path="/employer/invitations" element={<EmployerInvitations/>} />
-            <Route path="/employer/list-students" element={<EmployerStudents/>} />
-            <Route path="/employer/invitations/:invitationId" element={<EmployerInvitationDetails/>} />
-            <Route path="/students/:studentId" element={<StudentDetails/>} />
-            <Route path="/profile/edit" element={<EditProfile currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
+            <Route
+              path="/employer/invitations"
+              element={<EmployerInvitations />}
+            />
+            <Route
+              path="/employer/list-students"
+              element={<EmployerStudents />}
+            />
+            <Route
+              path="/employer/invitations/:invitationId"
+              element={<EmployerInvitationDetails />}
+            />
+            <Route
+              path="/students/:studentId"
+              element={<StudentDetails />}
+            />
+            <Route
+              path="/profile/edit"
+              element={
+                <EditProfile
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
+              }
+            />
           </Route>
         </Route>
       </Routes>
-
-    
     </div>
   );
 }
+
 export default App;
