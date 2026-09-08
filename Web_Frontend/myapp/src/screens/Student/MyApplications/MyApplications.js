@@ -62,7 +62,7 @@ function MyApplications() {
             <p>Theo dõi và cập nhật trạng thái tuyển dụng của bạn</p>
           </div>
 
-          <Link to="/jobs" className="btn btn-primary">
+          <Link to="/" className="btn btn-primary">
             + Tìm việc mới
           </Link>
         </div>
@@ -139,7 +139,7 @@ function MyApplications() {
               Chưa có đơn ứng tuyển nào thuộc trạng thái này.
             </p>
 
-            <Link to="/jobs">
+            <Link to="/">
               Tìm việc ngay
             </Link>
           </div>
