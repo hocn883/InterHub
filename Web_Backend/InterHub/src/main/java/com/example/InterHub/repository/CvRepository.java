@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface CvRepository extends JpaRepository<CvUpload,Long> {
-    List<CvUpload> findByStudentIdOrderByCreatedDateDesc(Long studentId);
+    Page<CvUpload> findByStudentIdOrderByCreatedDateDesc(Long studentId, Pageable pageable);
     List<CvUpload> findByLecturerIdOrderByCreatedDateDesc(Long lecturerId);
     Optional<CvUpload> findByIdAndStudentId(
             Long cvId,

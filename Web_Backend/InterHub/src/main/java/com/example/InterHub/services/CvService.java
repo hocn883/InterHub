@@ -169,4 +169,12 @@ public class CvService {
         Page<CvUploadResponse> page = cvPage.map(cvMapper::toResponse);
         return pageMapper.toPageResponse(page);
     }
+    @Transactional
+    public PageResponse<CvUploadResponse>getCvByStudent(User currentUser,Pageable  pageable)
+    {
+        Student student = (Student) currentUser;
+        Page<CvUpload> cvUploads = cvRepository.findByStudentIdOrderByCreatedDateDesc(student.getId(),pageable);
+        Page<CvUploadResponse>pageResponse=cvUploads.map(cvMapper::toResponse);
+        return pageMapper.toPageResponse(pageResponse);
+    }
 }

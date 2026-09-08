@@ -56,7 +56,7 @@ public class StudentCvController {
                 size,
                 Sort.by(Sort.Direction.DESC, "createdDate")
         );
-        PageResponse<CvUploadResponse> response = cvService.getAllCvs(pageable);
+        PageResponse<CvUploadResponse> response = cvService.getCvByStudent(currentUser.getUser(),pageable);
 
         return ResponseEntity.ok(
                 ApiResponse.<PageResponse<CvUploadResponse>>builder()
