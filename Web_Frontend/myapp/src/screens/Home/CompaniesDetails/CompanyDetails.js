@@ -1,7 +1,7 @@
 import "./CompanyDetails.css";
 import { useContext,useEffect,useState } from "react";
 import { useNavigate,useParams } from "react-router-dom";
-import api,{ authApi,endpoints } from "../../../utils/api";
+import { authApi,endpoints } from "../../../utils/api";
 import { UserContext } from "../../../contexts/UserContext";
 import JobCard from "../JobCard/JobCard";
 function CompanyDetails() {
@@ -28,7 +28,8 @@ function CompanyDetails() {
   const loadJobPage=async(pageNumber=0)=>{
     try{
       setJobLoading(true);
-      const response=await api.get(
+      const token=localStorage.getItem("access-token");
+      const response=await authApi(token).get(
         endpoints.employerJobs(employerId),
         {
           params:{
@@ -73,7 +74,8 @@ function CompanyDetails() {
   const loadReviewPage=async(pageNumber=0)=>{
     try{
       setReviewLoading(true);
-      const response=await api.get(
+      const token=localStorage.getItem("access-token");
+      const response=await authApi(token).get(
         endpoints.employerReview(employerId),
         {
           params:{
@@ -121,7 +123,8 @@ function CompanyDetails() {
       try{
         setLoading(true);
         setError("");
-        const response=await api.get(
+        const token=localStorage.getItem("access-token");
+        const response=await authApi(token).get(
           endpoints.employerDetails(employerId)
         );
         setCompany(
