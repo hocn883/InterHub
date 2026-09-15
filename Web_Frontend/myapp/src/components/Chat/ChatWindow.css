@@ -667,3 +667,30 @@
     min-width: 31px;
   }
 }
+@media (max-width: 600px) {
+  .chat-window {
+    width: 100%;
+    height: calc(100dvh - 58px);
+    min-height: calc(100dvh - 58px);
+    max-height: calc(100dvh - 58px);
+  }
+
+  .chat-window-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .chat-window-header,
+  .chat-window-footer {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .chat-window {
+    height: calc(100dvh - 58px);
+    min-height: calc(100dvh - 58px);
+    max-height: calc(100dvh - 58px);
+  }
+}
