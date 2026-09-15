@@ -5,11 +5,6 @@
 body {
   margin: 0;
 }
-
-/* ======================================================
-   COMMON
-====================================================== */
-
 .auth-input-icon {
   position: absolute;
   left: 14px;
@@ -551,4 +546,153 @@ body {
 
 .auth-mobile-brand {
   display: none;
+}
+
+@media (max-width: 900px) {
+  .auth-page {
+    overflow-y: auto;
+  }
+
+  .auth-container {
+    width: min(520px, calc(100% - 32px));
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    padding: 32px 0;
+  }
+
+  .auth-introduction {
+    display: none;
+  }
+
+  .auth-form-area {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .auth-mobile-brand {
+    width: 100%;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .auth-mobile-brand .auth-brand-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  .auth-mobile-brand .auth-brand-name strong {
+    font-size: 19px;
+  }
+
+  .auth-mobile-brand .auth-brand-name span {
+    font-size: 8px;
+  }
+
+  .auth-card {
+    max-width: 450px;
+  }
+
+  .auth-decoration-one {
+    width: 350px;
+    height: 350px;
+    top: -180px;
+    left: -180px;
+  }
+
+  .auth-decoration-two {
+    width: 300px;
+    height: 300px;
+    right: -160px;
+    bottom: -150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    width: calc(100% - 24px);
+    padding: 22px 0;
+  }
+
+  .auth-mobile-brand {
+    margin-bottom: 18px;
+  }
+
+  .auth-mobile-brand .auth-brand-logo {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .auth-mobile-brand .auth-brand-name strong {
+    font-size: 17px;
+  }
+
+  .auth-card {
+    max-width: 100%;
+    padding: 28px 20px;
+    border-radius: 18px;
+  }
+
+  .auth-card-header {
+    margin-bottom: 22px;
+  }
+
+  .auth-card-header h2 {
+    font-size: 25px;
+  }
+
+  .auth-card-header p {
+    font-size: 10px;
+  }
+
+  .auth-form-group {
+    margin-bottom: 15px;
+  }
+
+  .auth-input-wrapper input {
+    height: 45px;
+    font-size: 11px;
+  }
+
+  .auth-submit {
+    height: 47px;
+  }
+
+  .auth-divider {
+    margin: 19px 0;
+  }
+
+  .auth-google {
+    height: 45px;
+  }
+
+  .auth-switch {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .auth-container {
+    width: calc(100% - 16px);
+  }
+
+  .auth-card {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .auth-card-header h2 {
+    font-size: 23px;
+  }
 }

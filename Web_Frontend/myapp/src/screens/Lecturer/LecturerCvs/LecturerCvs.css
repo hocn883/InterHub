@@ -3,17 +3,14 @@
   padding: 0;
   background: #f8fafc;
 }
-
 .page-container {
   width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
 }
-
 .lecturer-cvs-main {
   padding-top: 45px;
   padding-bottom: 80px;
 }
-
 .cv-review-section {
   padding: 26px;
   background: #ffffff;
@@ -21,7 +18,6 @@
   border-radius: 16px;
   box-shadow: 0 8px 26px rgba(15, 23, 42, 0.04);
 }
-
 .cv-review-heading {
   display: flex;
   align-items: flex-end;
@@ -29,7 +25,6 @@
   gap: 20px;
   margin-bottom: 22px;
 }
-
 .cv-review-heading .section-label {
   display: inline-block;
   margin-bottom: 7px;
@@ -38,21 +33,18 @@
   font-weight: 800;
   letter-spacing: 1px;
 }
-
 .cv-review-heading h2 {
   margin: 0;
   color: #1e293b;
   font-size: 25px;
   font-weight: 700;
 }
-
 .cv-review-heading p {
   margin: 7px 0 0;
   color: #7c8b9a;
   font-size: 13px;
   line-height: 1.6;
 }
-
 .cv-filter {
   display: flex;
   align-items: center;
@@ -62,7 +54,6 @@
   padding-bottom: 22px;
   border-bottom: 1px solid #edf2f7;
 }
-
 .cv-filter button {
   display: inline-flex;
   align-items: center;
@@ -79,19 +70,16 @@
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
-
 .cv-filter button:hover {
   border-color: #38bdf8;
   background: #f0faff;
   color: #0284c7;
 }
-
 .cv-filter button.active {
   border-color: #0ea5e9;
   background: #0ea5e9;
   color: #ffffff;
 }
-
 .cv-filter-count {
   min-width: 21px;
   padding: 2px 6px;
@@ -102,18 +90,15 @@
   font-weight: 700;
   text-align: center;
 }
-
 .cv-filter button.active .cv-filter-count {
   background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
 }
-
 .cv-review-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-
 .cv-state-message {
   min-height: 220px;
   display: flex;
@@ -128,24 +113,20 @@
   color: #64748b;
   text-align: center;
 }
-
 .cv-state-message p {
   margin: 0;
   font-size: 14px;
   line-height: 1.6;
 }
-
 .cv-state-message.error {
   border-color: #fecdd3;
   background: #fff1f2;
   color: #be123c;
 }
-
 .cv-empty-icon {
   color: #38bdf8;
   font-size: 38px;
 }
-
 .cv-loading-spinner {
   width: 22px;
   height: 22px;
@@ -154,13 +135,11 @@
   border-radius: 50%;
   animation: cv-spin 0.7s linear infinite;
 }
-
 @keyframes cv-spin {
   to {
     transform: rotate(360deg);
   }
 }
-
 .cv-retry-button {
   margin-top: 4px;
   padding: 9px 15px;
@@ -174,9 +153,98 @@
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
-
 .cv-retry-button:hover {
   border-color: #0284c7;
   background: #0284c7;
   transform: translateY(-1px);
+}
+@media (max-width: 768px) {
+  .page-container {
+    width: calc(100% - 28px);
+  }
+  .lecturer-cvs-main {
+    padding-top: 28px;
+    padding-bottom: 50px;
+  }
+  .cv-review-section {
+    padding: 20px;
+    border-radius: 14px;
+  }
+  .cv-review-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .cv-review-heading h2 {
+    font-size: 22px;
+  }
+  .cv-filter {
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+  }
+  .cv-filter button {
+    padding: 7px 11px;
+    font-size: 11px;
+  }
+  .cv-state-message {
+    min-height: 190px;
+    padding: 32px 16px;
+  }
+}
+@media (max-width: 480px) {
+  .page-container {
+    width: calc(100% - 20px);
+  }
+  .lecturer-cvs-main {
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+  .cv-review-section {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  .cv-review-heading {
+    margin-bottom: 16px;
+  }
+  .cv-review-heading .section-label {
+    margin-bottom: 5px;
+    font-size: 10px;
+  }
+  .cv-review-heading h2 {
+    font-size: 20px;
+  }
+  .cv-review-heading p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .cv-filter {
+    gap: 7px;
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+  }
+  .cv-filter button {
+    flex: 1 1 auto;
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+  .cv-review-list {
+    gap: 12px;
+  }
+  .cv-state-message {
+    min-height: 170px;
+    padding: 28px 14px;
+    border-radius: 12px;
+  }
+  .cv-state-message p {
+    font-size: 12px;
+  }
+  .cv-empty-icon {
+    font-size: 32px;
+  }
+  .cv-retry-button {
+    padding: 8px 13px;
+    font-size: 11px;
+  }
 }

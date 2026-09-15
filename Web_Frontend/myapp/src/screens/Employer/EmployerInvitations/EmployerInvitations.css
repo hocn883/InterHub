@@ -11,10 +11,6 @@
   width: 100%;
 }
 
-/* =========================
-   HEADING
-========================= */
-
 .employer-invitations-heading {
   display: flex;
   align-items: flex-end;
@@ -36,10 +32,6 @@
   font-size: 13px;
   line-height: 1.6;
 }
-
-/* =========================
-   SUMMARY
-========================= */
 
 .employer-invitations-summary {
   display: flex;
@@ -78,10 +70,6 @@
   color: #969dac;
   font-size: 9px;
 }
-
-/* =========================
-   FILTER
-========================= */
 
 .employer-invitations-filter {
   width: fit-content;
@@ -134,11 +122,13 @@
   background: rgba(255, 255, 255, 0.18);
   color: #ffffff;
 }
+
 .employer-invitations-list {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
+
 .employer-invitations-empty {
   display: flex;
   min-height: 240px;
@@ -151,18 +141,135 @@
   background: #ffffff;
   text-align: center;
 }
+
 .employer-invitations-empty > svg {
   margin-bottom: 12px;
   color: #6046e9;
   font-size: 31px;
 }
+
 .employer-invitations-empty h3 {
   margin: 0 0 7px;
   color: #293247;
   font-size: 15px;
 }
+
 .employer-invitations-empty p {
   margin: 0;
   color: #8b92a2;
   font-size: 11px;
+}
+
+@media (max-width: 768px) {
+  .employer-invitations-main {
+    padding: 32px 0 55px;
+  }
+
+  .employer-invitations-heading {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .employer-invitations-heading h2 {
+    font-size: 24px;
+  }
+
+  .employer-invitations-summary {
+    width: fit-content;
+  }
+
+  .employer-invitations-filter {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+    scrollbar-width: none;
+  }
+
+  .employer-invitations-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .employer-invitations-filter button {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .employer-invitations-main {
+    padding: 26px 0 40px;
+  }
+
+  .employer-invitations-heading {
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .employer-invitations-heading h2 {
+    font-size: 21px;
+  }
+
+  .employer-invitations-heading p {
+    margin-top: 6px;
+    font-size: 12px;
+  }
+
+  .employer-invitations-summary {
+    width: 100%;
+    padding: 10px 12px;
+  }
+
+  .employer-invitations-summary-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 15px;
+  }
+
+  .employer-invitations-summary strong {
+    font-size: 15px;
+  }
+
+  .employer-invitations-filter {
+    width: 100%;
+    gap: 5px;
+    padding: 4px;
+    border-radius: 10px;
+  }
+
+  .employer-invitations-filter button {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+
+  .employer-invitations-filter button > span {
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    font-size: 7px;
+  }
+
+  .employer-invitations-list {
+    gap: 12px;
+  }
+
+  .employer-invitations-empty {
+    min-height: 200px;
+    padding: 25px 16px;
+    border-radius: 13px;
+  }
+
+  .employer-invitations-empty > svg {
+    font-size: 27px;
+  }
+
+  .employer-invitations-empty h3 {
+    font-size: 14px;
+  }
+
+  .employer-invitations-empty p {
+    font-size: 10px;
+  }
 }

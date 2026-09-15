@@ -1,19 +1,10 @@
-/* =========================================
-   CARD
-========================================= */
-
 .company-card {
   width: 100%;
-
   padding: 20px;
-
   border: 1px solid #e8ebf2;
   border-radius: 16px;
-
   background: #ffffff;
-
   box-shadow: 0 6px 20px rgba(30, 40, 70, 0.04);
-
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -22,51 +13,30 @@
 
 .company-card:hover {
   transform: translateY(-2px);
-
   border-color: #d9d3f7;
-
   box-shadow: 0 10px 28px rgba(30, 40, 70, 0.07);
 }
-
-
-/* =========================================
-   TOP
-========================================= */
 
 .company-card-top {
   display: flex;
   align-items: center;
-
   gap: 14px;
-
   padding-bottom: 16px;
-
   border-bottom: 1px solid #eff1f5;
 }
-
-
-/* =========================================
-   LOGO
-========================================= */
 
 .company-card-logo {
   width: 58px;
   height: 58px;
-
   flex: 0 0 58px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   overflow: hidden;
-
   border: 1px solid #e5e1fa;
   border-radius: 14px;
-
   background: #f2efff;
   color: #6046e9;
-
   font-size: 18px;
   font-weight: 800;
 }
@@ -74,14 +44,8 @@
 .company-card-logo img {
   width: 100%;
   height: 100%;
-
   object-fit: cover;
 }
-
-
-/* =========================================
-   MAIN
-========================================= */
 
 .company-card-main {
   flex: 1;
@@ -91,44 +55,28 @@
 .company-card-title-row {
   display: flex;
   align-items: center;
-
   flex-wrap: wrap;
-
   gap: 8px;
 }
 
 .company-card-title-row h3 {
   margin: 0;
-
   overflow: hidden;
-
   color: #252d41;
-
   font-size: 15px;
   font-weight: 750;
-
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-
-/* =========================================
-   VERIFIED
-========================================= */
-
 .company-verified {
   display: inline-flex;
   align-items: center;
-
   gap: 4px;
-
   padding: 4px 7px;
-
   border-radius: 20px;
-
   background: #e9f8f2;
   color: #198363;
-
   font-size: 8px;
   font-weight: 700;
 }
@@ -137,21 +85,12 @@
   font-size: 9px;
 }
 
-
-/* =========================================
-   SUBTITLE
-========================================= */
-
 .company-card-subtitle {
   display: flex;
   align-items: center;
-
   gap: 5px;
-
   margin: 6px 0 0;
-
   color: #8d94a4;
-
   font-size: 10px;
 }
 
@@ -159,42 +98,29 @@
   color: #7664d7;
 }
 
-
-/* =========================================
-   INFORMATION
-========================================= */
-
 .company-card-info {
   display: flex;
   flex-direction: column;
-
   gap: 10px;
-
   padding: 16px 0;
 }
 
 .company-card-info-item {
   display: flex;
   align-items: center;
-
   gap: 10px;
 }
 
 .company-card-info-icon {
   width: 34px;
   height: 34px;
-
   flex: 0 0 34px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 9px;
-
   background: #f5f3ff;
   color: #6046e9;
-
   font-size: 12px;
 }
 
@@ -204,56 +130,34 @@
 
 .company-card-info-item span {
   display: block;
-
   margin-bottom: 2px;
-
   color: #a0a5b2;
-
   font-size: 8px;
 }
 
 .company-card-info-item strong {
   display: block;
-
   overflow: hidden;
-
   color: #596174;
-
   font-size: 10px;
   font-weight: 650;
-
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-
-/* =========================================
-   FOOTER
-========================================= */
 
 .company-card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 12px;
-
   padding-top: 14px;
-
   border-top: 1px solid #eff1f5;
 }
-
-
-/* =========================================
-   STATUS
-========================================= */
 
 .company-card-status {
   display: flex;
   align-items: center;
-
   gap: 6px;
-
   font-size: 9px;
   font-weight: 650;
 }
@@ -269,36 +173,22 @@
 .company-status-dot {
   width: 7px;
   height: 7px;
-
   border-radius: 50%;
-
   background: currentColor;
 }
-
-
-/* =========================================
-   DETAIL LINK
-========================================= */
 
 .company-detail-link {
   display: inline-flex;
   align-items: center;
-
   gap: 6px;
-
   padding: 8px 11px;
-
   border: 1px solid #ddd8f7;
   border-radius: 8px;
-
   background: #f8f7ff;
   color: #6046e9;
-
   font-size: 9px;
   font-weight: 700;
-
   text-decoration: none;
-
   transition:
     background 0.2s ease,
     color 0.2s ease,
@@ -307,17 +197,125 @@
 
 .company-detail-link:hover {
   border-color: #6046e9;
-
   background: #6046e9;
   color: #ffffff;
 }
 
 .company-detail-link i {
   font-size: 9px;
-
   transition: transform 0.2s ease;
 }
 
 .company-detail-link:hover i {
   transform: translateX(2px);
+}
+
+@media (max-width: 768px) {
+  .company-card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .company-card-top {
+    gap: 12px;
+    padding-bottom: 14px;
+  }
+
+  .company-card-logo {
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
+    border-radius: 12px;
+    font-size: 16px;
+  }
+
+  .company-card-title-row h3 {
+    font-size: 14px;
+  }
+
+  .company-card-info {
+    padding: 14px 0;
+  }
+
+  .company-card-footer {
+    padding-top: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .company-card {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .company-card:hover {
+    transform: none;
+  }
+
+  .company-card-top {
+    align-items: flex-start;
+    gap: 10px;
+    padding-bottom: 12px;
+  }
+
+  .company-card-logo {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+  .company-card-title-row {
+    gap: 5px;
+  }
+
+  .company-card-title-row h3 {
+    max-width: 100%;
+    font-size: 13px;
+  }
+
+  .company-verified {
+    padding: 3px 6px;
+    font-size: 7px;
+  }
+
+  .company-card-subtitle {
+    margin-top: 5px;
+    font-size: 9px;
+  }
+
+  .company-card-info {
+    gap: 9px;
+    padding: 12px 0;
+  }
+
+  .company-card-info-item {
+    gap: 8px;
+  }
+
+  .company-card-info-icon {
+    width: 31px;
+    height: 31px;
+    flex-basis: 31px;
+    font-size: 11px;
+  }
+
+  .company-card-info-item strong {
+    font-size: 9px;
+  }
+
+  .company-card-footer {
+    gap: 8px;
+    padding-top: 12px;
+  }
+
+  .company-card-status {
+    font-size: 8px;
+  }
+
+  .company-detail-link {
+    padding: 7px 9px;
+    font-size: 8px;
+  }
 }

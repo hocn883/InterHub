@@ -384,3 +384,149 @@
 .register-login a:hover {
   text-decoration: underline;
 }
+
+
+@media (max-width: 768px) {
+  .register-page {
+    padding: 30px 16px 50px;
+  }
+
+  .register-card {
+    max-width: 620px;
+    padding: 28px 24px;
+  }
+
+  .register-header {
+    margin-bottom: 26px;
+  }
+
+  .register-header h1 {
+    font-size: 27px;
+  }
+
+  .register-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .register-role-list {
+    gap: 8px;
+  }
+
+  .register-section {
+    margin-bottom: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-page {
+    padding: 20px 12px 35px;
+  }
+
+  .register-card {
+    padding: 24px 16px;
+    border-radius: 14px;
+  }
+
+  .register-header {
+    margin-bottom: 24px;
+  }
+
+  .register-header-badge {
+    margin-bottom: 11px;
+    padding: 5px 9px;
+    font-size: 7px;
+  }
+
+  .register-header-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 12px;
+    border-radius: 15px;
+    font-size: 20px;
+  }
+
+  .register-header h1 {
+    font-size: 24px;
+  }
+
+  .register-header p {
+    font-size: 10px;
+  }
+
+  .register-role-list {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .register-role {
+    min-height: 42px;
+  }
+
+  .register-section {
+    margin-bottom: 20px;
+  }
+
+  .register-section + .register-section {
+    padding-top: 19px;
+  }
+
+  .register-section-title {
+    margin-bottom: 13px;
+    font-size: 12px;
+  }
+
+  .register-group {
+    margin-bottom: 13px;
+  }
+
+  .register-input-box input,
+  .register-input-box select {
+    height: 42px;
+  }
+
+  .register-avatar {
+    min-height: 65px;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .register-avatar-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+
+  .register-avatar-button {
+    padding: 7px 9px;
+    font-size: 9px;
+  }
+
+  .register-agreement {
+    font-size: 10px;
+  }
+
+  .register-login {
+    flex-wrap: wrap;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .register-page {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .register-card {
+    padding: 22px 13px;
+  }
+
+  .register-header h1 {
+    font-size: 22px;
+  }
+
+  .register-avatar-button {
+    display: none;
+  }
+}

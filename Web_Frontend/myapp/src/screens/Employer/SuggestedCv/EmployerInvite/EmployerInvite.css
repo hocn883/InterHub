@@ -1,7 +1,3 @@
-/* =========================
-   PAGE
-========================= */
-
 .invite-cv-page {
   min-height: 100vh;
   padding: 0;
@@ -17,10 +13,6 @@
   padding-top: 45px;
   padding-bottom: 80px;
 }
-
-/* =========================
-   BACK BUTTON
-========================= */
 
 .invite-back-button {
   display: inline-flex;
@@ -46,20 +38,12 @@
   color: #6046e9;
 }
 
-/* =========================
-   LAYOUT
-========================= */
-
 .invite-layout {
   display: grid;
   grid-template-columns: 340px minmax(0, 1fr);
   gap: 24px;
   align-items: start;
 }
-
-/* =========================
-   COMMON CARD
-========================= */
 
 .invite-candidate-card,
 .invite-form-card {
@@ -70,10 +54,6 @@
     0 1px 2px rgba(15, 23, 42, 0.03),
     0 8px 24px rgba(59, 46, 120, 0.04);
 }
-
-/* =========================
-   CANDIDATE CARD
-========================= */
 
 .invite-candidate-card {
   position: sticky;
@@ -115,10 +95,6 @@
   line-height: 1.35;
 }
 
-/* =========================
-   CANDIDATE INFO
-========================= */
-
 .invite-candidate-info {
   display: flex;
   flex-direction: column;
@@ -156,10 +132,6 @@
   font-weight: 700;
 }
 
-/* =========================
-   VIEW CV
-========================= */
-
 .invite-view-cv {
   width: 100%;
   min-height: 44px;
@@ -187,10 +159,6 @@
   color: #5037d4;
 }
 
-/* =========================
-   FORM CARD
-========================= */
-
 .invite-form-card {
   padding: 30px;
 }
@@ -200,10 +168,6 @@
   flex-direction: column;
   gap: 26px;
 }
-
-/* =========================
-   FORM GROUP
-========================= */
 
 .invite-form-group {
   position: relative;
@@ -229,10 +193,6 @@
 .invite-form-group label span {
   color: #dc2626;
 }
-
-/* =========================
-   SELECT
-========================= */
 
 .invite-form-group select {
   width: 100%;
@@ -260,10 +220,6 @@
   box-shadow: 0 0 0 3px rgba(96, 70, 233, 0.1);
 }
 
-/* =========================
-   TEXTAREA
-========================= */
-
 .invite-form-group textarea {
   width: 100%;
   min-height: 170px;
@@ -277,6 +233,7 @@
   font-family: inherit;
   font-size: 14px;
   line-height: 1.7;
+  box-sizing: border-box;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
@@ -295,10 +252,6 @@
   box-shadow: 0 0 0 3px rgba(96, 70, 233, 0.1);
 }
 
-/* =========================
-   CHARACTER COUNT
-========================= */
-
 .invite-character-count {
   position: absolute;
   right: 12px;
@@ -307,10 +260,6 @@
   font-size: 12px;
   pointer-events: none;
 }
-
-/* =========================
-   LOADING / EMPTY
-========================= */
 
 .invite-loading,
 .invite-empty {
@@ -322,15 +271,12 @@
   color: #777080;
   font-size: 14px;
   line-height: 1.6;
+  box-sizing: border-box;
 }
 
 .invite-empty {
   color: #655f70;
 }
-
-/* =========================
-   ERROR / SUCCESS
-========================= */
 
 .invite-error,
 .invite-success {
@@ -351,10 +297,6 @@
   background: #f0fdf4;
   color: #15803d;
 }
-
-/* =========================
-   ACTIONS
-========================= */
 
 .invite-actions {
   display: flex;
@@ -382,10 +324,6 @@
     box-shadow 0.2s ease;
 }
 
-/* =========================
-   CANCEL
-========================= */
-
 .invite-cancel-button {
   border: 1px solid #d5d2dc;
   background: #ffffff;
@@ -398,9 +336,6 @@
   color: #282232;
 }
 
-/* =========================
-   SUBMIT
-========================= */
 .invite-submit-button {
   min-width: 145px;
   display: inline-flex;
@@ -412,24 +347,29 @@
   color: #ffffff;
   box-shadow: 0 7px 18px rgba(96, 70, 233, 0.18);
 }
+
 .invite-submit-button svg {
   font-size: 17px;
 }
+
 .invite-submit-button:hover:not(:disabled) {
   border-color: #5037d4;
   background: #5037d4;
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(96, 70, 233, 0.24);
 }
+
 .invite-submit-button:active:not(:disabled) {
   transform: translateY(0);
 }
+
 .invite-submit-button:disabled {
   opacity: 0.55;
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
 }
+
 .invite-form-group input {
   width: 100%;
   height: 48px;
@@ -440,6 +380,7 @@
   background: #ffffff;
   color: #273244;
   font-size: 13px;
+  box-sizing: border-box;
   transition: 0.2s ease;
 }
 
@@ -449,7 +390,229 @@
 
 .invite-form-group input:focus {
   border-color: #6046e9;
-  box-shadow:
-    0 0 0 3px
-    rgba(96, 70, 233, 0.1);
+  box-shadow: 0 0 0 3px rgba(96, 70, 233, 0.1);
+}
+
+@media (max-width: 900px) {
+  .invite-layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .invite-candidate-card {
+    padding: 20px;
+  }
+
+  .invite-form-card {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .invite-cv-container {
+    width: calc(100% - 32px);
+  }
+
+  .invite-cv-main {
+    padding-top: 32px;
+    padding-bottom: 55px;
+  }
+
+  .invite-layout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .invite-candidate-card {
+    position: static;
+    top: auto;
+  }
+
+  .invite-candidate-info {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .invite-candidate-info > div {
+    grid-template-columns: 28px minmax(0, 1fr);
+  }
+
+  .invite-candidate-info strong {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .invite-cv-container {
+    width: calc(100% - 24px);
+  }
+
+  .invite-cv-main {
+    padding-top: 22px;
+    padding-bottom: 40px;
+  }
+
+  .invite-back-button {
+    gap: 6px;
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+
+  .invite-back-button svg {
+    font-size: 15px;
+  }
+
+  .invite-layout {
+    gap: 14px;
+  }
+
+  .invite-candidate-card,
+  .invite-form-card {
+    border-radius: 13px;
+  }
+
+  .invite-candidate-card {
+    padding: 18px 16px;
+  }
+
+  .invite-section-title {
+    margin-bottom: 17px;
+    font-size: 10px;
+  }
+
+  .invite-avatar {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 11px;
+    font-size: 24px;
+  }
+
+  .invite-candidate-card h2 {
+    font-size: 17px;
+  }
+
+  .invite-candidate-info {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .invite-candidate-info > div {
+    grid-template-columns: 26px minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 10px 11px;
+  }
+
+  .invite-candidate-info strong {
+    grid-column: auto;
+  }
+
+  .invite-candidate-info svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .invite-candidate-info span,
+  .invite-candidate-info strong {
+    font-size: 11px;
+  }
+
+  .invite-view-cv {
+    min-height: 41px;
+    margin-top: 15px;
+    font-size: 12px;
+  }
+
+  .invite-form-card {
+    padding: 18px 16px;
+  }
+
+  .invite-form-card form {
+    gap: 20px;
+  }
+
+  .invite-form-group {
+    gap: 8px;
+  }
+
+  .invite-form-group label {
+    gap: 6px;
+    font-size: 12px;
+  }
+
+  .invite-form-group label svg {
+    font-size: 15px;
+  }
+
+  .invite-form-group select,
+  .invite-form-group input {
+    min-height: 44px;
+    height: 44px;
+    font-size: 12px;
+  }
+
+  .invite-form-group textarea {
+    min-height: 145px;
+    padding: 12px 12px 29px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .invite-character-count {
+    right: 10px;
+    bottom: 8px;
+    font-size: 10px;
+  }
+
+  .invite-loading,
+  .invite-empty {
+    padding: 13px;
+    font-size: 12px;
+  }
+
+  .invite-error,
+  .invite-success {
+    padding: 11px 12px;
+    font-size: 12px;
+  }
+
+  .invite-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding-top: 17px;
+  }
+
+  .invite-cancel-button,
+  .invite-submit-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .invite-cv-container {
+    width: calc(100% - 16px);
+  }
+
+  .invite-candidate-card,
+  .invite-form-card {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+
+  .invite-candidate-info > div {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+
+  .invite-candidate-info strong {
+    grid-column: 2;
+  }
+
+  .invite-actions {
+    grid-template-columns: 1fr;
+  }
 }

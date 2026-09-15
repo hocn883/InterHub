@@ -210,3 +210,137 @@
 .student-application-job-info svg {
   color: #7b8799;
 }
+
+@media (max-width: 768px) {
+  .student-application-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 0;
+  }
+
+  .student-application-info-item {
+    padding: 0 14px;
+  }
+
+  .student-application-info-item:nth-child(2) {
+    border-right: none;
+  }
+
+  .student-application-info-item:nth-child(3) {
+    padding-left: 0;
+  }
+
+  .student-application-job-info {
+    gap: 15px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .student-application-card {
+    border-radius: 12px;
+  }
+
+  .student-application-header {
+    padding: 16px;
+  }
+
+  .student-application-profile {
+    align-items: flex-start;
+    gap: 11px;
+  }
+
+  .student-application-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .student-application-avatar svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .student-application-title-row {
+    gap: 7px;
+  }
+
+  .student-application-title-row h3 {
+    font-size: 15px;
+  }
+
+  .student-application-name p {
+    margin-top: 4px;
+    font-size: 11px;
+  }
+
+  .student-application-status {
+    padding: 4px 8px;
+    font-size: 9px;
+  }
+
+  .student-application-info-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 5px 16px;
+  }
+
+  .student-application-info-item,
+  .student-application-info-item:first-child,
+  .student-application-info-item:nth-child(3) {
+    padding: 12px 0;
+    border-right: none;
+    border-bottom: 1px solid #eef1f5;
+  }
+
+  .student-application-info-item:last-child {
+    border-bottom: none;
+  }
+
+  .student-application-info-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .student-application-info-item span {
+    font-size: 10px;
+  }
+
+  .student-application-info-item strong {
+    font-size: 12px;
+  }
+
+  .student-application-job {
+    padding: 15px 16px;
+  }
+
+  .student-application-job-heading {
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .student-application-job-heading > svg {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+  }
+
+  .student-application-job-heading > div {
+    min-width: 0;
+  }
+
+  .student-application-job-heading a,
+  .student-application-job-heading strong {
+    overflow-wrap: anywhere;
+    font-size: 13px;
+  }
+
+  .student-application-job-info {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 9px;
+    margin-top: 12px;
+  }
+
+  .student-application-job-info div {
+    font-size: 11px;
+  }
+}

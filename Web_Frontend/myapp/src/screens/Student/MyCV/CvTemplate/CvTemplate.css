@@ -1,35 +1,20 @@
-/* =========================================================
-   PAGE
-========================================================= */
-
 .cv-builder-page {
   min-height: 100vh;
   padding: 32px 0 60px;
   overflow-x: auto;
   background: #f7f9fc;
 }
-
 .cv-builder-page * {
   box-sizing: border-box;
 }
-
-/*
-  CÙNG CONTAINER VỚI PROJECT CHÍNH
-*/
 .cv-builder-container {
   width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
 }
-
-/* =========================================================
-   PAGE HEADER
-========================================================= */
-
 .cv-builder-header {
   width: 100%;
   margin: 0 0 28px;
 }
-
 .cv-header-badge {
   display: inline-block;
   margin-bottom: 10px;
@@ -42,68 +27,33 @@
   font-weight: 700;
   letter-spacing: 1px;
 }
-
 .cv-builder-header h1 {
   margin: 0 0 8px;
   color: #172033;
   font-size: 30px;
   line-height: 1.2;
 }
-
 .cv-builder-header p {
   margin: 0;
   color: #7a8290;
   font-size: 14px;
 }
-
-/* =========================================================
-   MAIN LAYOUT
-
-   FORM | CV | TEMPLATE
-========================================================= */
-
 .cv-builder-layout {
   display: grid;
-
-  grid-template-columns:
-    320px
-    794px
-    150px;
-
+  grid-template-columns: 320px 794px 150px;
   gap: 16px;
-
   width: max-content;
-
   align-items: start;
-
-  /*
-    QUAN TRỌNG:
-    KHÔNG CENTER.
-    Mép trái form sẽ thẳng với header CV
-    và container của project chính.
-  */
   justify-content: start;
 }
-
-/* =========================================================
-   FORM CARD
-========================================================= */
-
 .cv-form-card {
   width: 320px;
   padding: 22px;
   border: 1px solid #edf0f5;
   border-radius: 16px;
   background: #ffffff;
-  box-shadow:
-    0 5px 25px
-    rgba(27, 39, 66, 0.07);
+  box-shadow: 0 5px 25px rgba(27, 39, 66, 0.07);
 }
-
-/* =========================================================
-   FORM HEADING
-========================================================= */
-
 .card-heading {
   display: flex;
   align-items: flex-start;
@@ -111,20 +61,17 @@
   gap: 15px;
   margin-bottom: 24px;
 }
-
 .card-heading h2 {
   margin: 0 0 5px;
   color: #1e293b;
   font-size: 19px;
   line-height: 1.25;
 }
-
 .card-heading p {
   margin: 0;
   color: #8a93a3;
   font-size: 11px;
 }
-
 .card-heading > span {
   display: flex;
   width: 34px;
@@ -138,11 +85,6 @@
   font-size: 11px;
   font-weight: 700;
 }
-
-/* =========================================================
-   AVATAR
-========================================================= */
-
 .avatar-upload-section {
   display: flex;
   align-items: center;
@@ -153,7 +95,6 @@
   border-radius: 11px;
   background: #ffffff;
 }
-
 .avatar-preview {
   display: flex;
   width: 60px;
@@ -168,32 +109,27 @@
   font-size: 23px;
   font-weight: 700;
 }
-
 .avatar-preview img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .avatar-information {
   display: flex;
   min-width: 0;
   flex-direction: column;
   align-items: flex-start;
 }
-
 .avatar-information strong {
   margin-bottom: 3px;
   color: #283347;
   font-size: 12px;
 }
-
 .avatar-information > span {
   margin-bottom: 7px;
   color: #9ba3af;
   font-size: 9px;
 }
-
 .avatar-button {
   padding: 6px 9px;
   border: 1px solid #dce3ed;
@@ -205,26 +141,18 @@
   font-weight: 600;
   transition: 0.2s ease;
 }
-
 .avatar-button:hover {
   border-color: #9ab5d8;
   background: #f8fbff;
 }
-
-/* =========================================================
-   FORM
-========================================================= */
-
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
-
 .form-group {
   margin-bottom: 15px;
 }
-
 .form-group label {
   display: block;
   margin-bottom: 6px;
@@ -232,7 +160,6 @@
   font-size: 11px;
   font-weight: 600;
 }
-
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -243,84 +170,50 @@
   color: #273244;
   font-family: inherit;
   font-size: 11px;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-
 .form-group input {
   height: 40px;
   padding: 0 11px;
 }
-
 .form-group textarea {
   padding: 10px 11px;
   line-height: 1.5;
   resize: vertical;
 }
-
 .form-group input::placeholder,
 .form-group textarea::placeholder {
   color: #a0a7b3;
 }
-
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: #6791ce;
-  box-shadow:
-    0 0 0 3px
-    rgba(73, 121, 190, 0.1);
+  box-shadow: 0 0 0 3px rgba(73, 121, 190, 0.1);
 }
-
-/* =========================================================
-   CV PREVIEW COLUMN
-
-   KHÔNG HEADER "XEM TRƯỚC"
-   CV NẰM NGANG ĐẦU FORM
-========================================================= */
-
 .cv-preview-column {
   width: 794px;
   min-width: 794px;
   margin: 0;
   padding: 0;
 }
-
-/* =========================================================
-   CV PAPER
-========================================================= */
-
 .cv-paper-area {
   width: 794px;
   margin: 0;
   padding: 0;
 }
-
 .cv-paper-wrapper {
   width: 794px;
   margin: 0;
   padding: 0;
 }
-
-/*
-  A4:
-  794 x 1123 px
-*/
 .cv-paper {
   width: 794px;
   min-height: 1123px;
   margin: 0;
   overflow: hidden;
   background: #ffffff;
-  box-shadow:
-    0 6px 26px
-    rgba(26, 36, 55, 0.14);
+  box-shadow: 0 6px 26px rgba(26, 36, 55, 0.14);
 }
-
-/* =========================================================
-   NO TEMPLATE
-========================================================= */
-
 .no-template {
   display: flex;
   min-height: 1123px;
@@ -330,44 +223,29 @@
   color: #98a2b3;
   font-size: 14px;
 }
-
-/* =========================================================
-   TEMPLATE COLUMN
-
-   NẰM NGOÀI CV
-========================================================= */
-
 .template-column {
   width: 150px;
   min-width: 150px;
   margin: 0;
   padding: 0;
 }
-
-/* =========================================================
-   TEMPLATE HEADING
-========================================================= */
-
 .template-heading {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 14px;
 }
-
 .template-heading h2 {
   margin: 7px 0 4px;
   color: #1e293b;
   font-size: 15px;
   line-height: 1.2;
 }
-
 .template-heading p {
   margin: 0;
   color: #929aa7;
   font-size: 10px;
 }
-
 .section-number {
   display: inline-flex;
   min-height: 25px;
@@ -380,13 +258,6 @@
   font-size: 10px;
   font-weight: 700;
 }
-
-/* =========================================================
-   TEMPLATE SCROLL
-
-   CHỈ DANH SÁCH TEMPLATE CUỘN
-========================================================= */
-
 .template-scroll {
   width: 100%;
   height: 1035px;
@@ -394,28 +265,19 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
-
 .template-scroll::-webkit-scrollbar {
   width: 4px;
 }
-
 .template-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .template-scroll::-webkit-scrollbar-thumb {
   border-radius: 20px;
   background: #cbd2dc;
 }
-
 .template-scroll::-webkit-scrollbar-thumb:hover {
   background: #aeb7c4;
 }
-
-/* =========================================================
-   TEMPLATE CARD
-========================================================= */
-
 .template-card {
   display: block;
   width: 100%;
@@ -426,31 +288,21 @@
   background: transparent;
   cursor: pointer;
   text-align: left;
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
-
 .template-card:last-child {
   margin-bottom: 0;
 }
-
 .template-card:hover {
   transform: translateY(-1px);
   border-color: #dce3ec;
   background: #ffffff;
 }
-
 .template-card.active {
   border-color: #316bbd;
   background: #ffffff;
-  box-shadow:
-    0 3px 15px
-    rgba(38, 77, 132, 0.1);
+  box-shadow: 0 3px 15px rgba(38, 77, 132, 0.1);
 }
-
 .template-card > strong {
   display: block;
   margin-top: 6px;
@@ -460,7 +312,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .template-card > span {
   display: block;
   margin-top: 2px;
@@ -470,11 +321,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-/* =========================================================
-   TEMPLATE THUMBNAIL
-========================================================= */
-
 .template-thumbnail {
   height: 122px;
   overflow: hidden;
@@ -483,31 +329,24 @@
   border-radius: 6px;
   background: #ffffff;
 }
-
 .thumb-header {
   display: flex;
   align-items: center;
   gap: 5px;
   margin-bottom: 9px;
   padding-bottom: 7px;
-  border-bottom:
-    3px solid
-    var(--template-color);
+  border-bottom: 3px solid var(--template-color);
 }
-
 .thumb-avatar {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   border-radius: 50%;
-  background:
-    var(--template-color);
+  background: var(--template-color);
 }
-
 .thumb-heading {
   width: 100%;
 }
-
 .thumb-heading span,
 .thumb-heading small,
 .thumb-line,
@@ -516,42 +355,30 @@
   border-radius: 10px;
   background: #dce1e8;
 }
-
 .thumb-heading span {
   width: 70%;
   height: 4px;
   margin-bottom: 3px;
-  background:
-    var(--template-color);
+  background: var(--template-color);
 }
-
 .thumb-heading small {
   width: 45%;
   height: 3px;
 }
-
 .thumb-title {
   width: 35%;
   height: 4px;
   margin: 7px 0 5px;
-  background:
-    var(--template-color);
+  background: var(--template-color);
 }
-
 .thumb-line {
   width: 100%;
   height: 3px;
   margin-bottom: 4px;
 }
-
 .thumb-line.short {
   width: 65%;
 }
-
-/* =========================================================
-   ERROR
-========================================================= */
-
 .cv-error {
   margin-top: 13px;
   padding: 11px 13px;
@@ -561,18 +388,12 @@
   color: #c13737;
   font-size: 11px;
 }
-
-/* =========================================================
-   ACTIONS
-========================================================= */
-
 .cv-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   margin-top: 17px;
 }
-
 .cv-actions button {
   height: 42px;
   padding: 0 18px;
@@ -583,26 +404,118 @@
   font-weight: 600;
   transition: 0.2s ease;
 }
-
 .download-button {
   background: #edf2f8;
   color: #274f85;
 }
-
 .download-button:hover {
   background: #e1e9f3;
 }
-
 .generate-button {
   background: #6046e9;
   color: #ffffff;
 }
-
 .generate-button:hover:not(:disabled) {
   background: #5138d8;
 }
-
 .generate-button:disabled {
   cursor: not-allowed;
   opacity: 0.65;
+}
+@media (max-width: 1200px) {
+  .cv-builder-page {
+    overflow-x: hidden;
+  }
+  .cv-builder-layout {
+    width: 100%;
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
+  .template-column {
+    width: 100%;
+    min-width: 0;
+    grid-column: 1 / -1;
+  }
+  .template-scroll {
+    display: flex;
+    width: 100%;
+    height: auto;
+    gap: 10px;
+    padding: 0 0 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .template-card {
+    width: 140px;
+    min-width: 140px;
+    margin: 0;
+  }
+}
+@media (max-width: 992px) {
+  .cv-builder-layout {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+  .cv-form-card {
+    width: 100%;
+  }
+  .cv-preview-column {
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+  }
+  .cv-paper-area {
+    width: 794px;
+  }
+  .cv-paper-wrapper {
+    width: 794px;
+  }
+  .cv-paper {
+    width: 794px;
+  }
+  .template-column {
+    width: 100%;
+  }
+}
+@media (max-width: 576px) {
+  .cv-builder-page {
+    padding: 24px 0 40px;
+  }
+  .cv-builder-container {
+    width: calc(100% - 24px);
+  }
+  .cv-builder-header {
+    margin-bottom: 20px;
+  }
+  .cv-builder-header h1 {
+    font-size: 25px;
+  }
+  .cv-builder-header p {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .cv-form-card {
+    padding: 18px 16px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .avatar-upload-section {
+    align-items: flex-start;
+  }
+  .cv-actions {
+    width: 100%;
+  }
+  .cv-actions button {
+    flex: 1;
+    padding: 0 12px;
+  }
+  .template-scroll {
+    gap: 8px;
+  }
+  .template-card {
+    width: 125px;
+    min-width: 125px;
+  }
 }

@@ -71,3 +71,47 @@
   bottom: -100px;
   left: 7%;
 }
+
+
+@media (max-width: 600px) {
+  .employer-page-hero {
+    min-height: 210px;
+  }
+
+  .employer-hero-content {
+    min-height: 210px;
+    padding: 28px 0;
+  }
+
+  .employer-hero-badge {
+    padding: 6px 11px;
+    margin-bottom: 12px;
+    font-size: 10px;
+  }
+
+  .employer-hero-content h1 {
+    margin-bottom: 12px;
+    font-size: 30px;
+    line-height: 1.25;
+  }
+
+  .employer-hero-content p {
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .employer-decoration-one {
+    width: 190px;
+    height: 190px;
+    top: -100px;
+    right: -50px;
+  }
+
+  .employer-decoration-two {
+    width: 120px;
+    height: 120px;
+    bottom: -70px;
+    left: -30px;
+  }
+}

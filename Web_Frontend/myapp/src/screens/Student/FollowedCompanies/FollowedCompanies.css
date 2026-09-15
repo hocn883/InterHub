@@ -6,12 +6,10 @@
     radial-gradient(circle at 90% 10%, #edf1ff 0, transparent 30%),
     #f8faff;
 }
-
 .followed-companies-content {
   padding-top: 45px;
   padding-bottom: 80px;
 }
-
 .followed-company-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -23,4 +21,24 @@
   color: #64748b;
   font-size: 16px;
   font-weight: 500;
+}
+@media (max-width: 992px) {
+  .followed-company-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+@media (max-width: 576px) {
+  .followed-companies-content {
+    padding-top: 25px;
+    padding-bottom: 50px;
+  }
+  .followed-company-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .followed-companies-empty {
+    padding: 40px 15px;
+    font-size: 14px;
+  }
 }

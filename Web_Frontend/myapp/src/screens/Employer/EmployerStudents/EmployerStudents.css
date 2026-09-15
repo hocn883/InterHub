@@ -305,6 +305,7 @@
   justify-content: center;
   width: 34px;
   height: 34px;
+  flex-shrink: 0;
   overflow: hidden;
   border-radius: 50%;
   background: #edf1f6;
@@ -319,6 +320,7 @@
 
 .employer-student-lecturer-info > div:last-child {
   display: flex;
+  min-width: 0;
   flex-direction: column;
 }
 
@@ -363,4 +365,222 @@
   margin: 0;
   font-size: 13px;
   color: #8a94a5;
+}
+
+@media (max-width: 768px) {
+  .employer-students-main {
+    padding-top: 26px;
+    padding-bottom: 50px;
+  }
+
+  .employer-students-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .employer-students-heading h2 {
+    font-size: 24px;
+  }
+
+  .employer-students-tabs {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+
+  .employer-students-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .employer-students-tabs button {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .employer-student-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 0;
+  }
+
+  .employer-student-info-item {
+    padding: 0 14px;
+  }
+
+  .employer-student-info-item:nth-child(2) {
+    border-right: none;
+  }
+
+  .employer-student-info-item:nth-child(3) {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .employer-students-main {
+    padding-top: 22px;
+    padding-bottom: 40px;
+  }
+
+  .employer-students-heading {
+    margin-bottom: 18px;
+  }
+
+  .employer-students-heading .section-label {
+    margin-bottom: 5px;
+    font-size: 10px;
+  }
+
+  .employer-students-heading h2 {
+    font-size: 21px;
+  }
+
+  .employer-students-heading p {
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .employer-students-tabs {
+    gap: 5px;
+    margin-bottom: 16px;
+    padding: 4px;
+    border-radius: 10px;
+  }
+
+  .employer-students-tabs button {
+    gap: 6px;
+    padding: 9px 11px;
+    font-size: 11px;
+  }
+
+  .employer-students-tabs button span {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    font-size: 9px;
+  }
+
+  .employer-students-toolbar {
+    margin-bottom: 16px;
+  }
+
+  .employer-students-search {
+    width: 100%;
+    padding: 0 11px;
+  }
+
+  .employer-students-search input {
+    height: 42px;
+    font-size: 12px;
+  }
+
+  .employer-students-list {
+    gap: 12px;
+  }
+
+  .employer-student-card {
+    border-radius: 12px;
+  }
+
+  .employer-student-header {
+    padding: 16px;
+  }
+
+  .employer-student-profile {
+    align-items: flex-start;
+    gap: 11px;
+  }
+
+  .employer-student-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .employer-student-avatar svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .employer-student-title-row {
+    gap: 7px;
+  }
+
+  .employer-student-title-row h3 {
+    font-size: 15px;
+  }
+
+  .employer-student-name p {
+    margin-top: 4px;
+    font-size: 11px;
+  }
+
+  .employer-student-status {
+    padding: 4px 8px;
+    font-size: 9px;
+  }
+
+  .employer-student-info-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 5px 16px;
+  }
+
+  .employer-student-info-item,
+  .employer-student-info-item:first-child,
+  .employer-student-info-item:nth-child(3) {
+    padding: 12px 0;
+    border-right: none;
+    border-bottom: 1px solid #eef1f5;
+  }
+
+  .employer-student-info-item:last-child {
+    border-bottom: none;
+  }
+
+  .employer-student-info-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .employer-student-info-item span {
+    font-size: 10px;
+  }
+
+  .employer-student-info-item strong {
+    font-size: 12px;
+  }
+
+  .employer-student-footer {
+    padding: 14px 16px;
+  }
+
+  .employer-student-lecturer-info strong {
+    font-size: 12px;
+  }
+
+  .employer-student-lecturer-info small {
+    font-size: 10px;
+  }
+
+  .employer-students-empty {
+    min-height: 190px;
+    padding: 28px 16px;
+    border-radius: 12px;
+  }
+
+  .employer-students-empty svg {
+    width: 29px;
+    height: 29px;
+  }
+
+  .employer-students-empty h3 {
+    font-size: 15px;
+  }
+
+  .employer-students-empty p {
+    font-size: 11px;
+  }
 }

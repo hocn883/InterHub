@@ -1,18 +1,13 @@
 .application-card {
   display: flex;
   gap: 20px;
-
   padding: 24px;
-
   background: #ffffff;
-
   border: 1px solid #e5e7eb;
   border-radius: 16px;
-
   box-shadow:
     0 2px 6px rgba(15, 23, 42, 0.04),
     0 8px 24px rgba(15, 23, 42, 0.05);
-
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -21,76 +16,48 @@
 
 .application-card:hover {
   transform: translateY(-2px);
-
   border-color: #cbd5e1;
-
   box-shadow:
     0 4px 12px rgba(15, 23, 42, 0.06),
     0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
-
-/* =========================
-   AVATAR
-========================= */
-
 .student-avatar {
   flex-shrink: 0;
-
   width: 56px;
   height: 56px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 14px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #2563eb,
-      #1d4ed8
-    );
-
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
   color: #ffffff;
-
   font-size: 22px;
   font-weight: 800;
-
   box-shadow:
     0 6px 14px rgba(37, 99, 235, 0.2);
 }
-
-
-/* =========================
-   MAIN
-========================= */
 
 .application-main {
   flex: 1;
   min-width: 0;
 }
 
-
-/* =========================
-   TOP
-========================= */
-
 .application-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
-
   margin-bottom: 18px;
 }
 
 .student-heading h3 {
   margin: 0 0 7px;
-
   color: #111827;
-
   font-size: 19px;
   font-weight: 750;
   line-height: 1.3;
@@ -100,11 +67,8 @@
   display: flex;
   align-items: center;
   gap: 6px;
-
   margin: 0;
-
   color: #6b7280;
-
   font-size: 13px;
 }
 
@@ -118,22 +82,13 @@
   font-weight: 650;
 }
 
-
-/* =========================
-   STATUS
-========================= */
-
 .application-status {
   flex-shrink: 0;
-
   display: inline-flex;
   align-items: center;
   gap: 6px;
-
   padding: 7px 12px;
-
   border-radius: 999px;
-
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
@@ -146,44 +101,31 @@
 .status-pending {
   background: #fff7ed;
   color: #c2410c;
-
   border: 1px solid #fed7aa;
 }
 
 .status-approved {
   background: #ecfdf3;
   color: #15803d;
-
   border: 1px solid #bbf7d0;
 }
 
 .status-rejected {
   background: #fff1f2;
   color: #be123c;
-
   border: 1px solid #fecdd3;
 }
 
 .status-default {
   background: #f3f4f6;
   color: #4b5563;
-
   border: 1px solid #e5e7eb;
 }
 
-
-/* =========================
-   INFO
-========================= */
-
 .application-info {
   display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-
   margin-bottom: 18px;
 }
 
@@ -191,39 +133,28 @@
   display: flex;
   align-items: center;
   gap: 11px;
-
   min-width: 0;
-
   padding: 13px 14px;
-
   background: #f8fafc;
-
   border: 1px solid #eef2f7;
   border-radius: 11px;
 }
 
 .info-icon {
   flex-shrink: 0;
-
   width: 36px;
   height: 36px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   background: #eff6ff;
-
   border-radius: 9px;
-
   color: #2563eb;
-
   font-size: 15px;
 }
 
 .info-content {
   min-width: 0;
-
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -231,35 +162,23 @@
 
 .info-content span {
   color: #94a3b8;
-
   font-size: 11px;
   font-weight: 600;
 }
 
 .info-content strong {
   overflow: hidden;
-
   color: #334155;
-
   font-size: 13px;
   font-weight: 700;
-
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-
-/* =========================
-   COVER LETTER
-========================= */
-
 .cover-letter {
   padding: 15px 16px;
-
   margin-bottom: 18px;
-
   background: #fafafa;
-
   border: 1px solid #e5e7eb;
   border-left: 3px solid #2563eb;
   border-radius: 10px;
@@ -269,11 +188,8 @@
   display: flex;
   align-items: center;
   gap: 7px;
-
   margin-bottom: 7px;
-
   color: #374151;
-
   font-size: 12px;
   font-weight: 700;
 }
@@ -284,26 +200,17 @@
 
 .cover-letter p {
   margin: 0;
-
   color: #64748b;
-
   font-size: 13px;
   line-height: 1.65;
 }
-
-
-/* =========================
-   ACTIONS
-========================= */
 
 .application-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-
   padding-top: 17px;
-
   border-top: 1px solid #edf0f3;
 }
 
@@ -313,11 +220,6 @@
   align-items: center;
   gap: 9px;
 }
-
-
-/* =========================
-   COMMON BUTTON
-========================= */
 
 .application-card button,
 .application-card a {
@@ -329,23 +231,16 @@
 .reject-button,
 .approve-button {
   height: 38px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-
   padding: 0 14px;
-
   border-radius: 9px;
-
   font-size: 13px;
   font-weight: 650;
-
   text-decoration: none;
-
   cursor: pointer;
-
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
@@ -360,16 +255,9 @@
   transform: scale(0.97);
 }
 
-
-/* =========================
-   CV BUTTON
-========================= */
-
 .cv-button {
   background: #eff6ff;
-
   border: 1px solid #bfdbfe;
-
   color: #1d4ed8;
 }
 
@@ -378,58 +266,33 @@
   border-color: #93c5fd;
 }
 
-
-/* =========================
-   VIEW BUTTON
-========================= */
-
 .view-button {
   background: #ffffff;
-
   border: 1px solid #d1d5db;
-
   color: #475569;
 }
 
 .view-button:hover {
   background: #f8fafc;
-
   border-color: #94a3b8;
-
   color: #1e293b;
 }
 
-
-/* =========================
-   REJECT
-========================= */
-
 .reject-button {
   background: #ffffff;
-
   border: 1px solid #fecaca;
-
   color: #dc2626;
 }
 
 .reject-button:hover:not(:disabled) {
   background: #fef2f2;
-
   border-color: #fca5a5;
 }
 
-
-/* =========================
-   APPROVE
-========================= */
-
 .approve-button {
   background: #2563eb;
-
   border: 1px solid #2563eb;
-
   color: #ffffff;
-
   box-shadow:
     0 4px 10px rgba(37, 99, 235, 0.18);
 }
@@ -438,8 +301,144 @@
   background: #1d4ed8;
   border-color: #1d4ed8;
 }
+
 .reject-button:disabled,
 .approve-button:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .application-card {
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .application-info {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .application-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .application-actions-left,
+  .application-decision-actions {
+    width: 100%;
+  }
+
+  .application-actions-left > *,
+  .application-decision-actions > * {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .application-card {
+    position: relative;
+    display: block;
+    padding: 16px;
+    border-radius: 13px;
+  }
+
+  .student-avatar {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 12px;
+    border-radius: 11px;
+    font-size: 18px;
+  }
+
+  .application-top {
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 14px;
+  }
+
+  .student-heading h3 {
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+
+  .student-id {
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+
+  .application-status {
+    padding: 5px 9px;
+    font-size: 10px;
+  }
+
+  .application-info {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .info-item {
+    padding: 10px 11px;
+  }
+
+  .info-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .info-content span {
+    font-size: 10px;
+  }
+
+  .info-content strong {
+    font-size: 12px;
+  }
+
+  .cover-letter {
+    margin-bottom: 14px;
+    padding: 12px 13px;
+  }
+
+  .cover-letter-title {
+    font-size: 11px;
+  }
+
+  .cover-letter p {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .application-actions {
+    padding-top: 14px;
+  }
+
+  .application-actions-left,
+  .application-decision-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .cv-button,
+  .view-button,
+  .reject-button,
+  .approve-button {
+    width: 100%;
+    height: 37px;
+    padding: 0 8px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .application-card {
+    padding: 14px;
+  }
+
+  .application-actions-left,
+  .application-decision-actions {
+    grid-template-columns: 1fr;
+  }
 }

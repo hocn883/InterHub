@@ -249,3 +249,162 @@
     transform: rotate(360deg);
   }
 }
+
+
+@media (max-width: 768px) {
+  .student-detail-page {
+    padding: 24px 16px 45px;
+  }
+
+  .student-profile-header {
+    padding: 24px;
+    gap: 18px;
+  }
+
+  .student-avatar {
+    width: 76px;
+    height: 76px;
+    font-size: 29px;
+  }
+
+  .student-title-row h1 {
+    font-size: 23px;
+  }
+
+  .student-main-info > p {
+    font-size: 14px;
+  }
+
+  .student-information {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 6px 12px;
+  }
+
+  .student-info-item {
+    padding: 16px 12px;
+  }
+
+  .student-section {
+    padding: 24px;
+  }
+
+  .student-section-header h2 {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 480px) {
+  .student-detail-page {
+    padding: 20px 12px 35px;
+  }
+
+  .student-back-button {
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+
+  .student-profile-card,
+  .student-section {
+    border-radius: 14px;
+  }
+
+  .student-profile-header {
+    align-items: flex-start;
+    padding: 20px 16px;
+    gap: 14px;
+  }
+
+  .student-avatar {
+    width: 62px;
+    height: 62px;
+    border-radius: 14px;
+    font-size: 24px;
+  }
+
+  .student-title-row {
+    gap: 7px;
+  }
+
+  .student-title-row h1 {
+    font-size: 19px;
+  }
+
+  .student-main-info > p {
+    margin: 5px 0 4px;
+    font-size: 13px;
+  }
+
+  .student-code {
+    font-size: 12px;
+  }
+
+  .student-status {
+    padding: 5px 9px;
+    font-size: 10px;
+  }
+
+  .student-information {
+    grid-template-columns: 1fr;
+    padding: 8px 14px;
+  }
+
+  .student-info-item {
+    padding: 12px 4px;
+    border-bottom: 1px solid #edf1f5;
+  }
+
+  .student-info-item:last-child {
+    border-bottom: 0;
+  }
+
+  .student-info-item span,
+  .student-detail-item span {
+    margin-bottom: 5px;
+    font-size: 11px;
+  }
+
+  .student-info-item strong,
+  .student-detail-item strong {
+    font-size: 13px;
+  }
+
+  .student-section {
+    margin-top: 14px;
+    padding: 20px 16px;
+  }
+
+  .student-section-header > span {
+    font-size: 10px;
+  }
+
+  .student-section-header h2 {
+    font-size: 18px;
+  }
+
+  .student-section-header p {
+    font-size: 13px;
+  }
+
+  .student-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .student-detail-item {
+    padding: 14px;
+  }
+
+  .student-state {
+    min-height: 55vh;
+    padding: 20px;
+  }
+
+  .student-state h2 {
+    font-size: 19px;
+  }
+
+  .student-state p {
+    font-size: 13px;
+  }
+}

@@ -435,3 +435,167 @@
   color: #888;
   font-size: 14px;
 }
+
+@media (max-width: 600px) {
+  .invitation-details-page {
+    padding: 20px 12px 40px;
+  }
+
+  .invitation-back {
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+
+  .invitation-mail {
+    border-radius: 11px;
+  }
+
+  .invitation-mail-top {
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px;
+    flex-wrap: wrap;
+  }
+
+  .invitation-mail-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 17px;
+  }
+
+  .invitation-mail-top > div:nth-child(2) {
+    min-width: 0;
+  }
+
+  .invitation-status {
+    padding: 6px 9px;
+    font-size: 10px;
+  }
+
+  .invitation-mail-info {
+    padding: 18px 16px;
+  }
+
+  .invitation-person {
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .invitation-person > span {
+    width: 28px;
+    font-size: 12px;
+  }
+
+  .invitation-person-content {
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .invitation-person-content img,
+  .invitation-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .invitation-person-content > div {
+    min-width: 0;
+  }
+
+  .invitation-person-content strong {
+    font-size: 13px;
+  }
+
+  .invitation-person-content p {
+    overflow-wrap: anywhere;
+    font-size: 11px;
+  }
+
+  .invitation-date {
+    position: static;
+    margin-top: 14px;
+    padding-left: 36px;
+    font-size: 11px;
+  }
+
+  .invitation-subject {
+    padding: 20px 16px 7px;
+  }
+
+  .invitation-subject h1 {
+    font-size: 19px;
+  }
+
+  .invitation-message {
+    padding: 10px 16px 20px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .invitation-job {
+    margin: 0 16px;
+    padding: 16px;
+  }
+
+  .invitation-job-title {
+    gap: 9px;
+  }
+
+  .invitation-job-title h2 {
+    font-size: 16px;
+  }
+
+  .invitation-job-info {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .invitation-info-icon {
+    width: 33px;
+    height: 33px;
+  }
+
+  .invitation-job-content {
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+
+  .invitation-job-content > p {
+    font-size: 13px;
+  }
+
+  .invitation-cv {
+    align-items: stretch;
+    flex-direction: column;
+    margin: 16px 16px 0;
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .invitation-cv > div {
+    min-width: 0;
+  }
+
+  .invitation-cv > div > div {
+    min-width: 0;
+  }
+
+  .invitation-cv > div > div > strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .invitation-cv a {
+    width: 100%;
+  }
+
+  .invitation-signature {
+    padding: 24px 16px;
+  }
+
+  .invitation-empty {
+    padding: 50px 16px;
+  }
+}

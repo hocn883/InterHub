@@ -2,17 +2,17 @@
   min-height: 100vh;
   background: #f7f8fb;
 }
+
 .page-container {
   width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
 }
-/* ================================
-   MAIN
-================================ */
+
 .employer-jobs-main {
   padding-top: 45px;
   padding-bottom: 80px;
 }
+
 .employer-job-content {
   padding: 26px;
   background: #ffffff;
@@ -20,9 +20,7 @@
   border-radius: 16px;
   box-shadow: 0 8px 28px rgba(31, 35, 48, 0.04);
 }
-/* ================================
-   HEADING
-================================ */
+
 .employer-job-heading {
   display: flex;
   align-items: flex-end;
@@ -30,6 +28,7 @@
   gap: 24px;
   margin-bottom: 24px;
 }
+
 .employer-job-heading .section-label {
   display: inline-block;
   margin-bottom: 7px;
@@ -38,6 +37,7 @@
   font-weight: 800;
   letter-spacing: 1px;
 }
+
 .employer-job-heading h2 {
   margin: 0;
   color: #202636;
@@ -45,14 +45,13 @@
   font-weight: 700;
   line-height: 1.25;
 }
+
 .employer-job-heading p {
   margin: 7px 0 0;
   color: #8a91a2;
   font-size: 13px;
 }
-/* ================================
-   ADD JOB BUTTON
-================================ */
+
 .employer-add-job-button {
   display: inline-flex;
   align-items: center;
@@ -75,6 +74,7 @@
     box-shadow 0.2s ease,
     transform 0.2s ease;
 }
+
 .employer-add-job-icon {
   width: 29px;
   height: 29px;
@@ -85,6 +85,7 @@
   background: rgba(255, 255, 255, 0.16);
   font-size: 18px;
 }
+
 .employer-add-job-button:hover {
   background: #5037d4;
   border-color: #5037d4;
@@ -92,9 +93,7 @@
   transform: translateY(-1px);
   box-shadow: 0 10px 24px rgba(96, 70, 233, 0.24);
 }
-/* ================================
-   FILTER
-================================ */
+
 .employer-job-filter {
   display: flex;
   align-items: center;
@@ -104,6 +103,7 @@
   padding-bottom: 22px;
   border-bottom: 1px solid #f0f0f4;
 }
+
 .employer-job-filter button {
   display: inline-flex;
   align-items: center;
@@ -123,16 +123,19 @@
     border-color 0.2s ease,
     color 0.2s ease;
 }
+
 .employer-job-filter button:hover {
   border-color: #a99af2;
   background: #f8f6ff;
   color: #6046e9;
 }
+
 .employer-job-filter button.active {
   border-color: #6046e9;
   background: #6046e9;
   color: #ffffff;
 }
+
 .employer-job-filter button span {
   min-width: 21px;
   padding: 2px 6px;
@@ -143,15 +146,18 @@
   font-weight: 700;
   text-align: center;
 }
+
 .employer-job-filter button.active span {
   background: rgba(255, 255, 255, 0.18);
   color: #ffffff;
 }
+
 .employer-job-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
+
 .employer-job-empty {
   display: flex;
   flex-direction: column;
@@ -164,15 +170,148 @@
   background: #fafafd;
   text-align: center;
 }
+
 .employer-job-empty h3 {
   margin: 0 0 8px;
   color: #303646;
   font-size: 17px;
   font-weight: 700;
 }
+
 .employer-job-empty p {
   margin: 0;
   color: #949aa8;
   font-size: 13px;
   line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    width: calc(100% - 32px);
+  }
+
+  .employer-jobs-main {
+    padding-top: 32px;
+    padding-bottom: 55px;
+  }
+
+  .employer-job-content {
+    padding: 22px;
+  }
+
+  .employer-job-heading {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .employer-job-heading h2 {
+    font-size: 23px;
+  }
+
+  .employer-add-job-button {
+    width: fit-content;
+  }
+
+  .employer-job-filter {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 16px;
+    scrollbar-width: none;
+  }
+
+  .employer-job-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .employer-job-filter button {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    width: calc(100% - 24px);
+  }
+
+  .employer-jobs-main {
+    padding-top: 25px;
+    padding-bottom: 40px;
+  }
+
+  .employer-job-content {
+    padding: 16px;
+    border-radius: 13px;
+  }
+
+  .employer-job-heading {
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .employer-job-heading .section-label {
+    margin-bottom: 5px;
+    font-size: 9px;
+  }
+
+  .employer-job-heading h2 {
+    font-size: 20px;
+  }
+
+  .employer-job-heading p {
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .employer-add-job-button {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  .employer-add-job-icon {
+    width: 27px;
+    height: 27px;
+    font-size: 16px;
+  }
+
+  .employer-job-filter {
+    width: 100%;
+    gap: 7px;
+    margin-bottom: 18px;
+    padding-bottom: 15px;
+  }
+
+  .employer-job-filter button {
+    padding: 7px 11px;
+    font-size: 10px;
+  }
+
+  .employer-job-filter button span {
+    min-width: 19px;
+    padding: 2px 5px;
+    font-size: 9px;
+  }
+
+  .employer-job-list {
+    gap: 12px;
+  }
+
+  .employer-job-empty {
+    min-height: 190px;
+    padding: 30px 15px;
+    border-radius: 11px;
+  }
+
+  .employer-job-empty h3 {
+    font-size: 15px;
+  }
+
+  .employer-job-empty p {
+    font-size: 11px;
+  }
 }

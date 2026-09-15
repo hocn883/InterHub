@@ -176,3 +176,79 @@
 .employer-invitation-detail-button svg {
   font-size: 12px;
 }
+@media (max-width: 600px) {
+  .employer-invitation-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .employer-invitation-card-main {
+    gap: 12px;
+  }
+
+  .employer-invitation-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    font-size: 18px;
+  }
+
+  .employer-invitation-card-header {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 13px;
+  }
+
+  .employer-invitation-card-header h3 {
+    font-size: 14px;
+  }
+
+  .employer-invitation-status {
+    width: fit-content;
+    padding: 5px 8px;
+    font-size: 8px;
+  }
+
+  .employer-invitation-card-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .employer-invitation-card-meta > div {
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .employer-invitation-card-meta strong {
+    overflow: hidden;
+    font-size: 9px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .employer-invitation-detail-button {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .employer-invitation-card {
+    padding: 14px;
+  }
+
+  .employer-invitation-card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .employer-invitation-card-meta {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}

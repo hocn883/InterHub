@@ -1,21 +1,11 @@
-/* =========================================
-   CARD
-========================================= */
-
 .myjob-card {
   width: 100%;
   padding: 22px;
-
   background: #ffffff;
-
   border: 1px solid #e2e8f0;
   border-radius: 14px;
-
   box-sizing: border-box;
-
-  box-shadow:
-    0 3px 12px rgba(15, 23, 42, 0.04);
-
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
@@ -23,20 +13,13 @@
 
 .myjob-card:hover {
   border-color: #bfdbfe;
-
-  box-shadow:
-    0 7px 22px rgba(37, 99, 235, 0.07);
+  box-shadow: 0 7px 22px rgba(37, 99, 235, 0.07);
 }
-
-/* =========================================
-   HEADER
-========================================= */
 
 .myjob-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-
   gap: 24px;
 }
 
@@ -49,18 +32,14 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-
   gap: 10px;
 }
 
 .myjob-title {
   color: #0f172a;
-
   font-size: 18px;
   font-weight: 750;
-
   text-decoration: none;
-
   transition: color 0.2s ease;
 }
 
@@ -68,18 +47,11 @@
   color: #2563eb;
 }
 
-/* =========================================
-   STATUS
-========================================= */
-
 .myjob-status {
   display: inline-flex;
   align-items: center;
-
   padding: 5px 10px;
-
   border-radius: 999px;
-
   font-size: 11px;
   font-weight: 700;
 }
@@ -99,20 +71,12 @@
   color: #059669;
 }
 
-/* =========================================
-   CREATED DATE
-========================================= */
-
 .myjob-created {
   display: flex;
   align-items: center;
-
   gap: 6px;
-
   margin-top: 9px;
-
   color: #94a3b8;
-
   font-size: 12px;
 }
 
@@ -120,28 +84,17 @@
   font-size: 13px;
 }
 
-/* =========================================
-   APPLICATION COUNT
-========================================= */
-
 .myjob-applicant-box {
   min-width: 115px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 10px;
-
   padding: 11px 14px;
-
   background: #f8fafc;
-
   border: 1px solid #e2e8f0;
   border-radius: 10px;
-
   text-decoration: none;
-
   transition: 0.2s ease;
 }
 
@@ -152,162 +105,113 @@
 
 .myjob-applicant-box > svg {
   color: #2563eb;
-
   font-size: 20px;
 }
 
 .myjob-applicant-box div {
   display: flex;
   flex-direction: column;
-
   line-height: 1.2;
 }
 
 .myjob-applicant-box strong {
   color: #0f172a;
-
   font-size: 16px;
   font-weight: 750;
 }
 
 .myjob-applicant-box span {
   margin-top: 3px;
-
   color: #64748b;
-
   font-size: 10px;
 }
 
-/* =========================================
-   INFO
-========================================= */
-
 .myjob-info-grid {
   display: grid;
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
-
   margin-top: 20px;
 }
 
 .myjob-info-item {
   min-width: 0;
-
   display: flex;
   align-items: center;
-
   gap: 10px;
-
   padding: 13px;
-
   background: #f8fafc;
-
   border-radius: 9px;
 }
 
 .myjob-info-icon {
   width: 34px;
   height: 34px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   flex-shrink: 0;
-
   background: #eff6ff;
   color: #2563eb;
-
   border-radius: 8px;
-
   font-size: 15px;
 }
 
 .myjob-info-item > div:last-child {
   min-width: 0;
-
   display: flex;
   flex-direction: column;
-
   gap: 4px;
 }
 
 .myjob-info-item span {
   color: #94a3b8;
-
   font-size: 10px;
   font-weight: 500;
 }
 
 .myjob-info-item strong {
   overflow: hidden;
-
   color: #334155;
-
   font-size: 12px;
   font-weight: 650;
-
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-/* =========================================
-   FOOTER
-========================================= */
 
 .myjob-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 20px;
-
   margin-top: 20px;
   padding-top: 16px;
-
   border-top: 1px solid #e2e8f0;
 }
-
-/* =========================================
-   MAIN ACTIONS
-========================================= */
 
 .myjob-main-actions {
   display: flex;
   align-items: center;
-
   gap: 8px;
 }
 
 .myjob-button {
   height: 38px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   gap: 7px;
-
   padding: 0 14px;
-
   border-radius: 8px;
-
   font-size: 12px;
   font-weight: 650;
-
   text-decoration: none;
-
   box-sizing: border-box;
-
   transition: 0.2s ease;
 }
 
 .myjob-view {
   background: #ffffff;
   color: #2563eb;
-
   border: 1px solid #bfdbfe;
 }
 
@@ -319,7 +223,6 @@
 .myjob-applications {
   background: #2563eb;
   color: #ffffff;
-
   border: 1px solid #2563eb;
 }
 
@@ -328,47 +231,30 @@
   border-color: #1d4ed8;
 }
 
-/* =========================================
-   MANAGE ACTIONS
-========================================= */
-
 .myjob-manage-actions {
   display: flex;
   align-items: center;
-
   gap: 6px;
 }
 
 .myjob-icon-button {
   height: 36px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   gap: 6px;
-
   padding: 0 10px;
-
   background: transparent;
-
   border: 1px solid transparent;
   border-radius: 7px;
-
   font-family: inherit;
   font-size: 11px;
   font-weight: 650;
-
   text-decoration: none;
-
   cursor: pointer;
-
   box-sizing: border-box;
-
   transition: 0.2s ease;
 }
-
-/* EDIT */
 
 .myjob-icon-button.edit {
   color: #475569;
@@ -379,12 +265,9 @@
   color: #2563eb;
 }
 
-/* CLOSE */
-
 .myjob-icon-button.close {
   background: #fff7ed;
   color: #c2410c;
-
   border-color: #fed7aa;
 }
 
@@ -392,8 +275,6 @@
   background: #ffedd5;
   border-color: #fb923c;
 }
-
-/* DELETE */
 
 .myjob-icon-button.delete {
   color: #dc2626;
@@ -407,4 +288,158 @@
 .myjob-icon-button:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .myjob-card {
+    padding: 18px;
+  }
+
+  .myjob-header {
+    gap: 16px;
+  }
+
+  .myjob-title {
+    font-size: 16px;
+  }
+
+  .myjob-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .myjob-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .myjob-main-actions,
+  .myjob-manage-actions {
+    width: 100%;
+  }
+
+  .myjob-main-actions .myjob-button {
+    flex: 1;
+  }
+
+  .myjob-manage-actions {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .myjob-card {
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .myjob-header {
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .myjob-header-main {
+    width: 100%;
+  }
+
+  .myjob-title-row {
+    align-items: flex-start;
+    gap: 7px;
+  }
+
+  .myjob-title {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .myjob-status {
+    padding: 4px 8px;
+    font-size: 9px;
+  }
+
+  .myjob-created {
+    margin-top: 7px;
+    font-size: 10px;
+  }
+
+  .myjob-applicant-box {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    padding: 10px 12px;
+  }
+
+  .myjob-applicant-box > svg {
+    font-size: 18px;
+  }
+
+  .myjob-applicant-box strong {
+    font-size: 14px;
+  }
+
+  .myjob-info-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 15px;
+  }
+
+  .myjob-info-item {
+    padding: 10px;
+  }
+
+  .myjob-info-icon {
+    width: 31px;
+    height: 31px;
+    font-size: 13px;
+  }
+
+  .myjob-info-item strong {
+    font-size: 11px;
+  }
+
+  .myjob-footer {
+    margin-top: 15px;
+    padding-top: 14px;
+  }
+
+  .myjob-main-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .myjob-button {
+    width: 100%;
+    height: 37px;
+    padding: 0 8px;
+    font-size: 10px;
+  }
+
+  .myjob-manage-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .myjob-icon-button {
+    width: 100%;
+    height: 35px;
+    padding: 0 6px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .myjob-card {
+    padding: 13px;
+  }
+
+  .myjob-main-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .myjob-manage-actions {
+    grid-template-columns: 1fr;
+  }
 }
