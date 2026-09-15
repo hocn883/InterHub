@@ -6,7 +6,9 @@
     <link rel="stylesheet" th:href="@{/css/admin/common.css}">
     <link rel="stylesheet" th:href="@{/css/admin/students/detail.css}">
 </head>
+
 <body>
+
 <header class="admin-top-header">
     <div class="header-container">
         <a th:href="@{/admin}" class="admin-brand">
@@ -14,88 +16,124 @@
         </a>
     </div>
 </header>
+
 <nav class="admin-navbar">
     <div class="nav-container">
+
         <a th:href="@{/admin}" class="nav-item">
             Dashboard
         </a>
+
         <a th:href="@{/admin/students}" class="nav-item active">
             Sinh viên
         </a>
+
         <a th:href="@{/admin/lecturers}" class="nav-item">
             Giảng viên
         </a>
+
         <a th:href="@{/admin/employers}" class="nav-item">
             Doanh nghiệp
         </a>
+
         <a th:href="@{/admin/jobs}" class="nav-item">
             Việc làm
         </a>
+
     </div>
 </nav>
+
 <div class="breadcrumb">
     <div class="content-container">
+
         <a th:href="@{/admin}">
             Home
         </a>
+
         <span>›</span>
+
         <a th:href="@{/admin/students}">
             Sinh viên
         </a>
+
         <span>›</span>
+
         <span th:text="${student.fullName}">
         </span>
+
     </div>
 </div>
+
 <main class="content-container">
+
     <div class="page-header">
         <h1 th:text="${student.fullName}">
             Sinh viên
         </h1>
+
         <p>
             Chi tiết thông tin sinh viên
         </p>
     </div>
+
     <section class="admin-content-grid">
+
+        <!-- THÔNG TIN SINH VIÊN -->
         <div class="module-section">
+
             <div class="module-title">
                 Thông tin sinh viên
             </div>
+
             <div class="detail-row">
                 <strong>MSSV</strong>
+
                 <span th:text="${student.mssv}">
                 </span>
             </div>
+
             <div class="detail-row">
                 <strong>Họ tên</strong>
+
                 <span th:text="${student.fullName}">
                 </span>
             </div>
+
             <div class="detail-row">
                 <strong>Email</strong>
+
                 <span th:text="${student.email}">
                 </span>
             </div>
+
             <div class="detail-row">
                 <strong>Số điện thoại</strong>
+
                 <span th:text="${student.phone}">
                 </span>
             </div>
+
             <div class="detail-row">
                 <strong>Ngành</strong>
+
                 <span th:text="${student.major}">
                 </span>
             </div>
+
             <div class="detail-row">
                 <strong>Lớp</strong>
+
                 <span th:text="${student.className}">
                 </span>
             </div>
+
             <div class="detail-row">
                 <strong>Giảng viên quản lý</strong>
+
                 <span th:if="${student.lecturer != null}"
                       th:text="${student.lecturer.fullName}">
                 </span>
+
                 <span th:if="${student.lecturer == null}">
                     Chưa có
                 </span>
@@ -106,58 +144,116 @@
                 Tình trạng thực tập
             </div>
             <div class="internship-status no-job"
-                 th:if="${!hasJob}">
+                 th:if="${acceptedApplication == null}">
+
                 <h2>
                     Chưa có việc
                 </h2>
+
                 <p>
-                    Sinh viên hiện chưa có Application nào được doanh nghiệp chấp nhận.
+                    Sinh viên hiện chưa có hoặc đã thực hiện xong công việc thực tập.
                 </p>
+
             </div>
+
+
+            <!-- CÓ APPLICATION APPROVED -->
             <div class="internship-status has-job"
-                 th:if="${hasJob}">
+                 th:if="${acceptedApplication != null}">
+
                 <h2>
                     Đang thực tập
                 </h2>
+
+
+                <!-- DOANH NGHIỆP -->
                 <div class="detail-row">
+
                     <strong>
                         Doanh nghiệp
                     </strong>
+
                     <a class="object-link"
-                       th:href="@{/admin/employers/{id}(id=${acceptedApplication.job.employer.id})}"
+                       th:if="${acceptedApplication.job != null
+                               and acceptedApplication.job.employer != null}"
+                       th:href="@{/admin/employers/{id}
+                       (id=${acceptedApplication.job.employer.id})}"
                        th:text="${acceptedApplication.job.employer.companyName}">
                     </a>
+
+                    <span th:if="${acceptedApplication.job == null
+                                 or acceptedApplication.job.employer == null}">
+                        Không có thông tin
+                    </span>
+
                 </div>
+
+
+                <!-- VỊ TRÍ -->
                 <div class="detail-row">
+
                     <strong>
                         Vị trí
                     </strong>
-                    <span th:text="${acceptedApplication.job.title}">
+
+                    <span th:if="${acceptedApplication.job != null}"
+                          th:text="${acceptedApplication.job.title}">
                     </span>
+
+                    <span th:if="${acceptedApplication.job == null}">
+                        Không có thông tin
+                    </span>
+
                 </div>
+
+
+                <!-- ĐỊA ĐIỂM -->
                 <div class="detail-row">
+
                     <strong>
                         Địa điểm
                     </strong>
-                    <span th:text="${acceptedApplication.job.location}">
+
+                    <span th:if="${acceptedApplication.job != null}"
+                          th:text="${acceptedApplication.job.location}">
                     </span>
+
+                    <span th:if="${acceptedApplication.job == null}">
+                        Không có thông tin
+                    </span>
+
                 </div>
+
+
+                <!-- TRẠNG THÁI -->
                 <div class="detail-row">
+
                     <strong>
                         Trạng thái Application
                     </strong>
+
                     <span th:text="${acceptedApplication.status}">
                     </span>
+
                 </div>
+
             </div>
+
         </div>
+
     </section>
+
+
     <div class="detail-actions">
+
         <a class="action-link"
            th:href="@{/admin/logs(userId=${student.id})}">
             Xem lịch sử hoạt động
         </a>
+
     </div>
+
 </main>
+
 </body>
 </html>

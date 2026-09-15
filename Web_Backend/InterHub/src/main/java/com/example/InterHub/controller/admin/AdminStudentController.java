@@ -44,20 +44,39 @@ public class AdminStudentController {
         return "admin/students/list";
     }
     @GetMapping("/{id}")
-    public String detail(@PathVariable Long id,
-            Model model)
-    {
-        Student student = studentRepository.findById(id).orElseThrow(
-                                () -> new RuntimeException(
-                                        "Không tìm thấy sinh viên"
-                                ));
-        Optional<Application> acceptedApplication = applicationRepository
+    public String detail(
+            @PathVariable Long id,
+            Model model
+    ) {
+        System.out.println("========== STUDENT DETAIL ==========");
+        System.out.println("Student ID = " + id);
+
+        Student student = studentRepository
+                .findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Không tìm thấy sinh viên"));
+
+        System.out.println("Found student = " + student.getFullName());
+
+        Optional<Application> acceptedApplication =
+                applicationRepository
                         .findFirstByStudentIdAndStatusOrderByCreatedDateDesc(
                                 id,
-                                ApplicationStatus.APPROVED);
+                                ApplicationStatus.APPROVED
+                        );
+
         model.addAttribute("student", student);
-        model.addAttribute("acceptedApplication", acceptedApplication.orElse(null));
-        model.addAttribute("hasJob",   student.getStatus() == StudentStatus.DA_CO_VIEC);
+        model.addAttribute(
+                "acceptedApplication",
+                acceptedApplication.orElse(null)
+        );
+        model.addAttribute(
+                "hasJob",
+                student.getStatus() == StudentStatus.DA_CO_VIEC
+        );
+
+        System.out.println("Returning detail.html");
+
         return "admin/students/detail";
     }
     @GetMapping("/{id}/applications")

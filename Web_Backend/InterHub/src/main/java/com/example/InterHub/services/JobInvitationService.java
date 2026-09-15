@@ -38,7 +38,7 @@ public class JobInvitationService {
         Student student = cv.getStudent();
         boolean alreadyApplied = applicationRepository.existsByStudentIdAndJobId(student.getId(), job.getId());
         if (alreadyApplied) {
-            throw new ConflictException("Sinh viên này đã ứng tuyển vào công việc"
+            throw new ConflictException("Sinh viên này đã ứng tuyển vào công việc."
             );
         }
         boolean alreadyInvited = jobInvitationRepository.existsByStudentIdAndJobId(student.getId(), job.getId());
@@ -56,12 +56,12 @@ public class JobInvitationService {
                 .message(request.getMessage())
                 .status(JobInvitationStatus.PENDING)
                 .build();
-        jobInvitationRepository.save(jobInvitation);
-        systemLogService.saveLog(
+                 jobInvitationRepository.save(jobInvitation);
+                 systemLogService.saveLog(
                 employer,
                 Action.SEND_JOB_INVITATION.name(),
-                "Gửi lời mời công việc ID: " + jobInvitation.getJob().getTitle() +
-                        " cho sinh viên : " + student.getFullName()
+                "Gửi lời mời công việc " + jobInvitation.getJob().getTitle() +
+                        " cho sinh viên " + student.getFullName()
         );
         return jobInvitationMapper.toResponse(jobInvitation);
     }

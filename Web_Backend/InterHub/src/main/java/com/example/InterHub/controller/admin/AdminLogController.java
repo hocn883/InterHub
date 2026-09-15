@@ -24,12 +24,15 @@ public class AdminLogController {
             @RequestParam(defaultValue = "20") int size,
             Model model
     ) {
+
         PageRequest pageable = PageRequest.of(
                 page,
                 size,
                 Sort.by("createdDate").descending()
         );
+
         Page<SystemLog> logPage;
+
         if (userId != null) {
             logPage = systemLogRepository.findByUserId(
                     userId,
@@ -37,32 +40,40 @@ public class AdminLogController {
             );
         } else {
             logPage = systemLogRepository.findAll(
-                    pageable);
+                    pageable
+            );
         }
+
         model.addAttribute(
                 "logs",
                 logPage.getContent()
         );
+
         model.addAttribute(
                 "currentPage",
                 logPage.getNumber()
         );
+
         model.addAttribute(
                 "totalPages",
                 logPage.getTotalPages()
         );
+
         model.addAttribute(
                 "totalItems",
                 logPage.getTotalElements()
         );
+
         model.addAttribute(
                 "pageSize",
                 logPage.getSize()
         );
+
         model.addAttribute(
                 "userId",
                 userId
         );
+
         return "admin/logs/list";
     }
 }
