@@ -36,7 +36,6 @@ import StudentDetails from "./components/StudentDetails/StudentDetails";
 function App() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const { pathname } = useLocation();
-
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -46,7 +45,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
         <Route element={<ProtectedRoute currentUser={currentUser} />}>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />

@@ -1,15 +1,8 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import {
-  FiBookOpen,
-  FiHash,
-  FiArrowRight,
-  FiBriefcase,
-  FiLayers,
-  FiMessageCircle,
-} from "react-icons/fi";
+import {FiBookOpen,FiHash,FiArrowRight,FiBriefcase,FiLayers,FiMessageCircle,} from "react-icons/fi";
 import { UserContext } from "../../../../contexts/UserContext";
-import { authApi } from "../../../../utils/api";
+import { authApi ,endpoints} from "../../../../utils/api";
 import "./StudentCard.css";
 
 function StudentCard({ student }) {
@@ -56,7 +49,7 @@ function StudentCard({ student }) {
     }
     try{
       const response=await authApi(token).post(
-        `https://interhub1611.onrender.com/chat/rooms/open/${currentUser.id}/${student.id}`
+        endpoints.openRoom(currentUser.id,student.id)
       );
       console.log(
         "OPEN ROOM RESPONSE:",

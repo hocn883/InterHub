@@ -1,21 +1,8 @@
-import {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import {
-  FiArrowLeft,
-  FiMessageCircle,
-  FiSend,
-  FiX,
-} from "react-icons/fi";
+import {useContext,useEffect,useRef,useState,} from "react";
+import {FiArrowLeft,FiMessageCircle,FiSend,FiX,} from "react-icons/fi";
 import { UserContext } from "../../contexts/UserContext";
-import { authApi } from "../../utils/api";
+import { authApi, endpoints } from "../../utils/api";
 import "./ChatWindow.css";
-
-const CHAT_API = "https://interhub1611.onrender.com/chat";
-
 const getSenderId = (message) => {
   if (!message) {
     return null;
@@ -72,13 +59,11 @@ function ChatWindow({
         setError("Không tìm thấy token đăng nhập.");
         return;
       }
-
       try {
         setLoading(true);
         setError("");
-
         const response = await authApi(token).get(
-          `${CHAT_API}/rooms/${room.roomId}/messages`
+         endpoints.listChat(room.roomId)
         );
 
         if (cancelled) {
@@ -95,7 +80,7 @@ function ChatWindow({
 
         try {
           await authApi(token).put(
-            `${CHAT_API}/rooms/${room.roomId}/read/${currentUser.id}`
+           endpoints.marksAsRead(room.roomId, currentUser.id)
           );
 
           if (cancelled) {
@@ -224,7 +209,7 @@ function ChatWindow({
             if (token) {
               authApi(token)
                 .put(
-                  `${CHAT_API}/rooms/${room.roomId}/read/${currentUser.id}`
+                  endpoints.markAsRead(room.roomId, currentUser.id)
                 )
                 .then(() => {
                   setMessages(

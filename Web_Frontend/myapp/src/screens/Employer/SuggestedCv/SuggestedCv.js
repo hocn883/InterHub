@@ -8,7 +8,6 @@ const SuggestedCv = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
   const loadSuggestedCv = async () => {
     try {
       setLoading(true);
@@ -58,7 +57,6 @@ const SuggestedCv = () => {
         highlight="đề xuất"
         description="Các hồ sơ đã được giảng viên xác nhận và có thể được nhà tuyển dụng tham khảo."
       />
-
       <main className="suggested-cv-container suggested-cv-main">
         {loading && (
           <div className="suggested-loading">
@@ -79,11 +77,10 @@ const SuggestedCv = () => {
           sortedApplications.length > 0 && (
             <div className="suggested-cv-list">
               {sortedApplications.map(
-                (application, index) => (
+                (application) => (
                   <SuggestedCvCard
                     key={application.id}
                     application={application}
-                    rank={index + 1}
                   />
                 )
               )}

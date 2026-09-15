@@ -1,17 +1,23 @@
 import axios from "axios";
-
 const BASE_URL = "https://interhub1611.onrender.com/api";
+//const BASE_URL="http://localhost:8080/api";
 
 const api = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
 });
-
 export const endpoints = {
+
+  //chat
+  chat: "/chat",
+  openRoom:(senderId,receiverId)=>`/chat/rooms/open/${senderId}/${receiverId}`,
+  getRooms:(userId)=>`/chat/rooms/user/${userId}`,
+  listChat:(roomId)=>`/chat/rooms/${roomId}/messages`,
+  maskAsRead:(roomId,userId)=>`/chat/rooms/${roomId}/read/${userId}`,
+  //
   login: "/auth/login",
   register: "/auth/register",
   refresh: "/auth/refresh",
-
   employer: "/employer",
   employerReview: (employerId) => `/employer/${employerId}/reviews`,
   employerDetails: (employerId) => `/employer/${employerId}`,
@@ -70,9 +76,7 @@ export const endpoints = {
     `/lecturer/cvs/${cvId}/approved`,
   lecturerCvRejected: (cvId) =>
     `/lecturer/cvs/${cvId}/rejected`,
-
   suggestedCv: "/cvs-suggested",
-
   myinvitations: "/student/job-invitations",
   studentAccept: (invitationId) =>
     `/student/job-invitations/${invitationId}/accept`,

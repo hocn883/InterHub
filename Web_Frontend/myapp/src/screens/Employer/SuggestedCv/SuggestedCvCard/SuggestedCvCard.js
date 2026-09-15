@@ -1,22 +1,22 @@
-import {FiCalendar,FiCheckCircle,FiEye, FiFileText,FiUser,FiUserCheck,} from "react-icons/fi";
+import { FiCalendar, FiCheckCircle, FiEye, FiFileText, FiUser, FiUserCheck,FiMessageCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import "./SuggestedCvCard.css";
 import { useContext } from "react";
 import { UserContext } from "../../../../contexts/UserContext";
-const SuggestedCvCard = ({ application, rank,
-}) => {
-  const navigate = useNavigate();
+import { useState } from "react";
+import {authApi,endpoints} from "../../../../utils/api";
 
+const SuggestedCvCard = ({ application,}) => {
+  const [openingChat,setOpeningChat] = useState(false);
+  const navigate = useNavigate();
   const formatDate = (date) => {
     if (!date) {
       return "Chưa cập nhật";
     }
-
     return new Date(date).toLocaleDateString(
       "vi-VN"
     );
   };
-
   const handleSelectCandidate = () => {
     navigate(
       `/employer/invite-cv/${application.id}`,
@@ -27,15 +27,68 @@ const SuggestedCvCard = ({ application, rank,
       }
     );
   };
-  const currentUser=useContext(UserContext).currentUser;
-
+   const currentUser = useContext(UserContext).currentUser;
+   const handleOpenChat=async()=>{
+      const token=
+        localStorage.getItem(
+          "access-token"
+        );
+  
+      if(!token){
+        return;
+      }
+  
+      try{
+        setOpeningChat(true);
+  
+        const response=
+          await authApi(token).post(
+            endpoints.openRoom( currentUser.id,application.studentId)
+          );
+  
+        console.log(
+          "OPEN LECTURER ROOM:",
+          response.data
+        );
+        const data=
+          response.data;
+        const roomId=
+          typeof data==="object"
+            ?data?.roomId??data?.id
+            :data;
+        if(!roomId){
+          console.error(
+            "Backend không trả roomId"
+          );
+          return;
+        }
+        window.dispatchEvent(
+          new CustomEvent(
+            "open-chat-room",
+            {
+              detail:{
+                roomId:Number(roomId)
+              }
+            }
+          )
+        );
+      }catch(error){
+        console.error(
+          "OPEN CHAT ERROR:",
+          error.response?.data||
+          error
+        );
+  
+        alert(
+          error.response?.data?.message||
+          "Không thể mở cuộc trò chuyện."
+        );
+      }finally{
+        setOpeningChat(false);
+      }
+    };
   return (
     <article className="suggested-card">
-
-      <div className="suggested-rank">
-        #{rank}
-      </div>
-
       <div className="suggested-avatar">
         {application.studentName
           ?.charAt(0)
@@ -58,7 +111,6 @@ const SuggestedCvCard = ({ application, rank,
                 CV đã duyệt
               </span>
             </div>
-
             <p className="suggested-student-id">
               <FiUser />
 
@@ -69,9 +121,7 @@ const SuggestedCvCard = ({ application, rank,
                   "Chưa cập nhật"}
               </strong>
             </p>
-
           </div>
-
           <span className="suggested-status">
             <FiCheckCircle />
             Đã xác nhận
@@ -152,14 +202,25 @@ const SuggestedCvCard = ({ application, rank,
           </a>
 
           {currentUser?.role === 'EMPLOYER' && (
-            <button
-              type="button"
-              className="suggested-select-button"
-              onClick={handleSelectCandidate}
-            >
-              <FiUserCheck />
-            Tuyển dụng
-          </button>)}
+            <>
+              <button
+                type="button"
+                className="suggested-message-button"
+                onClick={handleOpenChat}
+                disabled={openingChat}
+              >
+                <FiMessageCircle />
+                Tin nhắn
+              </button>
+              <button
+                type="button"
+                className="suggested-select-button"
+                onClick={handleSelectCandidate}
+              >
+                <FiUserCheck />
+                Tuyển dụng
+              </button>
+            </>)}
 
         </div>
 

@@ -153,7 +153,6 @@ function JobDetailScreen() {
         <div className="job-detail-layout">
           <section className="job-detail-main">
             <article className="job-detail-section">
-
               <h2>
                 Mô tả công việc
               </h2>
@@ -233,58 +232,45 @@ function JobDetailScreen() {
               )}
 
             </div>
-
-
             {/* COMPANY CARD */}
-            <div className="company-card">
+            <Link
+              to={`/companies/${job.employer?.id}`}
+              className="company-card"
+            >
+              <div className="company-card-top">
+                <h3>Thông tin công ty</h3>
 
-              <h3>
-                Thông tin công ty
-              </h3>
+                <span className="company-card-view">
+                  Xem công ty →
+                </span>
+              </div>
 
               <div className="company-card-heading">
-
                 <div className="company-card-logo">
-
                   {job.employer?.avatarUrl ? (
                     <img
                       src={job.employer.avatarUrl}
                       alt={companyName}
                     />
                   ) : (
-                    companyName.charAt(0).toUpperCase()
+                    <span>
+                      {companyName.charAt(0).toUpperCase()}
+                    </span>
                   )}
-
                 </div>
 
+                <div className="company-card-company">
+                  <strong>{companyName}</strong>
 
-                <div>
-
-                  <strong>
-                    {companyName}
-                  </strong>
-
-                  <span>
+                  <span className="company-verified">
                     Nhà tuyển dụng đã xác thực
                   </span>
-
                 </div>
-
               </div>
-
-
               <div className="company-card-info">
-
-                <p>
-                  Địa điểm:{" "}
-                  {job.location || "Đang cập nhật"}
-                </p>
-
+                <p>{job.location || "Đang cập nhật"}</p>
               </div>
-
-            </div>
-
-
+            </Link>
             {/* WARNING */}
             <div className="job-warning-card">
 

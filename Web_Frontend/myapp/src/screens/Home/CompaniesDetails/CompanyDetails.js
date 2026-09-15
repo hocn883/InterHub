@@ -243,7 +243,7 @@ function CompanyDetails() {
     }
     try{
       const response=await authApi(token).post(
-        `https://interhub1611.onrender.com/chat/rooms/open/${currentUser.id}/${employerId}`
+        endpoints.openRoom(currentUser.id,employerId)
       );
       console.log(
         "OPEN ROOM RESPONSE:",

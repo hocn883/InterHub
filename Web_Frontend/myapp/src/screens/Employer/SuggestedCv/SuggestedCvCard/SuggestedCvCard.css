@@ -368,3 +368,22 @@
 .suggested-select-button svg {
   font-size: 15px;
 }
+.suggested-message-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border: 1px solid #2563eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.suggested-message-button:hover {
+  background: #eff6ff;
+}

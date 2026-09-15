@@ -2,11 +2,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FiMessageCircle, FiX } from "react-icons/fi";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { authApi } from "../../utils/api";
+import { authApi, endpoints } from "../../utils/api";
 import ChatWindow from "./ChatWindow";
 import "./ChatBubble.css";
-const CHAT_API = "https://interhub1611.onrender.com/chat";
-const WS_URL = "https://interhub1611.onrender.com/ws";
+//production:
+const SOCKET_URL = "https://interhub1611.onrender.com/ws";
+//const SOCKET_URL="http://localhost:8080/ws";
 const CHAT_BUBBLE_OWNER_KEY = "__INTERHUB_CHAT_BUBBLE_OWNER__";
 function ChatBubble({ currentUser }) {
   const [opened, setOpened] = useState(false);
@@ -60,7 +61,7 @@ function ChatBubble({ currentUser }) {
     }
     try {
       setLoading(true);
-      const response = await authApi(token).get(`${CHAT_API}/rooms/user/${currentUser.id}`);
+      const response = await authApi(token).get(endpoints.getRooms(currentUser.id));
       const data = Array.isArray(response.data) ? response.data : [];
       setRooms(data);
       return data;
@@ -82,17 +83,15 @@ function ChatBubble({ currentUser }) {
       return;
     }
     const client = new Client({
-      webSocketFactory: () => new SockJS(WS_URL),
+      webSocketFactory: () => new SockJS(SOCKET_URL),
       reconnectDelay: 5000,
       debug: () => {},
     });
     client.onConnect = () => {
       setConnected(true);
-      console.log("CHAT WEBSOCKET CONNECTED");
       client.subscribe(`/topic/user/${currentUser.id}`, (frame) => {
         try {
           const message = JSON.parse(frame.body);
-          console.log("USER MESSAGE:", message);
           const roomId = Number(message.chatRoomId);
           if (Number.isNaN(roomId)) {
             return;
