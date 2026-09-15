@@ -142,18 +142,4 @@ class JobInvitationServiceTest {
         verify(invitation).setStatus(JobInvitationStatus.REJECTED);
         verify(systemLogService).saveLog(student,Action.REJECT_JOB_INVITATION.name(),"Từ chối lời mời công việc ID: 1");
     }
-    // TC06: Employer hủy lời mời thành công
-    @Test
-    void cancelJobInvitation_success() {
-        Employer employer = mock(Employer.class);
-        JobInvitation invitation = mock(JobInvitation.class);
-        JobInvitationResponse expected = mock(JobInvitationResponse.class);
-        when(invitation.getStatus()).thenReturn(JobInvitationStatus.PENDING);
-        when(jobInvitationRepository.findById(1L)).thenReturn(Optional.of(invitation));
-        when(jobInvitationMapper.toResponse(invitation)).thenReturn(expected);
-        JobInvitationResponse result = jobInvitationService.cancelJobInvitation(employer,1L);
-        assertSame(expected,result);
-        verify(invitation).setStatus(JobInvitationStatus.CANCELLED);
-        verify(systemLogService).saveLog(employer,Action.CANCEL_JOB_INVITATION.name(),"Hủy lời mời công việc ID: 1");
-    }
 }

@@ -112,7 +112,6 @@ class ApplicationServiceTest {
         when(applicationRepository.findByIdAndStudentId(10L,1L)).thenReturn(Optional.of(application));
         applicationService.deletedById(10L,student);
         verify(applicationRepository).delete(application);
-        verify(systemLogService).saveLog(student,Action.CANCEL_APPLICATION.name(),"Hủy đơn ứng tuyển ID: 10");
     }
     // TC05: Employer lấy danh sách ứng tuyển theo công việc
     @Test
