@@ -34,3 +34,4 @@ build/
 .env
 target/
 .idea/
+/src/main/resources/application-secret.properties

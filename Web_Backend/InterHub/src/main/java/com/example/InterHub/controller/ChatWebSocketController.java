@@ -11,11 +11,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequiredArgsConstructor
 public class ChatWebSocketController {
-
     private final ChatService chatService;
-
     private final SimpMessagingTemplate messagingTemplate;
-
     @MessageMapping("/chat/send")
     public void sendMessage(
             ChatMessageRequest request
