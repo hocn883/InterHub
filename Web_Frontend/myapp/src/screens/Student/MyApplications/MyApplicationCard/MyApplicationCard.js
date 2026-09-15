@@ -13,7 +13,6 @@ import {
 } from "react-icons/fa6";
 import { authApi, endpoints } from "../../../../utils/api";
 import "./MyApplicationCard.css";
-
 function MyApplicationCard({ application, onDelete }) {
     const status = application?.status?.toUpperCase() || "PENDING";
 
@@ -156,7 +155,7 @@ function MyApplicationCard({ application, onDelete }) {
                 </Link>
                 {status === "COMPLETED" && (
                     <Link
-                        to={`/jobs/${application.jobId}/review`}
+                        to={`/jobs/${application.job.id}/review`}
                         className="application-action-button review-button"
                     >
                         <FaStar />

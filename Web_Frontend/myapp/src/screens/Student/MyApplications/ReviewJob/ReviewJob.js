@@ -1,30 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  Link,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-
-import {
-  FaArrowLeft,
-  FaBuilding,
-  FaCalendarDays,
-  FaLocationDot,
-  FaPaperPlane,
-  FaRegStar,
-  FaStar,
-  FaUser,
-} from "react-icons/fa6";
-
-import api, {
-  authApi,
-  endpoints,
-} from "../../../../utils/api";
+import {Link,useNavigate,useParams,} from "react-router-dom";
+import { FaArrowLeft, FaBuilding,FaCalendarDays,FaLocationDot,FaPaperPlane,FaRegStar, FaStar,FaUser,} from "react-icons/fa6";
+import {authApi,endpoints,} from "../../../../utils/api";
 import "./ReviewJob.css";
 function ReviewJob() {
   const { jobId } = useParams();
   const navigate = useNavigate();
-
   const [job, setJob] = useState(null);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -32,14 +13,14 @@ function ReviewJob() {
   const [loading, setLoading] = useState(false);
   const [jobLoading, setJobLoading] = useState(true);
   const [error, setError] = useState("");
-
   useEffect(() => {
     const loadJob = async () => {
       try {
-        const response = await api.get(
+        const token =
+          localStorage.getItem("access-token");
+        const response = await authApi(token).get(
           endpoints.jobDetail(jobId)
         )
-
         setJob(response.data.result);
       } catch (error) {
         console.error(
